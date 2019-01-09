@@ -1,0 +1,11 @@
+[package]
+name = "seal-rs"
+version = "0.1.0"
+authors = ["Belval <edouard@belval.org>"]
+build = "build.rs"
+
+[build-dependencies]
+git2 = "0.8"
+cc = "1.0"
+
+[dependencies]
