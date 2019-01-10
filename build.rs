@@ -12,12 +12,17 @@ fn main() {
     
     println!("{}", url);
 
-    let repo = match Repository::clone(url, "./seal") {
-        Ok(repo) => repo,
-        Err(e) => panic!("Failed to clone SEAL: {}", e),
-    };
+    //let repo = match Repository::clone(url, "./seal") {
+    //    Ok(repo) => repo,
+    //    Err(e) => panic!("Failed to clone SEAL: {}", e),
+    //};
     
     let mut build = cc::Build::new();
+    build.cpp(true);
+    build.flag_if_supported("-std=c++17");
+    build.flag_if_supported("-msha");
+    build.flag_if_supported("-msse4.1");
+    build.flag_if_supported("-mssse3");
     let base_path = Path::new("./seal/src/seal/");
     let util_base_path = Path::new("./seal/src/seal/util/");
     add_cpp_files(&mut build, base_path);
