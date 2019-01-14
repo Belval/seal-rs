@@ -22,20 +22,20 @@ fn main() {
     
     // Configuring before building
     // Setting working directory
-    //let _res = match env::set_current_dir(Path::new("./seal")) {
-    //    Ok(r) => r,
-    //    Err(e) => panic!("SEAL was not properly cloned: {}", e),
-    //};
-    // Cmake
-    // Command::new("cmake")
-    //         .arg("./src/")
-    //         .output()
-    //         .expect("failed to execute process");
+    let _res = match env::set_current_dir(Path::new("./seal")) {
+        Ok(r) => r,
+        Err(e) => panic!("SEAL was not properly cloned: {}", e),
+    };
+    //Cmake
+    Command::new("cmake")
+            .arg("./src/")
+            .output()
+            .expect("failed to execute process");
     // Resetting working directory
-    //let _res = match env::set_current_dir(Path::new("..")) {
-    //    Ok(r) => r,
-    //    Err(e) => panic!("Unable to clean after cmaking the repo: {}", e)
-    //};
+    let _res = match env::set_current_dir(Path::new("..")) {
+        Ok(r) => r,
+        Err(e) => panic!("Unable to clean after cmaking the repo: {}", e)
+    };
 
     // Build SEAL
     //let mut build = cc::Build::new();
@@ -43,6 +43,7 @@ fn main() {
     //build.flag_if_supported("-std=c++17");
     //build.flag_if_supported("-march=native");
     //build.flag_if_supported("-msse4.1");
+    //build.flag_if_supported("--fkeep-inline-functions");
     //let base_path = Path::new("./seal/src/seal/");
     //let util_base_path = Path::new("./seal/src/seal/util/");
     //add_cpp_files(&mut build, base_path);
@@ -51,22 +52,22 @@ fn main() {
     //build.compile("seal");
 
     // Generate the bindings
-    let bindings = bindgen::Builder::default()
-        .header("./seal/src/seal/seal.h")
-        .clang_arg("-I./seal/src/")
-        .clang_arg("-std=c++17")
-        .clang_arg("-x")
-        .clang_arg("c++")
-        .opaque_type("std::*")
-        .whitelist_type("seal::SEALContext")
-        .whitelist_function("seal::SEALContext::Create")
-        .generate()
-        .expect("Unable to generate bindings");
+    //let bindings = bindgen::Builder::default()
+    //    .generate_inline_functions(true)
+    //    .header("./seal/src/seal/seal.h")
+    //    .clang_arg("-I./seal/src/")
+    //    .clang_arg("-std=c++17")
+    //    .clang_arg("-x")
+    //    .clang_arg("c++")
+    //    .opaque_type("std::.*")
+    //    .whitelist_type("seal::.*")
+    //    .generate()
+    //    .expect("Unable to generate bindings");
 
-    let out_path = PathBuf::from("./src/");
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
+    //let out_path = PathBuf::from("./src/");
+    //bindings
+    //    .write_to_file(out_path.join("bindings.rs"))
+    //    .expect("Couldn't write bindings!");
 
     // Cleanup
     let _res = match fs::remove_dir_all("./seal") {
