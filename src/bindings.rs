@@ -409,7 +409,7 @@ pub type seal_SEAL_BYTE = u8;
 ///
 ///@see EncryptionParameters for a description of the encryption parameters.
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct seal_util_global_variables_internal_mods_SmallModulus {
     pub value_: u64,
     pub const_ratio_: [u64; 3usize],
@@ -2883,7 +2883,7 @@ fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0
 ///order of these global variables to be correct (i.e. global memory pool
 ///first).
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_MemoryPoolHandle {
     pub pool_: [u64; 2usize],
 }
@@ -4864,7 +4864,7 @@ pub type seal_parms_id_type = seal_util_HashFunction_sha3_block_type;
 ///an expert in RLWE-based encryption when selecting parameters, as this is where
 ///inexperienced users seem to most often make critical mistakes.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_EncryptionParameters {
     pub pool_: seal_MemoryPoolHandle,
     pub scheme_: seal_scheme_type,
@@ -8044,9 +8044,10 @@ impl seal_Decryptor {
     }
 }
 #[repr(C)]
+#[derive(Default)]
 pub struct seal_AbstractIntegerEncoder__bindgen_vtable(::std::os::raw::c_void);
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_AbstractIntegerEncoder {
     pub vtable_: *const seal_AbstractIntegerEncoder__bindgen_vtable,
 }
@@ -9411,7 +9412,7 @@ extern "C" {
 ///@see BalancedEncoder for encoding using base-b representation for b greater than 2.
 ///@see FractionalEncoder for encoding real numbers.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_IntegerEncoder {
     pub _base: seal_AbstractIntegerEncoder,
     pub encoder_: *mut seal_AbstractIntegerEncoder,
