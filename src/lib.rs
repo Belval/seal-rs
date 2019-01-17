@@ -20,6 +20,5 @@ mod tests {
 
         let mut ie = seal_IntegerEncoder::Default();
         seal_IntegerEncoder_IntegerEncoder(&mut ie, ep.plain_modulus());
-
     }
 }

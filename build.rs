@@ -37,7 +37,7 @@ fn main() {
         Err(e) => panic!("Unable to clean after cmaking the repo: {}", e)
     };
 
-    // Build SEAL
+    //// Build SEAL
     //let mut build = cc::Build::new();
     //build.cpp(true);
     //build.flag_if_supported("-std=c++17");
@@ -51,9 +51,10 @@ fn main() {
     //build.include("./seal/src");
     //build.compile("seal");
 
-    // Generate the bindings
+    //// Generate the bindings
     //let bindings = bindgen::Builder::default()
     //    .generate_inline_functions(true)
+    //    .derive_default(true)
     //    .header("./seal/src/seal/seal.h")
     //    .clang_arg("-I./seal/src/")
     //    .clang_arg("-std=c++17")

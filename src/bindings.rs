@@ -4,7 +4,7 @@ pub type std_string = [u64; 4usize];
 pub type std_istream = [u64; 35usize];
 pub type std_ostream = [u64; 34usize];
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_pair {
     pub _address: u8,
 }
@@ -13,7 +13,7 @@ pub type std_pair_second_type = u8;
 pub type std_pair__PCCP = u8;
 pub type std_pair__PCCFP = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_allocator {
     pub _address: u8,
 }
@@ -25,7 +25,7 @@ pub type std_allocator_reference = u8;
 pub type std_allocator_const_reference = u8;
 pub type std_allocator_value_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_allocator_rebind {
     pub _address: u8,
 }
@@ -33,17 +33,17 @@ pub type std_allocator_rebind_other = u8;
 pub type std_allocator_propagate_on_container_move_assignment = u8;
 pub type std_allocator_is_always_equal = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_equal_to {
     pub _address: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_less {
     pub _address: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_hash {
     pub _address: u8,
 }
@@ -60,13 +60,13 @@ pub type std_array_reverse_iterator = u8;
 pub type std_array_const_reverse_iterator = u8;
 pub type std_array__AT_Type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_tuple {
     pub _address: u8,
 }
 pub type std_tuple__Inherited = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_tuple__TC2 {
     pub _address: u8,
 }
@@ -75,12 +75,12 @@ pub type std_tuple__TMC = u8;
 pub type std_tuple__TMCT = u8;
 pub type std_tuple__TNTC = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_default_delete {
     pub _address: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_unique_ptr {
     pub _address: u8,
 }
@@ -90,7 +90,7 @@ pub type std_unique_ptr_element_type = u8;
 pub type std_unique_ptr_deleter_type = u8;
 pub type std_unique_ptr___safe_conversion_up = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_shared_ptr {
     pub _address: u8,
 }
@@ -99,7 +99,7 @@ pub type std_shared_ptr__Assignable = u8;
 pub type std_shared_ptr_element_type = u8;
 pub type std_shared_ptr_weak_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_unordered_map {
     pub _address: u8,
 }
@@ -123,7 +123,7 @@ pub type std_unordered_map_difference_type = u8;
 pub type std_unordered_map_node_type = u8;
 pub type std_unordered_map_insert_return_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_vector {
     pub _address: u8,
 }
@@ -143,17 +143,17 @@ pub type std_vector_size_type = u64;
 pub type std_vector_difference_type = u64;
 pub type std_vector_allocator_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_vector__Temporary_value {
     pub _address: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_atomic {
     pub _address: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_map {
     pub _address: u8,
 }
@@ -163,7 +163,7 @@ pub type std_map_value_type = u8;
 pub type std_map_key_compare = u8;
 pub type std_map_allocator_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_map_value_compare {
     pub _address: u8,
 }
@@ -183,7 +183,7 @@ pub type std_map_const_reverse_iterator = u8;
 pub type std_map_node_type = u8;
 pub type std_map_insert_return_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_mutex {
     pub _bindgen_opaque_blob: [u64; 5usize],
 }
@@ -264,13 +264,13 @@ impl std_mutex {
     }
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_unique_lock {
     pub _address: u8,
 }
 pub type std_unique_lock_mutex_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_shared_mutex {
     pub _bindgen_opaque_blob: [u64; 7usize],
 }
@@ -380,13 +380,13 @@ impl std_shared_mutex {
     }
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_shared_lock {
     pub _address: u8,
 }
 pub type std_shared_lock_mutex_type = u8;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_complex {
     pub _address: u8,
 }
@@ -409,7 +409,7 @@ pub type seal_SEAL_BYTE = u8;
 ///
 ///@see EncryptionParameters for a description of the encryption parameters.
 #[repr(C)]
-#[derive(Debug, Copy, Clone, Default)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_util_global_variables_internal_mods_SmallModulus {
     pub value_: u64,
     pub const_ratio_: [u64; 3usize],
@@ -649,14 +649,14 @@ impl seal_util_global_variables_internal_mods_SmallModulus {
     }
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_util_is_uint64 {
     pub _address: u8,
 }
 pub type seal_util_ReaderLock = [u64; 2usize];
 pub type seal_util_WriterLock = [u64; 2usize];
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_util_ReaderWriterLocker {
     pub rw_lock_mutex_: std_shared_mutex,
 }
@@ -808,6 +808,11 @@ extern "C" {
         data: *mut seal_SEAL_BYTE,
     );
 }
+impl Default for seal_util_MemoryPoolItem {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_util_MemoryPoolItem {
     #[inline]
     pub unsafe fn data(&mut self) -> *mut seal_SEAL_BYTE {
@@ -921,6 +926,11 @@ extern "C" {
         this: *mut seal_util_MemoryPoolHead_allocation,
     );
 }
+impl Default for seal_util_MemoryPoolHead_allocation {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_util_MemoryPoolHead_allocation {
     #[inline]
     pub unsafe fn new() -> Self {
@@ -941,6 +951,11 @@ fn bindgen_test_layout_seal_util_MemoryPoolHead() {
         8usize,
         concat!("Alignment of ", stringify!(seal_util_MemoryPoolHead))
     );
+}
+impl Default for seal_util_MemoryPoolHead {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 extern "C" {
     #[link_name = "\u{1}_ZN4seal4util14MemoryPoolHeadD1Ev"]
@@ -1051,6 +1066,11 @@ extern "C" {
         item_byte_count: usize,
         clear_on_destruction: bool,
     );
+}
+impl Default for seal_util_MemoryPoolHeadMT {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_util_MemoryPoolHeadMT {
     #[inline]
@@ -1184,6 +1204,11 @@ extern "C" {
         clear_on_destruction: bool,
     );
 }
+impl Default for seal_util_MemoryPoolHeadST {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_util_MemoryPoolHeadST {
     #[inline]
     pub unsafe fn new(item_byte_count: usize, clear_on_destruction: bool) -> Self {
@@ -1256,6 +1281,11 @@ fn bindgen_test_layout_seal_util_MemoryPool() {
         8usize,
         concat!("Alignment of ", stringify!(seal_util_MemoryPool))
     );
+}
+impl Default for seal_util_MemoryPool {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 extern "C" {
     #[link_name = "\u{1}_ZN4seal4util10MemoryPoolD1Ev"]
@@ -1330,6 +1360,11 @@ extern "C" {
         this: *mut seal_util_MemoryPoolMT,
         copy: *const seal_util_MemoryPoolMT,
     );
+}
+impl Default for seal_util_MemoryPoolMT {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_util_MemoryPoolMT {
     #[inline]
@@ -1421,6 +1456,11 @@ extern "C" {
         copy: *const seal_util_MemoryPoolST,
     );
 }
+impl Default for seal_util_MemoryPoolST {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_util_MemoryPoolST {
     #[inline]
     pub unsafe fn new(clear_on_destruction: bool) -> Self {
@@ -1482,6 +1522,11 @@ pub struct seal_util_Pointer<T> {
     pub alias_: bool,
     pub _phantom_0: ::std::marker::PhantomData<::std::cell::UnsafeCell<T>>,
 }
+impl<T> Default for seal_util_Pointer<T> {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 #[test]
 fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0_instantiation() {
     assert_eq!(
@@ -1510,8 +1555,13 @@ pub struct seal_util_ConstPointer<T> {
     pub alias_: bool,
     pub _phantom_0: ::std::marker::PhantomData<::std::cell::UnsafeCell<T>>,
 }
+impl<T> Default for seal_util_ConstPointer<T> {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_util_HashFunction {
     pub _address: u8,
 }
@@ -1874,6 +1924,11 @@ extern "C" {
         modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
         pool: seal_MemoryPoolHandle,
     );
+}
+impl Default for seal_util_SmallNTTTables {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_util_SmallNTTTables {
     #[inline]
@@ -2646,6 +2701,11 @@ extern "C" {
         pool: seal_MemoryPoolHandle,
     );
 }
+impl Default for seal_util_BaseConverter {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_util_BaseConverter {
     #[inline]
     pub unsafe fn generate(
@@ -3077,6 +3137,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal6MMProfC2Ev"]
     pub fn seal_MMProf_MMProf(this: *mut seal_MMProf);
 }
+impl Default for seal_MMProf {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_MMProf {
     #[inline]
     pub unsafe fn new() -> Self {
@@ -3114,6 +3179,11 @@ extern "C" {
     ///Creates a new MMProfGlobal.
     #[link_name = "\u{1}_ZN4seal12MMProfGlobalC1Ev"]
     pub fn seal_MMProfGlobal_MMProfGlobal(this: *mut seal_MMProfGlobal);
+}
+impl Default for seal_MMProfGlobal {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_MMProfGlobal {
     #[inline]
@@ -3162,6 +3232,11 @@ extern "C" {
     ///Creates a new MMProfNew.
     #[link_name = "\u{1}_ZN4seal9MMProfNewC1Ev"]
     pub fn seal_MMProfNew_MMProfNew(this: *mut seal_MMProfNew);
+}
+impl Default for seal_MMProfNew {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_MMProfNew {
     #[inline]
@@ -3225,6 +3300,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal11MMProfFixedC1ENS_16MemoryPoolHandleE"]
     pub fn seal_MMProfFixed_MMProfFixed(this: *mut seal_MMProfFixed, pool: seal_MemoryPoolHandle);
 }
+impl Default for seal_MMProfFixed {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_MMProfFixed {
     #[inline]
     pub unsafe fn new(pool: seal_MemoryPoolHandle) -> Self {
@@ -3277,6 +3357,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal17MMProfThreadLocalC1Ev"]
     pub fn seal_MMProfThreadLocal_MMProfThreadLocal(this: *mut seal_MMProfThreadLocal);
 }
+impl Default for seal_MMProfThreadLocal {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_MMProfThreadLocal {
     #[inline]
     pub unsafe fn new() -> Self {
@@ -3304,7 +3389,7 @@ extern "C" {
 ///MMProf class (pure virtual) and encapsulates internal logic for deciding which
 ///memory pool to use.
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_MemoryManager {
     pub _address: u8,
 }
@@ -3382,7 +3467,7 @@ impl seal_MemoryManager {
 ///the profile is switched back to the original if a function throws an exception
 ///after changing the profile for local use.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_MMProfGuard {
     pub old_prof_: u64,
     pub mm_switch_lock_: [u64; 2usize],
@@ -4128,6 +4213,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal7BigUIntD1Ev"]
     pub fn seal_BigUInt_BigUInt_destructor(this: *mut seal_BigUInt);
 }
+impl Default for seal_BigUInt {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_BigUInt {
     #[inline]
     pub unsafe fn is_alias(&self) -> bool {
@@ -4348,8 +4438,13 @@ fn bindgen_test_layout_seal_aes_block() {
         )
     );
 }
+impl Default for seal_aes_block {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_AESEncryptor {
     pub round_key_: [__m128i; 11usize],
 }
@@ -4478,7 +4573,7 @@ impl seal_AESEncryptor {
     }
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_AESDecryptor {
     pub round_key_: [__m128i; 11usize],
 }
@@ -4593,6 +4688,11 @@ fn bindgen_test_layout_seal_UniformRandomGenerator() {
         concat!("Alignment of ", stringify!(seal_UniformRandomGenerator))
     );
 }
+impl Default for seal_UniformRandomGenerator {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 extern "C" {
     ///Destroys the random number generator.
     #[link_name = "\u{1}_ZN4seal22UniformRandomGeneratorD1Ev"]
@@ -4639,6 +4739,11 @@ extern "C" {
     ///not be destroyed.
     #[link_name = "\u{1}_ZN4seal29UniformRandomGeneratorFactory15default_factoryEv"]
     pub fn seal_UniformRandomGeneratorFactory_default_factory() -> [u64; 2usize];
+}
+impl Default for seal_UniformRandomGeneratorFactory {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_UniformRandomGeneratorFactory {
     #[inline]
@@ -4721,6 +4826,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal8FastPRNGC1Emm"]
     pub fn seal_FastPRNG_FastPRNG(this: *mut seal_FastPRNG, seed_lw: u64, seed_hw: u64);
 }
+impl Default for seal_FastPRNG {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_FastPRNG {
     #[inline]
     pub unsafe fn new(seed_lw: u64, seed_hw: u64) -> Self {
@@ -4784,6 +4894,11 @@ extern "C" {
         seed_hw: u64,
     );
 }
+impl Default for seal_FastPRNGFactory {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_FastPRNGFactory {
     #[inline]
     pub unsafe fn new(seed_lw: u64, seed_hw: u64) -> Self {
@@ -4816,6 +4931,11 @@ pub struct seal_StandardRandomAdapter<RNG> {
     pub generator_: RNG,
     pub _phantom_0: ::std::marker::PhantomData<::std::cell::UnsafeCell<RNG>>,
 }
+impl<RNG> Default for seal_StandardRandomAdapter<RNG> {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 ///Provides an implementation of UniformRandomGeneratorFactory for the standard
 ///C++ library's random number generators.
 ///
@@ -4825,6 +4945,11 @@ pub struct seal_StandardRandomAdapter<RNG> {
 #[derive(Debug)]
 pub struct seal_StandardRandomAdapterFactory {
     pub _base: seal_UniformRandomGeneratorFactory,
+}
+impl Default for seal_StandardRandomAdapterFactory {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 pub const seal_scheme_type_BFV: seal_scheme_type = 1;
 pub const seal_scheme_type_CKKS: seal_scheme_type = 2;
@@ -4864,7 +4989,7 @@ pub type seal_parms_id_type = seal_util_HashFunction_sha3_block_type;
 ///an expert in RLWE-based encryption when selecting parameters, as this is where
 ///inexperienced users seem to most often make critical mistakes.
 #[repr(C)]
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct seal_EncryptionParameters {
     pub pool_: seal_MemoryPoolHandle,
     pub scheme_: seal_scheme_type,
@@ -5212,6 +5337,11 @@ extern "C" {
         source: *mut seal_EncryptionParameters,
     );
 }
+impl Default for seal_EncryptionParameters {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_EncryptionParameters {
     #[inline]
     pub unsafe fn set_poly_modulus_degree(&mut self, poly_modulus_degree: usize) {
@@ -5313,7 +5443,7 @@ impl seal_EncryptionParameters {
 ///@see EncryptionParameters::GetQualifiers for obtaining the EncryptionParameterQualifiers
 ///corresponding to the current parameter set.
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct seal_EncryptionParameterQualifiers {
     ///If the encryption parameters are set in a way that is considered valid by SEAL, the
     ///variable parameters_set is set to true.
@@ -5468,7 +5598,7 @@ fn bindgen_test_layout_seal_EncryptionParameterQualifiers() {
 ///@see EncryptionParameters for more details on the parameters.
 ///@see EncryptionParameterQualifiers for more details on the qualifiers.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_SEALContext {
     pub pool_: seal_MemoryPoolHandle,
     pub first_parms_id_: seal_parms_id_type,
@@ -5838,6 +5968,11 @@ extern "C" {
         move_: *mut seal_SEALContext_ContextData,
     );
 }
+impl Default for seal_SEALContext_ContextData {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_SEALContext_ContextData {
     #[inline]
     pub unsafe fn parms(&self) -> *mut seal_EncryptionParameters {
@@ -6076,13 +6211,18 @@ impl seal_SEALContext {
 ///is concurrently mutating it.
 #[repr(C)]
 #[derive(Debug)]
-pub struct seal_IntArray<T> {
+pub struct seal_IntArray {
     pub pool_: seal_MemoryPoolHandle,
     pub capacity_: seal_IntArray_size_type,
     pub size_: seal_IntArray_size_type,
-    pub data_: seal_util_Pointer<T>,
+    pub data_: seal_util_Pointer<u64>,
 }
 pub type seal_IntArray_size_type = usize;
+impl Default for seal_IntArray {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 ///Class to store a ciphertext element. The data for a ciphertext consists
 ///of two or more polynomials, which are in SEAL stored in a CRT form with
 ///respect to the factors of the coefficient modulus. This data itself is
@@ -6121,7 +6261,7 @@ pub struct seal_Ciphertext {
     pub poly_modulus_degree_: seal_Ciphertext_size_type,
     pub coeff_mod_count_: seal_Ciphertext_size_type,
     pub scale_: f64,
-    pub data_: seal_IntArray<u64>,
+    pub data_: seal_IntArray,
 }
 pub type seal_Ciphertext_ct_coeff_type = u64;
 pub type seal_Ciphertext_size_type = size_type;
@@ -6613,6 +6753,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal10CiphertextC1EOS0_"]
     pub fn seal_Ciphertext_Ciphertext5(this: *mut seal_Ciphertext, source: *mut seal_Ciphertext);
 }
+impl Default for seal_Ciphertext {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_Ciphertext {
     #[inline]
     pub unsafe fn reserve(
@@ -6826,7 +6971,7 @@ impl seal_Ciphertext {
 pub struct seal_Plaintext {
     pub parms_id_: seal_parms_id_type,
     pub scale_: f64,
-    pub data_: seal_IntArray<u64>,
+    pub data_: seal_IntArray,
 }
 pub type seal_Plaintext_pt_coeff_type = u64;
 pub type seal_Plaintext_size_type = size_type;
@@ -7193,6 +7338,11 @@ extern "C" {
     ///@param[in] source The plaintext to move from
     #[link_name = "\u{1}_ZN4seal9PlaintextC1EOS0_"]
     pub fn seal_Plaintext_Plaintext5(this: *mut seal_Plaintext, source: *mut seal_Plaintext);
+}
+impl Default for seal_Plaintext {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_Plaintext {
     #[inline]
@@ -7603,6 +7753,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal11CKKSEncoderC1ESt10shared_ptrINS_11SEALContextEE"]
     pub fn seal_CKKSEncoder_CKKSEncoder(this: *mut seal_CKKSEncoder, context: [u64; 2usize]);
 }
+impl Default for seal_CKKSEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_CKKSEncoder {
     #[inline]
     pub unsafe fn encode(
@@ -7813,6 +7968,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal9SecretKeyD1Ev"]
     pub fn seal_SecretKey_SecretKey_destructor(this: *mut seal_SecretKey);
 }
+impl Default for seal_SecretKey {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_SecretKey {
     #[inline]
     pub unsafe fn data(&mut self) -> *mut seal_Plaintext {
@@ -8020,6 +8180,11 @@ extern "C" {
         secret_key: *const seal_SecretKey,
     );
 }
+impl Default for seal_Decryptor {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_Decryptor {
     #[inline]
     pub unsafe fn decrypt(
@@ -8044,10 +8209,9 @@ impl seal_Decryptor {
     }
 }
 #[repr(C)]
-#[derive(Default)]
 pub struct seal_AbstractIntegerEncoder__bindgen_vtable(::std::os::raw::c_void);
 #[repr(C)]
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct seal_AbstractIntegerEncoder {
     pub vtable_: *const seal_AbstractIntegerEncoder__bindgen_vtable,
 }
@@ -8063,6 +8227,11 @@ fn bindgen_test_layout_seal_AbstractIntegerEncoder() {
         8usize,
         concat!("Alignment of ", stringify!(seal_AbstractIntegerEncoder))
     );
+}
+impl Default for seal_AbstractIntegerEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 extern "C" {
     #[link_name = "\u{1}_ZN4seal22AbstractIntegerEncoderD1Ev"]
@@ -8089,6 +8258,11 @@ fn bindgen_test_layout_seal_AbstractFractionalEncoder() {
         8usize,
         concat!("Alignment of ", stringify!(seal_AbstractFractionalEncoder))
     );
+}
+impl Default for seal_AbstractFractionalEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 extern "C" {
     #[link_name = "\u{1}_ZN4seal25AbstractFractionalEncoderD1Ev"]
@@ -8213,6 +8387,11 @@ extern "C" {
         this: *mut seal_BinaryEncoder,
         source: *mut seal_BinaryEncoder,
     );
+}
+impl Default for seal_BinaryEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_BinaryEncoder {
     #[inline]
@@ -8596,6 +8775,11 @@ extern "C" {
         this: *mut seal_BalancedEncoder,
         source: *mut seal_BalancedEncoder,
     );
+}
+impl Default for seal_BalancedEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_BalancedEncoder {
     #[inline]
@@ -9019,6 +9203,11 @@ extern "C" {
         source: *mut seal_BinaryFractionalEncoder,
     );
 }
+impl Default for seal_BinaryFractionalEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_BinaryFractionalEncoder {
     #[inline]
     pub unsafe fn new(
@@ -9282,6 +9471,11 @@ extern "C" {
         source: *mut seal_BalancedFractionalEncoder,
     );
 }
+impl Default for seal_BalancedFractionalEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_BalancedFractionalEncoder {
     #[inline]
     pub unsafe fn new(
@@ -9412,7 +9606,7 @@ extern "C" {
 ///@see BalancedEncoder for encoding using base-b representation for b greater than 2.
 ///@see FractionalEncoder for encoding real numbers.
 #[repr(C)]
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct seal_IntegerEncoder {
     pub _base: seal_AbstractIntegerEncoder,
     pub encoder_: *mut seal_AbstractIntegerEncoder,
@@ -9475,6 +9669,11 @@ extern "C" {
         this: *mut seal_IntegerEncoder,
         source: *mut seal_IntegerEncoder,
     );
+}
+impl Default for seal_IntegerEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
 }
 impl seal_IntegerEncoder {
     #[inline]
@@ -9854,6 +10053,11 @@ extern "C" {
         source: *mut seal_FractionalEncoder,
     );
 }
+impl Default for seal_FractionalEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_FractionalEncoder {
     #[inline]
     pub unsafe fn new(
@@ -10074,6 +10278,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal9PublicKeyC1EOS0_"]
     pub fn seal_PublicKey_PublicKey2(this: *mut seal_PublicKey, source: *mut seal_PublicKey);
 }
+impl Default for seal_PublicKey {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_PublicKey {
     #[inline]
     pub unsafe fn data(&mut self) -> *mut seal_Ciphertext {
@@ -10237,6 +10446,11 @@ extern "C" {
         public_key: *const seal_PublicKey,
     );
 }
+impl Default for seal_Encryptor {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_Encryptor {
     #[inline]
     pub unsafe fn encrypt(
@@ -10294,7 +10508,7 @@ impl seal_Encryptor {
 ///@see GaloisKeys for the class that stores the Galois keys.
 ///@see KeyGenerator for the class that generates the relinearization keys.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_RelinKeys {
     pub pool_: seal_MemoryPoolHandle,
     pub parms_id_: seal_parms_id_type,
@@ -10589,7 +10803,7 @@ impl seal_RelinKeys {
 ///@see RelinKeys for the class that stores the relinearization keys.
 ///@see KeyGenerator for the class that generates the Galois keys.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_GaloisKeys {
     pub pool_: seal_MemoryPoolHandle,
     pub parms_id_: seal_parms_id_type,
@@ -10919,7 +11133,7 @@ impl seal_GaloisKeys {
 ///@see RelinKeys for more details on relinearization keys.
 ///@see GaloisKeys for more details on Galois keys.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct seal_Evaluator {
     pub context_: [u64; 2usize],
     pub Zmstar_to_generator_: [u64; 6usize],
@@ -12909,6 +13123,11 @@ extern "C" {
         public_key: *const seal_PublicKey,
     );
 }
+impl Default for seal_KeyGenerator {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_KeyGenerator {
     #[inline]
     pub unsafe fn secret_key(&self) -> *const seal_SecretKey {
@@ -13229,6 +13448,11 @@ extern "C" {
     #[link_name = "\u{1}_ZN4seal12BatchEncoderC1ESt10shared_ptrINS_11SEALContextEE"]
     pub fn seal_BatchEncoder_BatchEncoder(this: *mut seal_BatchEncoder, context: [u64; 2usize]);
 }
+impl Default for seal_BatchEncoder {
+    fn default() -> Self {
+        unsafe { ::std::mem::zeroed() }
+    }
+}
 impl seal_BatchEncoder {
     #[inline]
     pub unsafe fn encode(&mut self, values: *const u8, destination: *mut seal_Plaintext) {
@@ -13277,7 +13501,7 @@ impl seal_BatchEncoder {
 }
 pub type __m128i = [::std::os::raw::c_longlong; 2usize];
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _bindgen_ty_57 {
     pub _address: u8,
 }
