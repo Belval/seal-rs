@@ -38,18 +38,18 @@ fn main() {
     };
 
     //// Build SEAL
-    //let mut build = cc::Build::new();
-    //build.cpp(true);
-    //build.flag_if_supported("-std=c++17");
-    //build.flag_if_supported("-march=native");
-    //build.flag_if_supported("-msse4.1");
-    //build.flag_if_supported("--fkeep-inline-functions");
-    //let base_path = Path::new("./seal/src/seal/");
-    //let util_base_path = Path::new("./seal/src/seal/util/");
-    //add_cpp_files(&mut build, base_path);
-    //add_cpp_files(&mut build, util_base_path);
-    //build.include("./seal/src");
-    //build.compile("seal");
+    let mut build = cc::Build::new();
+    build.cpp(true);
+    build.flag_if_supported("-std=c++17");
+    build.flag_if_supported("-march=native");
+    build.flag_if_supported("-msse4.1");
+    build.flag_if_supported("--fkeep-inline-functions");
+    let base_path = Path::new("./seal/src/seal/");
+    let util_base_path = Path::new("./seal/src/seal/util/");
+    add_cpp_files(&mut build, base_path);
+    add_cpp_files(&mut build, util_base_path);
+    build.include("./seal/src");
+    build.compile("seal");
 
     //// Generate the bindings
     //let bindings = bindgen::Builder::default()
@@ -71,10 +71,10 @@ fn main() {
     //    .expect("Couldn't write bindings!");
 
     // Cleanup
-    let _res = match fs::remove_dir_all("./seal") {
-        Ok(r) => r,
-        Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
-    };
+    //let _res = match fs::remove_dir_all("./seal") {
+    //    Ok(r) => r,
+    //    Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
+    //};
 }
 
 fn add_cpp_files(build: &mut cc::Build, path: &Path) {
