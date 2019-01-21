@@ -7,8 +7,8 @@ use std::env;
 use std::path::Path;
 use std::path::PathBuf;
 use std::fs;
+use std::io::Write;
 use std::process::Command;
-
 use git2::Repository;
 
 fn main() {
@@ -42,8 +42,8 @@ fn main() {
     build.cpp(true);
     build.flag_if_supported("-std=c++17");
     build.flag_if_supported("-march=native");
-    build.flag_if_supported("-msse4.1");
-    build.flag_if_supported("--fkeep-inline-functions");
+    build.flag_if_supported("-fkeep-inline-functions");
+    build.flag_if_supported("-fno-inline-functions");
     let base_path = Path::new("./seal/src/seal/");
     let util_base_path = Path::new("./seal/src/seal/util/");
     add_cpp_files(&mut build, base_path);
@@ -51,30 +51,37 @@ fn main() {
     build.include("./seal/src");
     build.compile("seal");
 
-    //// Generate the bindings
-    //let bindings = bindgen::Builder::default()
-    //    .generate_inline_functions(true)
-    //    .derive_default(true)
-    //    .header("./seal/src/seal/seal.h")
-    //    .clang_arg("-I./seal/src/")
-    //    .clang_arg("-std=c++17")
-    //    .clang_arg("-x")
-    //    .clang_arg("c++")
-    //    .opaque_type("std::.*")
-    //    .whitelist_type("seal::.*")
-    //    .generate()
-    //    .expect("Unable to generate bindings");
+    // Generate the bindings
+    let bindings = bindgen::Builder::default()
+        .generate_inline_functions(true)
+        .derive_default(true)
+        .header("./seal/src/seal/seal.h")
+        .clang_arg("-I./seal/src/")
+        .clang_arg("-std=c++17")
+        .clang_arg("-x")
+        .clang_arg("c++")
+        .opaque_type("std::.*")
+        .whitelist_type("seal::.*")
+        .whitelist_function("seal::.*")
+        .generate()
+        .expect("Unable to generate bindings");
 
-    //let out_path = PathBuf::from("./src/");
-    //bindings
-    //    .write_to_file(out_path.join("bindings.rs"))
-    //    .expect("Couldn't write bindings!");
+    let out_path = PathBuf::from("./src/");
+    let mut bindings_string = bindings
+        .to_string()
+        // Dirty hack
+        .replace("pub data_: seal_util_Pointer<T>", "pub data_: seal_util_Pointer<u64>");
+
+    let mut file = fs::File::create("./src/bindings.rs").unwrap();
+    file.write_all(bindings_string.as_bytes());
+    file.sync_data();
+
 
     // Cleanup
-    //let _res = match fs::remove_dir_all("./seal") {
-    //    Ok(r) => r,
-    //    Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
-    //};
+    let _res = match fs::remove_dir_all("./seal") {
+        Ok(r) => r,
+        Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
+    };
 }
 
 fn add_cpp_files(build: &mut cc::Build, path: &Path) {

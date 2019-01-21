@@ -653,6 +653,52 @@ impl seal_util_global_variables_internal_mods_SmallModulus {
 pub struct seal_util_is_uint64 {
     pub _address: u8,
 }
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12reverse_bitsEj"]
+    pub fn seal_util_reverse_bits(operand: u32) -> u32;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12reverse_bitsEji"]
+    pub fn seal_util_reverse_bits1(operand: u32, bit_count: ::std::os::raw::c_int) -> u32;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util21get_msb_index_genericEPmm"]
+    pub fn seal_util_get_msb_index_generic(result: *mut ::std::os::raw::c_ulong, value: u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util25get_significant_bit_countEm"]
+    pub fn seal_util_get_significant_bit_count(value: u64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util11is_hex_charEc"]
+    pub fn seal_util_is_hex_char(hex: ::std::os::raw::c_char) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19nibble_to_upper_hexEi"]
+    pub fn seal_util_nibble_to_upper_hex(nibble: ::std::os::raw::c_int) -> ::std::os::raw::c_char;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13hex_to_nibbleEc"]
+    pub fn seal_util_hex_to_nibble(hex: ::std::os::raw::c_char) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15get_uint64_byteEPmm"]
+    pub fn seal_util_get_uint64_byte(value: *mut u64, byte_index: usize) -> *mut seal_SEAL_BYTE;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15get_uint64_byteEPKmm"]
+    pub fn seal_util_get_uint64_byte1(
+        value: *const u64,
+        byte_index: usize,
+    ) -> *const seal_SEAL_BYTE;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util24get_hex_string_bit_countEPKci"]
+    pub fn seal_util_get_hex_string_bit_count(
+        hex_string: *const ::std::os::raw::c_char,
+        char_count: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 pub type seal_util_ReaderLock = [u64; 2usize];
 pub type seal_util_WriterLock = [u64; 2usize];
 #[repr(C)]
@@ -1560,6 +1606,566 @@ impl<T> Default for seal_util_ConstPointer<T> {
         unsafe { ::std::mem::zeroed() }
     }
 }
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18uint_to_hex_stringB5cxx11EPKmm"]
+    pub fn seal_util_uint_to_hex_string(value: *const u64, uint64_count: usize) -> std_string;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18uint_to_dec_stringB5cxx11EPKmmRNS0_10MemoryPoolE"]
+    pub fn seal_util_uint_to_dec_string(
+        value: *const u64,
+        uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> std_string;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18hex_string_to_uintEPKcimPm"]
+    pub fn seal_util_hex_string_to_uint(
+        hex_string: *const ::std::os::raw::c_char,
+        char_count: ::std::os::raw::c_int,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13allocate_uintEmRNS0_10MemoryPoolE"]
+    pub fn seal_util_allocate_uint(
+        uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_Pointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_zero_uintEmPm"]
+    pub fn seal_util_set_zero_uint(uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18allocate_zero_uintEmRNS0_10MemoryPoolE"]
+    pub fn seal_util_allocate_zero_uint(
+        uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_Pointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util8set_uintEmmPm"]
+    pub fn seal_util_set_uint(value: u64, uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_uint_uintEPKmmPm"]
+    pub fn seal_util_set_uint_uint(value: *const u64, uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12is_zero_uintEPKmm"]
+    pub fn seal_util_is_zero_uint(value: *const u64, uint64_count: usize) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13is_equal_uintEPKmmm"]
+    pub fn seal_util_is_equal_uint(value: *const u64, uint64_count: usize, scalar: u64) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util20is_high_bit_set_uintEPKmm"]
+    pub fn seal_util_is_high_bit_set_uint(value: *const u64, uint64_count: usize) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15is_bit_set_uintEPKmmi"]
+    pub fn seal_util_is_bit_set_uint(
+        value: *const u64,
+        uint64_count: usize,
+        bit_index: ::std::os::raw::c_int,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12set_bit_uintEPmmi"]
+    pub fn seal_util_set_bit_uint(
+        value: *mut u64,
+        uint64_count: usize,
+        bit_index: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util30get_significant_bit_count_uintEPKmm"]
+    pub fn seal_util_get_significant_bit_count_uint(
+        value: *const u64,
+        uint64_count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util33get_significant_uint64_count_uintEPKmm"]
+    pub fn seal_util_get_significant_uint64_count_uint(
+        value: *const u64,
+        uint64_count: usize,
+    ) -> usize;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_uint_uintEPKmmmPm"]
+    pub fn seal_util_set_uint_uint1(
+        value: *const u64,
+        value_uint64_count: usize,
+        result_uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util16get_power_of_twoEm"]
+    pub fn seal_util_get_power_of_two(value: u64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util26get_power_of_two_minus_oneEm"]
+    pub fn seal_util_get_power_of_two_minus_one(value: u64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util21get_power_of_two_uintEPKmm"]
+    pub fn seal_util_get_power_of_two_uint(
+        operand: *const u64,
+        uint64_count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util31get_power_of_two_minus_one_uintEPKmm"]
+    pub fn seal_util_get_power_of_two_minus_one_uint(
+        operand: *const u64,
+        uint64_count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util20filter_highbits_uintEPmmi"]
+    pub fn seal_util_filter_highbits_uint(
+        operand: *mut u64,
+        uint64_count: usize,
+        bit_count: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util24duplicate_uint_if_neededEPKmmmbRNS0_10MemoryPoolE"]
+    pub fn seal_util_duplicate_uint_if_needed(
+        input: *const u64,
+        uint64_count: usize,
+        new_uint64_count: usize,
+        force: bool,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_ConstPointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17compare_uint_uintEPKmS2_m"]
+    pub fn seal_util_compare_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17compare_uint_uintEPKmmS2_m"]
+    pub fn seal_util_compare_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util25is_greater_than_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_greater_than_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util34is_greater_than_or_equal_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_greater_than_or_equal_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util22is_less_than_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_less_than_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util31is_less_than_or_equal_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_less_than_or_equal_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18is_equal_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_equal_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util22is_not_equal_uint_uintEPKmS2_m"]
+    pub fn seal_util_is_not_equal_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util25is_greater_than_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_greater_than_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util34is_greater_than_or_equal_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_greater_than_or_equal_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util22is_less_than_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_less_than_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util31is_less_than_or_equal_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_less_than_or_equal_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18is_equal_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_equal_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util22is_not_equal_uint_uintEPKmmS2_m"]
+    pub fn seal_util_is_not_equal_uint_uint1(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util14hamming_weightEm"]
+    pub fn seal_util_hamming_weight(value: u64) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util20hamming_weight_splitEm"]
+    pub fn seal_util_hamming_weight_split(value: u64) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13add_uint_uintEPKmmS2_mhmPm"]
+    pub fn seal_util_add_uint_uint(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+        carry: ::std::os::raw::c_uchar,
+        result_uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13add_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_add_uint_uint1(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15add_uint_uint64EPKmmmPm"]
+    pub fn seal_util_add_uint_uint64(
+        operand1: *const u64,
+        operand2: u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13sub_uint_uintEPKmmS2_mhmPm"]
+    pub fn seal_util_sub_uint_uint(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+        borrow: ::std::os::raw::c_uchar,
+        result_uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13sub_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_sub_uint_uint1(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15sub_uint_uint64EPKmmmPm"]
+    pub fn seal_util_sub_uint_uint64(
+        operand1: *const u64,
+        operand2: u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util14increment_uintEPKmmPm"]
+    pub fn seal_util_increment_uint(
+        operand: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util14decrement_uintEPKmmPm"]
+    pub fn seal_util_decrement_uint(
+        operand: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    ) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util11negate_uintEPKmmPm"]
+    pub fn seal_util_negate_uint(operand: *const u64, uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15left_shift_uintEPKmimPm"]
+    pub fn seal_util_left_shift_uint(
+        operand: *const u64,
+        shift_amount: ::std::os::raw::c_int,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util16right_shift_uintEPKmimPm"]
+    pub fn seal_util_right_shift_uint(
+        operand: *const u64,
+        shift_amount: ::std::os::raw::c_int,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18half_round_up_uintEPKmmPm"]
+    pub fn seal_util_half_round_up_uint(operand: *const u64, uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util8not_uintEPKmmPm"]
+    pub fn seal_util_not_uint(operand: *const u64, uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13and_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_and_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12or_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_or_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13xor_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_xor_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18multiply_uint_uintEPKmmS2_mmPm"]
+    pub fn seal_util_multiply_uint_uint(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: *const u64,
+        operand2_uint64_count: usize,
+        result_uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18multiply_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_multiply_uint_uint1(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util20multiply_uint_uint64EPKmmmmPm"]
+    pub fn seal_util_multiply_uint_uint64(
+        operand1: *const u64,
+        operand1_uint64_count: usize,
+        operand2: u64,
+        result_uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util27multiply_truncate_uint_uintEPKmS2_mPm"]
+    pub fn seal_util_multiply_truncate_uint_uint(
+        operand1: *const u64,
+        operand2: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util24divide_uint_uint_inplaceEPmPKmmS1_RNS0_10MemoryPoolE"]
+    pub fn seal_util_divide_uint_uint_inplace(
+        numerator: *mut u64,
+        denominator: *const u64,
+        uint64_count: usize,
+        quotient: *mut u64,
+        pool: *mut seal_util_MemoryPool,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util16divide_uint_uintEPKmS2_mPmS3_RNS0_10MemoryPoolE"]
+    pub fn seal_util_divide_uint_uint(
+        numerator: *const u64,
+        denominator: *const u64,
+        uint64_count: usize,
+        quotient: *mut u64,
+        remainder: *mut u64,
+        pool: *mut seal_util_MemoryPool,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util29divide_uint128_uint64_inplaceEPmmS1_"]
+    pub fn seal_util_divide_uint128_uint64_inplace(
+        numerator: *mut u64,
+        denominator: u64,
+        quotient: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util29divide_uint192_uint64_inplaceEPmmS1_"]
+    pub fn seal_util_divide_uint192_uint64_inplace(
+        numerator: *mut u64,
+        denominator: u64,
+        quotient: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17exponentiate_uintEPKmmS2_mmPmRNS0_10MemoryPoolE"]
+    pub fn seal_util_exponentiate_uint(
+        operand: *const u64,
+        operand_uint64_count: usize,
+        exponent: *const u64,
+        exponent_uint64_count: usize,
+        result_uint64_count: usize,
+        result: *mut u64,
+        pool: *mut seal_util_MemoryPool,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util24exponentiate_uint64_safeEmm"]
+    pub fn seal_util_exponentiate_uint64_safe(operand: u64, exponent: u64) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19exponentiate_uint64Emm"]
+    pub fn seal_util_exponentiate_uint64(operand: u64, exponent: u64) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18increment_uint_modEPKmS2_mPm"]
+    pub fn seal_util_increment_uint_mod(
+        operand: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18decrement_uint_modEPKmS2_mPm"]
+    pub fn seal_util_decrement_uint_mod(
+        operand: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15negate_uint_modEPKmS2_mPm"]
+    pub fn seal_util_negate_uint_mod(
+        operand: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13div2_uint_modEPKmS2_mPm"]
+    pub fn seal_util_div2_uint_mod(
+        operand: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17add_uint_uint_modEPKmS2_S2_mPm"]
+    pub fn seal_util_add_uint_uint_mod(
+        operand1: *const u64,
+        operand2: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17sub_uint_uint_modEPKmS2_S2_mPm"]
+    pub fn seal_util_sub_uint_uint_mod(
+        operand1: *const u64,
+        operand2: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19try_invert_uint_modEPKmS2_mPmRNS0_10MemoryPoolE"]
+    pub fn seal_util_try_invert_uint_mod(
+        operand: *const u64,
+        modulus: *const u64,
+        uint64_count: usize,
+        result: *mut u64,
+        pool: *mut seal_util_MemoryPool,
+    ) -> bool;
+}
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct seal_util_HashFunction {
@@ -2012,6 +2618,34 @@ impl seal_util_SmallNTTTables {
         );
         __bindgen_tmp
     }
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util26ntt_negacyclic_harvey_lazyEPmRKNS0_14SmallNTTTablesE"]
+    pub fn seal_util_ntt_negacyclic_harvey_lazy(
+        operand: *mut u64,
+        tables: *const seal_util_SmallNTTTables,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util21ntt_negacyclic_harveyEPmRKNS0_14SmallNTTTablesE"]
+    pub fn seal_util_ntt_negacyclic_harvey(
+        operand: *mut u64,
+        tables: *const seal_util_SmallNTTTables,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util34inverse_ntt_negacyclic_harvey_lazyEPmRKNS0_14SmallNTTTablesE"]
+    pub fn seal_util_inverse_ntt_negacyclic_harvey_lazy(
+        operand: *mut u64,
+        tables: *const seal_util_SmallNTTTables,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util29inverse_ntt_negacyclic_harveyEPmRKNS0_14SmallNTTTablesE"]
+    pub fn seal_util_inverse_ntt_negacyclic_harvey(
+        operand: *mut u64,
+        tables: *const seal_util_SmallNTTTables,
+    );
 }
 #[repr(C)]
 #[derive(Debug)]
@@ -2880,6 +3514,298 @@ impl seal_util_BaseConverter {
         );
         __bindgen_tmp
     }
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18poly_to_hex_stringB5cxx11EPKmmm"]
+    pub fn seal_util_poly_to_hex_string(
+        value: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+    ) -> std_string;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18poly_to_dec_stringB5cxx11EPKmmmRNS0_10MemoryPoolE"]
+    pub fn seal_util_poly_to_dec_string(
+        value: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> std_string;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13allocate_polyEmmRNS0_10MemoryPoolE"]
+    pub fn seal_util_allocate_poly(
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_Pointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_zero_polyEmmPm"]
+    pub fn seal_util_set_zero_poly(coeff_count: usize, coeff_uint64_count: usize, result: *mut u64);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18allocate_zero_polyEmmRNS0_10MemoryPoolE"]
+    pub fn seal_util_allocate_zero_poly(
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_Pointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util14get_poly_coeffEPmmm"]
+    pub fn seal_util_get_poly_coeff(
+        poly: *mut u64,
+        coeff_index: usize,
+        coeff_uint64_count: usize,
+    ) -> *mut u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util14get_poly_coeffEPKmmm"]
+    pub fn seal_util_get_poly_coeff1(
+        poly: *const u64,
+        coeff_index: usize,
+        coeff_uint64_count: usize,
+    ) -> *const u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_poly_polyEPKmmmPm"]
+    pub fn seal_util_set_poly_poly(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util12is_zero_polyEPKmmm"]
+    pub fn seal_util_is_zero_poly(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18is_equal_poly_polyEPKmS2_mm"]
+    pub fn seal_util_is_equal_poly_poly(
+        operand1: *const u64,
+        operand2: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13set_poly_polyEPKmmmmmPm"]
+    pub fn seal_util_set_poly_poly1(
+        poly: *const u64,
+        poly_coeff_count: usize,
+        poly_coeff_uint64_count: usize,
+        result_coeff_count: usize,
+        result_coeff_uint64_count: usize,
+        result: *mut u64,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util20is_one_zero_one_polyEPKmmm"]
+    pub fn seal_util_is_one_zero_one_poly(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util32get_significant_coeff_count_polyEPKmmm"]
+    pub fn seal_util_get_significant_coeff_count_poly(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+    ) -> usize;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util24duplicate_poly_if_neededEPKmmmmmbRNS0_10MemoryPoolE"]
+    pub fn seal_util_duplicate_poly_if_needed(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        new_coeff_count: usize,
+        new_coeff_uint64_count: usize,
+        force: bool,
+        pool: *mut seal_util_MemoryPool,
+    ) -> seal_util_ConstPointer<::std::os::raw::c_ulong>;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util31are_poly_coefficients_less_thanEPKmmmS2_m"]
+    pub fn seal_util_are_poly_coefficients_less_than(
+        poly: *const u64,
+        coeff_count: usize,
+        coeff_uint64_count: usize,
+        compare: *const u64,
+        compare_uint64_count: usize,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util31are_poly_coefficients_less_thanEPKmmm"]
+    pub fn seal_util_are_poly_coefficients_less_than1(
+        poly: *const u64,
+        coeff_count: usize,
+        compare: u64,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util3gcdEmm"]
+    pub fn seal_util_gcd(x: u64, y: u64) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util4xgcdEmm"]
+    pub fn seal_util_xgcd(x: u64, y: u64) -> [u64; 3usize];
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15try_mod_inverseEmmRm"]
+    pub fn seal_util_try_mod_inverse(value: u64, modulus: u64, result: *mut u64) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util21multiplicative_ordersESt6vectorImSaImEEm"]
+    pub fn seal_util_multiplicative_orders(conjugate_classes: u8, modulus: u64) -> u8;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17conjugate_classesEmm"]
+    pub fn seal_util_conjugate_classes(modulus: u64, subgroup_generator: u64) -> u8;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18babystep_giantstepEmRSt6vectorImSaImEES4_"]
+    pub fn seal_util_babystep_giantstep(modulus: u64, baby_steps: *mut u8, giant_steps: *mut u8);
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util28decompose_babystep_giantstepEmmRKSt6vectorImSaImEES5_"]
+    pub fn seal_util_decompose_babystep_giantstep(
+        modulus: u64,
+        input: u64,
+        baby_steps: *const u8,
+        giant_steps: *const u8,
+    ) -> [u64; 2usize];
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18increment_uint_modEmRKNS_12SmallModulusE"]
+    pub fn seal_util_increment_uint_mod1(
+        operand: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18decrement_uint_modEmRKNS_12SmallModulusE"]
+    pub fn seal_util_decrement_uint_mod1(
+        operand: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util15negate_uint_modEmRKNS_12SmallModulusE"]
+    pub fn seal_util_negate_uint_mod1(
+        operand: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util13div2_uint_modEmRKNS_12SmallModulusE"]
+    pub fn seal_util_div2_uint_mod1(
+        operand: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17add_uint_uint_modEmmRKNS_12SmallModulusE"]
+    pub fn seal_util_add_uint_uint_mod1(
+        operand1: u64,
+        operand2: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17sub_uint_uint_modEmmRKNS_12SmallModulusE"]
+    pub fn seal_util_sub_uint_uint_mod1(
+        operand1: u64,
+        operand2: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util22multiply_uint_uint_modEmmRKNS_12SmallModulusE"]
+    pub fn seal_util_multiply_uint_uint_mod(
+        operand1: u64,
+        operand2: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19modulo_uint_inplaceEPmmRKNS_12SmallModulusE"]
+    pub fn seal_util_modulo_uint_inplace(
+        value: *mut u64,
+        value_uint64_count: usize,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util11modulo_uintEPKmmRKNS_12SmallModulusERNS0_10MemoryPoolE"]
+    pub fn seal_util_modulo_uint(
+        value: *const u64,
+        value_uint64_count: usize,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+        pool: *mut seal_util_MemoryPool,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19try_invert_uint_modEmRKNS_12SmallModulusERm"]
+    pub fn seal_util_try_invert_uint_mod1(
+        operand: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+        result: *mut u64,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util17is_primitive_rootEmmRKNS_12SmallModulusE"]
+    pub fn seal_util_is_primitive_root(
+        root: u64,
+        degree: u64,
+        prime_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util18try_primitive_rootEmRKNS_12SmallModulusERm"]
+    pub fn seal_util_try_primitive_root(
+        degree: u64,
+        prime_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+        destination: *mut u64,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util26try_minimal_primitive_rootEmRKNS_12SmallModulusERm"]
+    pub fn seal_util_try_minimal_primitive_root(
+        degree: u64,
+        prime_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+        destination: *mut u64,
+    ) -> bool;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util21exponentiate_uint_modEmmRKNS_12SmallModulusE"]
+    pub fn seal_util_exponentiate_uint_mod(
+        operand: u64,
+        exponent: u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+    ) -> u64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util28divide_uint_uint_mod_inplaceEPmRKNS_12SmallModulusEmS1_RNS0_10MemoryPoolE"]
+    pub fn seal_util_divide_uint_uint_mod_inplace(
+        numerator: *mut u64,
+        modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
+        uint64_count: usize,
+        quotient: *mut u64,
+        pool: *mut seal_util_MemoryPool,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal4util19steps_to_galois_eltEim"]
+    pub fn seal_util_steps_to_galois_elt(steps: ::std::os::raw::c_int, coeff_count: usize) -> u64;
 }
 #[test]
 fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0_instantiation_1() {
@@ -4954,6 +5880,10 @@ impl Default for seal_StandardRandomAdapterFactory {
 pub const seal_scheme_type_BFV: seal_scheme_type = 1;
 pub const seal_scheme_type_CKKS: seal_scheme_type = 2;
 pub type seal_scheme_type = u8;
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal15is_valid_schemeENS_11scheme_typeE"]
+    pub fn seal_is_valid_scheme(scheme: seal_scheme_type) -> bool;
+}
 ///The data type to store unique identifiers of encryption parameters.
 pub type seal_parms_id_type = seal_util_HashFunction_sha3_block_type;
 ///Represents user-customizable encryption scheme settings. The parameters (most
@@ -7500,6 +8430,14 @@ impl seal_Plaintext {
         __bindgen_tmp
     }
 }
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal12from_complexIdvEET_St7complexIdE"]
+    pub fn seal_from_complex(in_: [u64; 2usize]) -> f64;
+}
+extern "C" {
+    #[link_name = "\u{1}_ZN4seal12from_complexISt7complexIdEvEET_S2_"]
+    pub fn seal_from_complex1(in_: [u64; 2usize]) -> [u64; 2usize];
+}
 ///Provides functionality for encoding vectors of complex or real numbers into plaintext
 ///polynomials to be encrypted and computed on using the CKKS scheme. If the polynomial
 ///modulus degree is N, then CKKSEncoder converts vectors of N/2 complex numbers into
@@ -8207,6 +9145,92 @@ impl seal_Decryptor {
         seal_Decryptor_Decryptor(&mut __bindgen_tmp, context, secret_key);
         __bindgen_tmp
     }
+}
+extern "C" {
+    ///Returns the default coefficients modulus for a given polynomial modulus degree.
+    ///The polynomial modulus and the coefficient modulus obtained in this way should
+    ///provide approdimately 128 bits of security against the best known attacks,
+    ///assuming the standard deviation of the noise distribution is left to its default
+    ///value.
+    ///
+    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
+    ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
+    #[link_name = "\u{1}_ZN4seal17coeff_modulus_128Em"]
+    pub fn seal_coeff_modulus_128(poly_modulus_degree: usize) -> [u64; 3usize];
+}
+extern "C" {
+    ///Returns the default coefficients modulus for a given polynomial modulus degree.
+    ///The polynomial modulus and the coefficient modulus obtained in this way should
+    ///provide approdimately 192 bits of security against the best known attacks,
+    ///assuming the standard deviation of the noise distribution is left to its default
+    ///value.
+    ///
+    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
+    ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
+    #[link_name = "\u{1}_ZN4seal17coeff_modulus_192Em"]
+    pub fn seal_coeff_modulus_192(poly_modulus_degree: usize) -> [u64; 3usize];
+}
+extern "C" {
+    ///Returns the default coefficients modulus for a given polynomial modulus degree.
+    ///The polynomial modulus and the coefficient modulus obtained in this way should
+    ///provide approdimately 256 bits of security against the best known attacks,
+    ///assuming the standard deviation of the noise distribution is left to its default
+    ///value.
+    ///
+    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
+    ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
+    #[link_name = "\u{1}_ZN4seal17coeff_modulus_256Em"]
+    pub fn seal_coeff_modulus_256(poly_modulus_degree: usize) -> [u64; 3usize];
+}
+extern "C" {
+    ///Returns a 60-bit coefficient modulus prime.
+    ///
+    ///@param[in] index The list index of the prime
+    ///@throws std::out_of_range if index is not within [0, 64)
+    #[link_name = "\u{1}_ZN4seal16small_mods_60bitEm"]
+    pub fn seal_small_mods_60bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus;
+}
+extern "C" {
+    ///Returns a 50-bit coefficient modulus prime.
+    ///
+    ///@param[in] index The list index of the prime
+    ///@throws std::out_of_range if index is not within [0, 64)
+    #[link_name = "\u{1}_ZN4seal16small_mods_50bitEm"]
+    pub fn seal_small_mods_50bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus;
+}
+extern "C" {
+    ///Returns a 40-bit coefficient modulus prime.
+    ///
+    ///@param[in] index The list index of the prime
+    ///@throws std::out_of_range if index is not within [0, 64)
+    #[link_name = "\u{1}_ZN4seal16small_mods_40bitEm"]
+    pub fn seal_small_mods_40bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus;
+}
+extern "C" {
+    ///Returns a 30-bit coefficient modulus prime.
+    ///
+    ///@param[in] index The list index of the prime
+    ///@throws std::out_of_range if index is not within [0, 64)
+    #[link_name = "\u{1}_ZN4seal16small_mods_30bitEm"]
+    pub fn seal_small_mods_30bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus;
+}
+extern "C" {
+    ///Returns the largest allowed decomposition bit count (60).
+    #[link_name = "\u{1}_ZN4seal7dbc_maxEv"]
+    pub fn seal_dbc_max() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    ///Returns the smallest allowed decomposition bit count (1).
+    #[link_name = "\u{1}_ZN4seal7dbc_minEv"]
+    pub fn seal_dbc_min() -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 pub struct seal_AbstractIntegerEncoder__bindgen_vtable(::std::os::raw::c_void);
