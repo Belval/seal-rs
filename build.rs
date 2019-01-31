@@ -12,6 +12,8 @@ use std::process::Command;
 use git2::Repository;
 
 fn main() {
+    println!("cargo:rerun-if-changed=build.rs");
+
     // Cloning the repo
     let url = "https://github.com/Microsoft/SEAL.git";
     
