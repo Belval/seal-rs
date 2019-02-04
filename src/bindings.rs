@@ -14524,6 +14524,13 @@ impl seal_BatchEncoder {
     }
 }
 pub type __m128i = [::std::os::raw::c_longlong; 2usize];
+extern "C" {
+    #[link_name = "\u{1}SEALContext_Create"]
+    pub fn bindings_SEALContext_Create(
+        parms: *const seal_EncryptionParameters,
+        expand_mod_chain: bool,
+    ) -> *mut seal_SEALContext;
+}
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _bindgen_ty_57 {

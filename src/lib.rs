@@ -19,9 +19,9 @@ fn example1() {
         ep.set_plain_modulus(&mut sm);
         
         // Construct the context
-        let mut ctx = seal_SEALContext_Create(&ep, false);
+        let ctx: &seal_SEALContext = &*bindings_SEALContext_Create(&mut ep, false);
 //
-//        // Construct the IntegerEncoder
+        // Construct the IntegerEncoder
 //        let mut ie: seal_IntegerEncoder = Default::default();
 //        seal_IntegerEncoder_IntegerEncoder(&mut ie, ep.plain_modulus(), 2);
 //
