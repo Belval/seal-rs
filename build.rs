@@ -51,7 +51,8 @@ fn main() {
     add_cpp_files(&mut build, base_path);
     add_cpp_files(&mut build, util_base_path);
     build.include("./seal/src");
-    build.file("src/bindings.h");
+    build.include("src/");
+    build.file("src/bindings.cpp");
     build.compile("seal");
 
     // Generate the bindings
