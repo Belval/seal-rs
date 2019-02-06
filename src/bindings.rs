@@ -14531,6 +14531,10 @@ extern "C" {
         expand_mod_chain: bool,
     ) -> *mut seal_SEALContext;
 }
+extern "C" {
+    #[link_name = "\u{1}KeyGenerator_Create"]
+    pub fn bindings_KeyGenerator_Create(ctx: *mut seal_SEALContext) -> *mut seal_KeyGenerator;
+}
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct _bindgen_ty_57 {

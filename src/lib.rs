@@ -19,18 +19,17 @@ fn example1() {
         ep.set_plain_modulus(&mut sm);
         
         // Construct the context
-        let ctx: &seal_SEALContext = &*bindings_SEALContext_Create(&mut ep, false);
-//
+        let mut ctx = bindings_SEALContext_Create(&mut ep, false);
+
         // Construct the IntegerEncoder
-//        let mut ie: seal_IntegerEncoder = Default::default();
-//        seal_IntegerEncoder_IntegerEncoder(&mut ie, ep.plain_modulus(), 2);
-//
-//        // Construct the KeyGenerator to generate the public and private keys
-//        let mut kg: seal_KeyGenerator = Default::default();
-//        seal_KeyGenerator_KeyGenerator(&mut kg, ctx);
-//
-//        let mut pk = kg.public_key();
-//
-//        let mut sk = kg.secret_key();
+        let mut ie: seal_IntegerEncoder = Default::default();
+        seal_IntegerEncoder_IntegerEncoder(&mut ie, ep.plain_modulus(), 2);
+
+        // Construct the KeyGenerator to generate the public and private keys
+        let mut kg = bindings_KeyGenerator_Create(ctx);
+
+        let mut pk = (&*kg).public_key();
+
+        let mut sk = (&*kg).secret_key();
     }
 }
