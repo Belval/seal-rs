@@ -14525,6 +14525,34 @@ impl seal_BatchEncoder {
 }
 pub type __m128i = [::std::os::raw::c_longlong; 2usize];
 extern "C" {
+    #[link_name = "\u{1}EncryptionParameters_Create"]
+    pub fn bindings_EncryptionParameters_Create(
+        scheme: ::std::os::raw::c_int,
+    ) -> *mut seal_EncryptionParameters;
+}
+extern "C" {
+    #[link_name = "\u{1}EncryptionParameters_set_poly_modulus_degree"]
+    pub fn bindings_EncryptionParameters_set_poly_modulus_degree(
+        ep: *mut seal_EncryptionParameters,
+        degree: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}EncryptionParameters_set_coeff_modulus"]
+    pub fn bindings_EncryptionParameters_set_coeff_modulus(
+        ep: *mut seal_EncryptionParameters,
+        coeff: ::std::os::raw::c_int,
+        degree: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}EncryptionParameters_set_plain_modulus"]
+    pub fn bindings_EncryptionParameters_set_plain_modulus(
+        ep: *mut seal_EncryptionParameters,
+        modulus: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     #[link_name = "\u{1}SEALContext_Create"]
     pub fn bindings_SEALContext_Create(
         parms: *const seal_EncryptionParameters,
@@ -14533,7 +14561,11 @@ extern "C" {
 }
 extern "C" {
     #[link_name = "\u{1}KeyGenerator_Create"]
-    pub fn bindings_KeyGenerator_Create(ctx: *mut seal_SEALContext) -> *mut seal_KeyGenerator;
+    pub fn bindings_KeyGenerator_Create(kg: *mut seal_KeyGenerator, ctx: *mut seal_SEALContext);
+}
+extern "C" {
+    #[link_name = "\u{1}SEALContext_parameters_set"]
+    pub fn bindings_SEALContext_parameters_set(ctx: *mut seal_SEALContext) -> bool;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]

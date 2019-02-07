@@ -15,12 +15,12 @@ fn main() {
 
     // Cloning the repo.
     let url = "https://github.com/Microsoft/SEAL.git";
-    
+
     let _repo = match Repository::clone(url, "./seal") {
         Ok(repo) => repo,
         Err(e) => panic!("Failed to clone SEAL: {}", e),
     };
-    
+
     // Configuring before building
     // Setting working directory
     let _res = match env::set_current_dir(Path::new("./seal")) {
