@@ -17,10 +17,10 @@ namespace bindings
         ep->set_coeff_modulus(coeff_modulus_128(degree));
     }
     void EncryptionParameters_set_plain_modulus(EncryptionParameters* ep, int modulus) {
-        ep->set_plain_modulus(1 << 8);
+        ep->set_plain_modulus(modulus);
     }
-    SmallModulus* EncryptionParameters_plain_modulus(EncryptionParameters* ep) {
-        return ep->plain_modulus();
+    const SmallModulus* EncryptionParameters_plain_modulus(EncryptionParameters* ep) {
+        return &ep->plain_modulus();
     }
 
 
@@ -29,30 +29,26 @@ namespace bindings
         return SEALContext::Create(*parms, expand_mod_chain).get();
     }
 
-    void KeyGenerator_Create(KeyGenerator* kg, SEALContext* ctx) {
-        kg = new KeyGenerator(std::shared_ptr<SEALContext>(ctx));
-    }
-
     bool SEALContext_parameters_set(SEALContext* ctx) {
         return ctx->context_data()->qualifiers().parameters_set;
     }
 
     // IntegerEncoder functions
-    IntegerEncoder* IntegerEncoder_Create(const SmallModulus* sm) {
-        return new IntegerEncoder(&sm);
+    IntegerEncoder* IntegerEncoder_Create(uint64_t sm) {
+        return new IntegerEncoder(sm);
     }
 
     // KeyGenerator functions
-    KeyGenerator* KeyGenerator_Create(SEALContext* ctx) {
-        return new KeyGenerator(&ctx);
+    void KeyGenerator_Create(KeyGenerator* kg, SEALContext* ctx) {
+        kg = new KeyGenerator(std::shared_ptr<SEALContext>(ctx));
     }
 
-    PublicKey* KeyGenerator_public_key(KeyGenerator* kg) {
-        return kg->public_key();
+    const PublicKey* KeyGenerator_public_key(KeyGenerator* kg) {
+        return &kg->public_key();
     }
 
-    SecretKey* KeyGenerator_private_key(KeyGenerator* kg) {
-        return kg->secret_key();
+    const SecretKey* KeyGenerator_private_key(KeyGenerator* kg) {
+        return &kg->secret_key();
     }
 }
 
