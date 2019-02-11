@@ -25,13 +25,14 @@ namespace bindings
 
 
     // SEALContext functions
-    SEALContext* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain) {
-        return SEALContext::Create(*parms, expand_mod_chain).get();
+    void* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain) {
+        void* ctx = SEALContext::Create(*parms, expand_mod_chain).get();
+        return ctx;
     }
 
-    bool SEALContext_parameters_set(SEALContext* ctx) {
-        return ctx->context_data()->qualifiers().parameters_set;
-    }
+    //bool SEALContext_parameters_set(SEALContext* ctx) {
+    //    return ctx->context_data()->qualifiers().parameters_set;
+    //}
 
     // IntegerEncoder functions
     IntegerEncoder* IntegerEncoder_Create(uint64_t sm) {
@@ -39,16 +40,18 @@ namespace bindings
     }
 
     // KeyGenerator functions
-    void KeyGenerator_Create(KeyGenerator* kg, SEALContext* ctx) {
-        kg = new KeyGenerator(std::shared_ptr<SEALContext>(ctx));
+    void* KeyGenerator_Create(void* ctx) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        bool blah = sp_ctx->parameters_set();
+        return new KeyGenerator(sp_ctx);
     }
 
-    const PublicKey* KeyGenerator_public_key(KeyGenerator* kg) {
-        return &kg->public_key();
+    const PublicKey* KeyGenerator_public_key(void* kg) {
+        return &static_cast<KeyGenerator*>(kg)->public_key();
     }
 
-    const SecretKey* KeyGenerator_private_key(KeyGenerator* kg) {
-        return &kg->secret_key();
+    const SecretKey* KeyGenerator_secret_key(void* kg) {
+        return &static_cast<KeyGenerator*>(kg)->secret_key();
     }
 }
 

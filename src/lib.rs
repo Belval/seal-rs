@@ -19,15 +19,13 @@ fn example1() {
         let mut ctx = bindings_SEALContext_Create(ep, false);
 
         // Construct the IntegerEncoder
-        //let mut ie: seal_IntegerEncoder = Default::default();
-        //seal_IntegerEncoder_IntegerEncoder(&mut ie, ep.plain_modulus(), 2);
+        //let mut ie = bindings_IntegerEncoder_Create(2);
 
         // Construct the KeyGenerator to generate the public and private keys
-        //let mut kg: seal_KeyGenerator = Default::default();
-        //let mut kg = bindings_KeyGenerator_Create(&mut kg, &mut ctx);
+        let mut kg = bindings_KeyGenerator_Create(ctx);
 
-        //let mut pk = (&*kg).public_key();
+        //let mut pk = bindings_KeyGenerator_public_key(kg);
 
-        //let mut sk = (&*kg).secret_key();
+        //let mut sk = bindings_KeyGenerator_secret_key(kg);
     }
 }

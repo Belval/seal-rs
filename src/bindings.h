@@ -12,15 +12,14 @@ namespace bindings
   extern "C" const SmallModulus* EncryptionParameters_plain_modulus(EncryptionParameters* ep);
 
   // SEALContext functions
-  extern "C" SEALContext* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain);
-  extern "C" void KeyGenerator_Create(KeyGenerator* kg, SEALContext* ctx);
-  extern "C" bool SEALContext_parameters_set(SEALContext* ctx);
+  extern "C" void* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain);
+  //extern "C" bool SEALContext_parameters_set(void* ctx);
 
   // IntegerEncoder functions
   extern "C" IntegerEncoder* IntegerEncoder_Create(uint64_t sm);
 
   // KeyGenerator function
-  extern "C" KeyGenerator* KeyGenerator_Create(SEALContext* ctx);
-  extern "C" const PublicKey* KeyGenerator_public_key(KeyGenerator* kg);
-  extern "C" const SecretKey* KeyGenerator_secret_key(KeyGenerator* kg);
+  extern "C" void* KeyGenerator_Create(void* ctx);
+  extern "C" const PublicKey* KeyGenerator_public_key(void* kg);
+  extern "C" const SecretKey* KeyGenerator_secret_key(void* kg);
 }
