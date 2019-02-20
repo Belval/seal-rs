@@ -25,33 +25,55 @@ namespace bindings
 
 
     // SEALContext functions
-    void* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain) {
-        void* ctx = SEALContext::Create(*parms, expand_mod_chain).get();
-        return ctx;
+    SEALContext* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain) {
+        return SEALContext::Create(*parms, expand_mod_chain);
     }
 
-    //bool SEALContext_parameters_set(SEALContext* ctx) {
-    //    return ctx->context_data()->qualifiers().parameters_set;
-    //}
+    bool SEALContext_parameters_set(SEALContext* ctx) {
+        return ctx->context_data()->qualifiers().parameters_set;
+    }
 
     // IntegerEncoder functions
     IntegerEncoder* IntegerEncoder_Create(uint64_t sm) {
         return new IntegerEncoder(sm);
     }
 
+    Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, uint64_t value) {
+        Plaintext* pt;
+        ie->encode(value, *pt);
+        return pt;
+    }
+
     // KeyGenerator functions
-    void* KeyGenerator_Create(void* ctx) {
+    KeyGenerator* KeyGenerator_Create(SEALContext* ctx) {
         std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
-        bool blah = sp_ctx->parameters_set();
         return new KeyGenerator(sp_ctx);
     }
 
-    const PublicKey* KeyGenerator_public_key(void* kg) {
-        return &static_cast<KeyGenerator*>(kg)->public_key();
+    const PublicKey* KeyGenerator_public_key(KeyGenerator* kg) {
+        return &kg->public_key();
     }
 
-    const SecretKey* KeyGenerator_secret_key(void* kg) {
-        return &static_cast<KeyGenerator*>(kg)->secret_key();
+    const SecretKey* KeyGenerator_secret_key(KeyGenerator* kg) {
+        return &kg->secret_key();
+    }
+
+    // Evaluator functions
+    Evaluator* Evaluator_Create(SEALContext* ctx) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        return new Evaluator(sp_ctx);
+    }
+
+    // Encryptor functions
+    Encryptor* Encryptor_Create(SEALContext* ctx, const PublicKey* pk) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        return new Encryptor(sp_ctx, *pk);
+    }
+
+    // Decryptor functions
+    Decryptor* Decryptor_Create(SEALContext* ctx, const SecretKey* sk) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        return new Decryptor(sp_ctx, *sk);
     }
 }
 

@@ -14,12 +14,12 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
 
     // Cloning the repo.
-    let url = "https://github.com/Microsoft/SEAL.git";
-
-    let _repo = match Repository::clone(url, "./seal") {
-        Ok(repo) => repo,
-        Err(e) => panic!("Failed to clone SEAL: {}", e),
-    };
+    //let url = "https://github.com/Microsoft/SEAL.git";
+//
+    //let _repo = match Repository::clone(url, "./seal") {
+    //    Ok(repo) => repo,
+    //    Err(e) => panic!("Failed to clone SEAL: {}", e),
+    //};
 
     // Configuring before building
     // Setting working directory
@@ -82,10 +82,10 @@ fn main() {
     file.sync_data();
 
     // Cleanup
-    let _res = match fs::remove_dir_all("./seal") {
-        Ok(r) => r,
-        Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
-    };
+    //let _res = match fs::remove_dir_all("./seal") {
+    //    Ok(r) => r,
+    //    Err(e) => panic!("Unable to remove SEAL dir after build: {}", e)
+    //};
 }
 
 fn add_cpp_files(build: &mut cc::Build, path: &Path) {

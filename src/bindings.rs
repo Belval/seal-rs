@@ -7047,7 +7047,7 @@ extern "C" {
     pub fn seal_SEALContext_Create(
         parms: *const seal_EncryptionParameters,
         expand_mod_chain: bool,
-    ) -> [u64; 2usize];
+    ) -> *mut seal_SEALContext;
 }
 extern "C" {
     ///Returns a const reference to ContextData class corresponding to the
@@ -7094,7 +7094,7 @@ impl seal_SEALContext {
     pub unsafe fn Create(
         parms: *const seal_EncryptionParameters,
         expand_mod_chain: bool,
-    ) -> [u64; 2usize] {
+    ) -> *mut seal_SEALContext {
         seal_SEALContext_Create(parms, expand_mod_chain)
     }
     #[inline]
@@ -14563,29 +14563,52 @@ extern "C" {
     pub fn bindings_SEALContext_Create(
         parms: *const seal_EncryptionParameters,
         expand_mod_chain: bool,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> *mut seal_SEALContext;
+}
+extern "C" {
+    #[link_name = "\u{1}SEALContext_parameters_set"]
+    pub fn bindings_SEALContext_parameters_set(ctx: *mut ::std::os::raw::c_void) -> bool;
 }
 extern "C" {
     #[link_name = "\u{1}IntegerEncoder_Create"]
     pub fn bindings_IntegerEncoder_Create(sm: u64) -> *mut seal_IntegerEncoder;
 }
 extern "C" {
+    #[link_name = "\u{1}IntegerEncoder_encode"]
+    pub fn bindings_IntegerEncoder_encode(
+        ie: *mut seal_IntegerEncoder,
+        value: ::std::os::raw::c_int,
+    ) -> *mut seal_Plaintext;
+}
+extern "C" {
     #[link_name = "\u{1}KeyGenerator_Create"]
-    pub fn bindings_KeyGenerator_Create(
-        ctx: *mut ::std::os::raw::c_void,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn bindings_KeyGenerator_Create(ctx: *mut seal_SEALContext) -> *mut seal_KeyGenerator;
 }
 extern "C" {
     #[link_name = "\u{1}KeyGenerator_public_key"]
-    pub fn bindings_KeyGenerator_public_key(
-        kg: *mut ::std::os::raw::c_void,
-    ) -> *const seal_PublicKey;
+    pub fn bindings_KeyGenerator_public_key(kg: *mut seal_KeyGenerator) -> *const seal_PublicKey;
 }
 extern "C" {
     #[link_name = "\u{1}KeyGenerator_secret_key"]
-    pub fn bindings_KeyGenerator_secret_key(
-        kg: *mut ::std::os::raw::c_void,
-    ) -> *const seal_SecretKey;
+    pub fn bindings_KeyGenerator_secret_key(kg: *mut seal_KeyGenerator) -> *const seal_SecretKey;
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_Create"]
+    pub fn bindings_Evaluator_Create(ctx: *mut seal_SEALContext) -> *mut seal_Evaluator;
+}
+extern "C" {
+    #[link_name = "\u{1}Encryptor_Create"]
+    pub fn bindings_Encryptor_Create(
+        ctx: *mut seal_SEALContext,
+        pk: *const seal_PublicKey,
+    ) -> *mut seal_Encryptor;
+}
+extern "C" {
+    #[link_name = "\u{1}Decryptor_Create"]
+    pub fn bindings_Decryptor_Create(
+        ctx: *mut seal_SEALContext,
+        sk: *const seal_SecretKey,
+    ) -> *mut seal_Decryptor;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]

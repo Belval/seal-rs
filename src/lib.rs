@@ -19,13 +19,22 @@ fn example1() {
         let mut ctx = bindings_SEALContext_Create(ep, false);
 
         // Construct the IntegerEncoder
-        //let mut ie = bindings_IntegerEncoder_Create(2);
+        let mut ie = bindings_IntegerEncoder_Create(2);
 
         // Construct the KeyGenerator to generate the public and private keys
         let mut kg = bindings_KeyGenerator_Create(ctx);
 
-        //let mut pk = bindings_KeyGenerator_public_key(kg);
+        let mut pk = bindings_KeyGenerator_public_key(kg);
 
-        //let mut sk = bindings_KeyGenerator_secret_key(kg);
+        let mut sk = bindings_KeyGenerator_secret_key(kg);
+
+        let mut enc = bindings_Encryptor_Create(ctx, pk);
+
+        let mut ev = bindings_Evaluator_Create(ctx);
+
+        let mut dec = bindings_Decryptor_Create(ctx, sk);
+
+        let p1 = bindings_IntegerEncoder_encode(ie, 1);
+        let p2 = bindings_IntegerEncoder_encode(ie, 2);
     }
 }
