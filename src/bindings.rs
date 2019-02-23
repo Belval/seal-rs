@@ -14604,11 +14604,25 @@ extern "C" {
     ) -> *mut seal_Encryptor;
 }
 extern "C" {
+    #[link_name = "\u{1}Encryptor_encrypt"]
+    pub fn bindings_Encryptor_encrypt(
+        enc: *mut seal_Encryptor,
+        pt: *mut seal_Plaintext,
+    ) -> *mut seal_Ciphertext;
+}
+extern "C" {
     #[link_name = "\u{1}Decryptor_Create"]
     pub fn bindings_Decryptor_Create(
         ctx: *mut seal_SEALContext,
         sk: *const seal_SecretKey,
     ) -> *mut seal_Decryptor;
+}
+extern "C" {
+    #[link_name = "\u{1}Decryptor_invariant_noise_budget"]
+    pub fn bindings_Decryptor_invariant_noise_budget(
+        dec: *mut seal_Decryptor,
+        ct: *mut seal_Ciphertext,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]

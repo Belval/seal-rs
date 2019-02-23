@@ -29,7 +29,9 @@ namespace bindings
 
   // Encryptor function
   extern "C" Encryptor* Encryptor_Create(SEALContext* ctx, const PublicKey* pk);
+  extern "C" Ciphertext* Encryptor_encrypt(Encryptor* enc, Plaintext* pt);
 
   // Decryptor function
   extern "C" Decryptor* Decryptor_Create(SEALContext* ctx, const SecretKey* sk);
+  extern "C" int Decryptor_invariant_noise_budget(Decryptor* dec, Ciphertext* ct);
 }

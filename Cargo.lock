@@ -334,6 +334,7 @@ dependencies = [
  "bindgen 0.42.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "cc 1.0.28 (registry+https://github.com/rust-lang/crates.io-index)",
  "git2 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.2.46 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

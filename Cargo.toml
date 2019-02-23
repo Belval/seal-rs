@@ -10,3 +10,4 @@ bindgen = "0.42.2"
 cc = "1.0"
 
 [dependencies]
+libc = "*"

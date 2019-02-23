@@ -38,7 +38,7 @@ namespace bindings
         return new IntegerEncoder(sm);
     }
 
-    Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, uint64_t value) {
+    Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, int value) {
         Plaintext* pt;
         ie->encode(value, *pt);
         return pt;
@@ -70,10 +70,20 @@ namespace bindings
         return new Encryptor(sp_ctx, *pk);
     }
 
+    Ciphertext* Encryptor_encrypt(Encryptor* enc, Plaintext* pt) {
+        Ciphertext* ct;
+        enc->encrypt(*pt, *ct);
+        return ct;
+    }
+
     // Decryptor functions
     Decryptor* Decryptor_Create(SEALContext* ctx, const SecretKey* sk) {
         std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
         return new Decryptor(sp_ctx, *sk);
+    }
+
+    int Decryptor_invariant_noise_budget(Decryptor* dec, Ciphertext* ct) {
+        return dec->invariant_noise_budget(*ct);
     }
 }
 

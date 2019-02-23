@@ -4,11 +4,14 @@
 
 include!("./bindings.rs");
 
+extern crate libc;
 
 #[test]
 fn example1() {
     // This means to emulate https://github.com/Microsoft/SEAL/blob/master/examples/examples.cpp
     unsafe {
+        let mut x: libc::c_int = 1;
+        let mut y: libc::c_int = 2;
         // Building the EncryptionParameters object
         let mut ep = bindings_EncryptionParameters_Create(1);
         bindings_EncryptionParameters_set_poly_modulus_degree(ep, 2048);
@@ -34,7 +37,14 @@ fn example1() {
 
         let mut dec = bindings_Decryptor_Create(ctx, sk);
 
-        let p1 = bindings_IntegerEncoder_encode(ie, 1);
-        let p2 = bindings_IntegerEncoder_encode(ie, 2);
+        let mut p1 = bindings_IntegerEncoder_encode(ie, x);
+        let mut p2 = bindings_IntegerEncoder_encode(ie, y);
+
+        let mut ct1 = bindings_Encryptor_encrypt(enc, p1);
+        let mut ct2 = bindings_Encryptor_encrypt(enc, p2);
+
+        let nb1 = bindings_Decryptor_invariant_noise_budget(dec, ct1);
+        let nb2 = bindings_Decryptor_invariant_noise_budget(dec, ct2);
+
     }
 }
