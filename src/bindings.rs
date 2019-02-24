@@ -14581,6 +14581,13 @@ extern "C" {
     ) -> *mut seal_Plaintext;
 }
 extern "C" {
+    #[link_name = "\u{1}IntegerEncoder_decode_int32"]
+    pub fn bindings_IntegerEncoder_decode_int32(
+        ie: *mut seal_IntegerEncoder,
+        pt: *const seal_Plaintext,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     #[link_name = "\u{1}KeyGenerator_Create"]
     pub fn bindings_KeyGenerator_Create(ctx: *mut seal_SEALContext) -> *mut seal_KeyGenerator;
 }
@@ -14595,6 +14602,26 @@ extern "C" {
 extern "C" {
     #[link_name = "\u{1}Evaluator_Create"]
     pub fn bindings_Evaluator_Create(ctx: *mut seal_SEALContext) -> *mut seal_Evaluator;
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_negate_inplace"]
+    pub fn bindings_Evaluator_negate_inplace(evr: *mut seal_Evaluator, c1: *mut seal_Ciphertext);
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_add_inplace"]
+    pub fn bindings_Evaluator_add_inplace(
+        evr: *mut seal_Evaluator,
+        c1: *mut seal_Ciphertext,
+        c2: *mut seal_Ciphertext,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_multiply_inplace"]
+    pub fn bindings_Evaluator_multiply_inplace(
+        evr: *mut seal_Evaluator,
+        c1: *mut seal_Ciphertext,
+        c2: *mut seal_Ciphertext,
+    );
 }
 extern "C" {
     #[link_name = "\u{1}Encryptor_Create"]
@@ -14618,11 +14645,22 @@ extern "C" {
     ) -> *mut seal_Decryptor;
 }
 extern "C" {
+    #[link_name = "\u{1}Decryptor_decrypt"]
+    pub fn bindings_Decryptor_decrypt(
+        dec: *mut seal_Decryptor,
+        c1: *mut seal_Ciphertext,
+    ) -> *mut seal_Plaintext;
+}
+extern "C" {
     #[link_name = "\u{1}Decryptor_invariant_noise_budget"]
     pub fn bindings_Decryptor_invariant_noise_budget(
         dec: *mut seal_Decryptor,
         ct: *mut seal_Ciphertext,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    #[link_name = "\u{1}Plaintext_to_string"]
+    pub fn bindings_Plaintext_to_string(pt: *mut seal_Plaintext) -> *const ::std::os::raw::c_char;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]

@@ -6,6 +6,8 @@ include!("./bindings.rs");
 
 extern crate libc;
 
+use std::ffi::CStr;
+
 #[test]
 fn example1() {
     // This means to emulate https://github.com/Microsoft/SEAL/blob/master/examples/examples.cpp
@@ -45,6 +47,32 @@ fn example1() {
 
         let nb1 = bindings_Decryptor_invariant_noise_budget(dec, ct1);
         let nb2 = bindings_Decryptor_invariant_noise_budget(dec, ct2);
+
+        println!("{}", nb1);
+
+        bindings_Evaluator_negate_inplace(ev, ct1);
+
+        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+
+        bindings_Evaluator_add_inplace(ev, ct1, ct2);
+
+        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+
+        bindings_Evaluator_multiply_inplace(ev, ct1, ct2);
+
+        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+
+        let mut p3 = bindings_Decryptor_decrypt(dec, ct1);
+
+        println!("{}", CStr::from_ptr(bindings_Plaintext_to_string(p3)).to_str().unwrap());
+
+        println!("{}", bindings_IntegerEncoder_decode_int32(ie, p3));
+    }
+}
+
+#[test]
+fn example2() {
+    unsafe {
 
     }
 }

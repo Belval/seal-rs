@@ -1,8 +1,11 @@
 #include "bindings.h"
-
+#include <stdexcept>
+#include <algorithm>
+#include <cmath>
 #include <seal/seal.h>
 
 using namespace seal;
+using namespace seal::util;
 
 namespace bindings
 {
@@ -34,14 +37,19 @@ namespace bindings
     }
 
     // IntegerEncoder functions
-    IntegerEncoder* IntegerEncoder_Create(uint64_t sm) {
-        return new IntegerEncoder(sm);
+    IntegerEncoder* IntegerEncoder_Create(SEALContext* ctx) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        return new IntegerEncoder(sp_ctx);
     }
 
     Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, int value) {
-        Plaintext* pt;
+        Plaintext* pt = new Plaintext();
         ie->encode(value, *pt);
         return pt;
+    }
+
+    int IntegerEncoder_decode_int32(IntegerEncoder* ie, const Plaintext* pt) {
+        return ie->decode_int32(*pt);
     }
 
     // KeyGenerator functions
@@ -64,6 +72,18 @@ namespace bindings
         return new Evaluator(sp_ctx);
     }
 
+    void Evaluator_negate_inplace(Evaluator* evr, Ciphertext* c1) {
+        evr->negate_inplace(*c1);
+    }
+
+    void Evaluator_add_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2) {
+        evr->add_inplace(*c1, *c2);
+    }
+
+    void Evaluator_multiply_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2) {
+        evr->multiply_inplace(*c1, *c2);
+    }
+
     // Encryptor functions
     Encryptor* Encryptor_Create(SEALContext* ctx, const PublicKey* pk) {
         std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
@@ -71,7 +91,7 @@ namespace bindings
     }
 
     Ciphertext* Encryptor_encrypt(Encryptor* enc, Plaintext* pt) {
-        Ciphertext* ct;
+        Ciphertext* ct = new Ciphertext();
         enc->encrypt(*pt, *ct);
         return ct;
     }
@@ -82,8 +102,19 @@ namespace bindings
         return new Decryptor(sp_ctx, *sk);
     }
 
+    Plaintext* Decryptor_decrypt(Decryptor* dec, Ciphertext* c1) {
+        Plaintext* pt = new Plaintext();
+        dec->decrypt(*c1, *pt);
+        return pt;
+    }
+
     int Decryptor_invariant_noise_budget(Decryptor* dec, Ciphertext* ct) {
         return dec->invariant_noise_budget(*ct);
+    }
+
+    // Plaintext functions
+    const char* Plaintext_to_string(Plaintext* pt) {
+        return pt->to_string().c_str();
     }
 }
 

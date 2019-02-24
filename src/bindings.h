@@ -16,8 +16,9 @@ namespace bindings
   extern "C" bool SEALContext_parameters_set(void* ctx);
 
   // IntegerEncoder functions
-  extern "C" IntegerEncoder* IntegerEncoder_Create(uint64_t sm);
+  extern "C" IntegerEncoder* IntegerEncoder_Create(SEALContext* ctx);
   extern "C" Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, int value);
+  extern "C" int IntegerEncoder_decode_int32(IntegerEncoder* ie, const Plaintext* pt);
 
   // KeyGenerator function
   extern "C" KeyGenerator* KeyGenerator_Create(SEALContext* ctx);
@@ -26,6 +27,9 @@ namespace bindings
 
   // Evaluator function
   extern "C" Evaluator* Evaluator_Create(SEALContext* ctx);
+  extern "C" void Evaluator_negate_inplace(Evaluator* evr, Ciphertext* c1);
+  extern "C" void Evaluator_add_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2);
+  extern "C" void Evaluator_multiply_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2);
 
   // Encryptor function
   extern "C" Encryptor* Encryptor_Create(SEALContext* ctx, const PublicKey* pk);
@@ -33,5 +37,9 @@ namespace bindings
 
   // Decryptor function
   extern "C" Decryptor* Decryptor_Create(SEALContext* ctx, const SecretKey* sk);
+  extern "C" Plaintext* Decryptor_decrypt(Decryptor* dec, Ciphertext* c1);
   extern "C" int Decryptor_invariant_noise_budget(Decryptor* dec, Ciphertext* ct);
+
+  // Plaintext function
+  extern "C" const char* Plaintext_to_string(Plaintext* pt);
 }
