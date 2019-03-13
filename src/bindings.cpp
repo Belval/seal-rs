@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cmath>
-#include <seal/seal.h>
+#include "seal/seal.h"
 
 using namespace seal;
 using namespace seal::util;
@@ -17,7 +17,7 @@ namespace bindings
         ep->set_poly_modulus_degree(degree);
     }
     void EncryptionParameters_set_coeff_modulus(EncryptionParameters* ep, int coeff, int degree) {
-        ep->set_coeff_modulus(coeff_modulus_128(degree));
+        ep->set_coeff_modulus(DefaultParams::coeff_modulus_128(degree));
     }
     void EncryptionParameters_set_plain_modulus(EncryptionParameters* ep, int modulus) {
         ep->set_plain_modulus(modulus);

@@ -5,6 +5,13 @@ pub type std_istream = [u64; 35usize];
 pub type std_ostream = [u64; 34usize];
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
+pub struct std_decay {
+    pub _address: u8,
+}
+pub type std_decay___remove_type = u8;
+pub type std_decay_type = u8;
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct std_pair {
     pub _address: u8,
 }
@@ -3826,7 +3833,7 @@ fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0
         )
     );
 }
-///Manages a shared pointer to a memory pool. SEAL uses memory pools for
+///Manages a shared pointer to a memory pool. Microsoft SEAL uses memory pools for
 ///improved performance due to the large number of memory allocations needed
 ///by the homomorphic encryption operations, and the underlying polynomial
 ///arithmetic. The library automatically creates a shared global memory pool
@@ -3838,7 +3845,7 @@ fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0
 ///allocations in certain functions. For example, in heavily multi-threaded
 ///applications allocating concurrently from a shared memory pool might lead
 ///to significant performance issues due to thread contention. For these cases
-///SEAL provides overloads of the functions that take a MemoryPoolHandle as an
+///Microsoft SEAL provides overloads of the functions that take a MemoryPoolHandle as an
 ///additional argument, and uses the associated memory pool for all dynamic
 ///allocations inside the function. Whenever these functions are called, the
 ///user can then simply pass a thread-local MemoryPoolHandle to be used.
@@ -3857,7 +3864,7 @@ fn __bindgen_test_layout_seal_util_ConstPointer_open0_seal_SEAL_BYTE_void_close0
 ///
 ///@Managing Lifetime
 ///Internally, the MemoryPoolHandle wraps an std::shared_ptr pointing to
-///a SEAL memory pool class. Thus, as long as a MemoryPoolHandle pointing to
+///a memory pool class. Thus, as long as a MemoryPoolHandle pointing to
 ///a particular memory pool exists, the pool stays alive. Classes such as
 ///Evaluator and Ciphertext store their own local copies of a MemoryPoolHandle
 ///to guarantee that the pool stays alive as long as the managing object
@@ -4082,7 +4089,7 @@ extern "C" {
     pub fn seal_MMProf_MMProf_destructor(this: *mut seal_MMProf);
 }
 ///A memory manager profile that always returns a MemoryPoolHandle pointing to
-///the global memory pool. SEAL uses this memory manager profile by default.
+///the global memory pool. Microsoft SEAL uses this memory manager profile by default.
 #[repr(C)]
 #[derive(Debug)]
 pub struct seal_MMProfGlobal {
@@ -5583,7 +5590,7 @@ impl seal_AESDecryptor {
 }
 #[repr(C)]
 pub struct seal_UniformRandomGenerator__bindgen_vtable(::std::os::raw::c_void);
-///Provides the base-class for a uniform random number generator. Instances of
+///Provides the base class for a uniform random number generator. Instances of
 ///this class are typically returned from the UniformRandomGeneratorFactory class.
 ///This class is meant for users to sub-class to implement their own random number
 ///generators. The implementation should provide a uniform random unsigned 32-bit
@@ -5592,10 +5599,8 @@ pub struct seal_UniformRandomGenerator__bindgen_vtable(::std::os::raw::c_void);
 ///of the same class may have concurrent calls). The uniformity and unpredictability
 ///of the numbers generated is essential for making a secure cryptographic system.
 ///
-///@see UniformRandomGeneratorFactory for the base-class of a factory class that
+///@see UniformRandomGeneratorFactory for the base class of a factory class that
 ///generates UniformRandomGenerator instances.
-///@see StandardRandomAdapter for an implementation of UniformRandomGenerator to
-///support the C++ standard library's random number generators.
 #[repr(C)]
 #[derive(Debug)]
 pub struct seal_UniformRandomGenerator {
@@ -5628,7 +5633,7 @@ extern "C" {
 }
 #[repr(C)]
 pub struct seal_UniformRandomGeneratorFactory__bindgen_vtable(::std::os::raw::c_void);
-///Provides the base-class for a factory instance that creates instances of
+///Provides the base class for a factory instance that creates instances of
 ///UniformRandomGenerator. This class is meant for users to sub-class to implement
 ///their own random number generators. Note that each instance returned may be
 ///used concurrently across separate threads, but each individual instance does
@@ -6061,7 +6066,7 @@ extern "C" {
     ///The polynomial modulus directly affects the number of coefficients in
     ///plaintext polynomials, the size of ciphertext elements, the computational
     ///performance of the scheme (bigger is worse), and the security level (bigger
-    ///is better). In SEAL the degree of the polynomial modulus must be a power
+    ///is better). In Microsoft SEAL the degree of the polynomial modulus must be a power
     ///of 2 (e.g.  1024, 2048, 4096, 8192, 16384, or 32768).
     ///
     ///@param[in] poly_modulus_degree The new polynomial modulus degree
@@ -6076,7 +6081,7 @@ extern "C" {
     ///of a list of distinct prime numbers, and is represented by a vector of
     ///SmallModulus objects. The coefficient modulus directly affects the size
     ///of ciphertext elements, the amount of computation that the scheme can perform
-    ///(bigger is better), and the security level (bigger is worse). In SEAL each
+    ///(bigger is better), and the security level (bigger is worse). In Microsoft SEAL each
     ///of the prime numbers in the coefficient modulus must be at most 60 bits,
     ///and must be congruent to 1 modulo 2*degree(poly_modulus).
     ///
@@ -6093,7 +6098,7 @@ extern "C" {
     ///modulus represented by the SmallModulus class. The plaintext modulus
     ///determines the largest coefficient that plaintext polynomials can represent.
     ///It also affects the amount of computation that the scheme can perform
-    ///(bigger is worse). In SEAL the plaintext modulus can be at most 60 bits
+    ///(bigger is worse). In Microsoft SEAL the plaintext modulus can be at most 60 bits
     ///long, but can otherwise be any integer. Note, however, that some features
     ///(e.g. batching) require the plaintext modulus to be of a particular form.
     ///
@@ -6111,7 +6116,7 @@ extern "C" {
     ///takes a std::uint64_t and automatically creates the SmallModulus object.
     ///The plaintext modulus determines the largest coefficient that plaintext
     ///polynomials can represent. It also affects the amount of computation that
-    ///the scheme can perform (bigger is worse). In SEAL the plaintext modulus
+    ///the scheme can perform (bigger is worse). In Microsoft SEAL the plaintext modulus
     ///can be at most 60 bits long, but can otherwise be any integer. Note,
     ///however, that some features (e.g. batching) require the plaintext modulus
     ///to be of a particular form.
@@ -6375,13 +6380,13 @@ impl seal_EncryptionParameters {
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
 pub struct seal_EncryptionParameterQualifiers {
-    ///If the encryption parameters are set in a way that is considered valid by SEAL, the
+    ///If the encryption parameters are set in a way that is considered valid by Microsoft SEAL, the
     ///variable parameters_set is set to true.
     pub parameters_set: bool,
     ///Tells whether FFT can be used for polynomial multiplication. If the polynomial modulus
     ///is of the form X^N+1, where N is a power of two, then FFT can be used for fast
     ///multiplication of polynomials modulo the polynomial modulus. In this case the
-    ///variable using_fft will be set to true. However, currently SEAL requires this
+    ///variable using_fft will be set to true. However, currently Microsoft SEAL requires this
     ///to be the case for the parameters to be valid. Therefore, parameters_set can only
     ///be true if using_fft is true.
     pub using_fft: bool,
@@ -6390,7 +6395,7 @@ pub struct seal_EncryptionParameterQualifiers {
     ///modulus and N is a power of two, then the number-theoretic transform (NTT) can be
     ///used for fast multiplications of polynomials modulo the polynomial modulus and
     ///coefficient modulus. In this case the variable using_ntt will be set to true. However,
-    ///currently SEAL requires this to be the case for the parameters to be valid. Therefore,
+    ///currently Microsoft SEAL requires this to be the case for the parameters to be valid. Therefore,
     ///parameters_set can only be true if using_ntt is true.
     pub using_ntt: bool,
     ///Tells whether batching is supported by the encryption parameters. If the plaintext
@@ -7148,13 +7153,14 @@ pub struct seal_IntArray {
     pub data_: seal_util_Pointer<u64>,
 }
 pub type seal_IntArray_size_type = usize;
+pub type seal_IntArray_T = u8;
 impl Default for seal_IntArray {
     fn default() -> Self {
         unsafe { ::std::mem::zeroed() }
     }
 }
 ///Class to store a ciphertext element. The data for a ciphertext consists
-///of two or more polynomials, which are in SEAL stored in a CRT form with
+///of two or more polynomials, which are in Microsoft SEAL stored in a CRT form with
 ///respect to the factors of the coefficient modulus. This data itself is
 ///not meant to be modified directly by the user, but is instead operated
 ///on by functions in the Evaluator class. The size of the backing array of
@@ -7195,6 +7201,12 @@ pub struct seal_Ciphertext {
 }
 pub type seal_Ciphertext_ct_coeff_type = u64;
 pub type seal_Ciphertext_size_type = size_type;
+///Enables access to private members of seal::Ciphertext for .NET wrapper.
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct seal_Ciphertext_CiphertextPrivateHelper {
+    _unused: [u8; 0],
+}
 #[test]
 fn bindgen_test_layout_seal_Ciphertext() {
     assert_eq!(
@@ -7432,7 +7444,7 @@ extern "C" {
 }
 extern "C" {
     ///Returns a pointer to a particular polynomial in the ciphertext
-    ///data. Note that SEAL stores each polynomial in the ciphertext
+    ///data. Note that Microsoft SEAL stores each polynomial in the ciphertext
     ///modulo all of the K primes in the coefficient modulus. The pointer
     ///returned by this function is to the beginning (constant coefficient)
     ///of the first one of these K polynomials.
@@ -7448,7 +7460,7 @@ extern "C" {
 }
 extern "C" {
     ///Returns a const pointer to a particular polynomial in the
-    ///ciphertext data. Note that SEAL stores each polynomial in the
+    ///ciphertext data. Note that Microsoft SEAL stores each polynomial in the
     ///ciphertext modulo all of the K primes in the coefficient modulus.
     ///The pointer returned by this function is to the beginning
     ///(constant coefficient) of the first one of these K polynomials.
@@ -7511,11 +7523,34 @@ extern "C" {
     ///returns false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal10Ciphertext12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal10Ciphertext12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_Ciphertext_is_valid_for(
         this: *const seal_Ciphertext,
         context: [u64; 2usize],
     ) -> bool;
+}
+extern "C" {
+    ///Check whether the current ciphertext is valid for a given SEALContext.
+    ///If the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the ciphertext data does not match the SEALContext, this function
+    ///returns false. Otherwise, returns true. This function only checks the metadata
+    ///and not the ciphertext data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal10Ciphertext21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_Ciphertext_is_metadata_valid_for(
+        this: *const seal_Ciphertext,
+        context: [u64; 2usize],
+    ) -> bool;
+}
+extern "C" {
+    ///Check whether the current ciphertext is transparent, i.e. does not require
+    ///a secret key to decrypt. In typical security models such transparent
+    ///ciphertexts would not be considered to be valid. Starting from the second
+    ///polynomial in the current ciphertext, this function returns true if all
+    ///following coefficients are identically zero. Otherwise, returns false.
+    #[link_name = "\u{1}_ZNK4seal10Ciphertext14is_transparentEv"]
+    pub fn seal_Ciphertext_is_transparent(this: *const seal_Ciphertext) -> bool;
 }
 extern "C" {
     ///Saves the ciphertext to an output stream. The output is in binary format
@@ -7782,6 +7817,14 @@ impl seal_Ciphertext {
         seal_Ciphertext_is_valid_for(self, context)
     }
     #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_Ciphertext_is_metadata_valid_for(self, context)
+    }
+    #[inline]
+    pub unsafe fn is_transparent(&self) -> bool {
+        seal_Ciphertext_is_transparent(self)
+    }
+    #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
         seal_Ciphertext_save(self, stream)
     }
@@ -7905,6 +7948,12 @@ pub struct seal_Plaintext {
 }
 pub type seal_Plaintext_pt_coeff_type = u64;
 pub type seal_Plaintext_size_type = size_type;
+///Enables access to private members of seal::Plaintext for .NET wrapper.
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct seal_Plaintext_PlaintextPrivateHelper {
+    _unused: [u8; 0],
+}
 #[test]
 fn bindgen_test_layout_seal_Plaintext() {
     assert_eq!(
@@ -8096,9 +8145,23 @@ extern "C" {
     ///false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal9Plaintext12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal9Plaintext12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_Plaintext_is_valid_for(this: *const seal_Plaintext, context: [u64; 2usize])
         -> bool;
+}
+extern "C" {
+    ///Check whether the current Plaintext is valid for a given SEALContext. If
+    ///the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the Plaintext data does not match the SEALContext, this function returns
+    ///false. Otherwise, returns true. This function only checks the metadata
+    ///and not the plaintext data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal9Plaintext21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_Plaintext_is_metadata_valid_for(
+        this: *const seal_Plaintext,
+        context: [u64; 2usize],
+    ) -> bool;
 }
 extern "C" {
     ///Saves the plaintext to an output stream. The output is in binary format
@@ -8354,6 +8417,10 @@ impl seal_Plaintext {
         seal_Plaintext_is_valid_for(self, context)
     }
     #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_Plaintext_is_metadata_valid_for(self, context)
+    }
+    #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
         seal_Plaintext_save(self, stream)
     }
@@ -8467,10 +8534,6 @@ pub struct seal_CKKSEncoder {
     pub matrix_reps_index_map_: seal_util_Pointer<u64>,
 }
 pub const seal_CKKSEncoder_PI_: f64 = 3.141592653589793;
-extern "C" {
-    #[link_name = "\u{1}_ZN4seal11CKKSEncoder11two_pow_64_E"]
-    pub static mut seal_CKKSEncoder_two_pow_64_: f64;
-}
 #[test]
 fn bindgen_test_layout_seal_CKKSEncoder() {
     assert_eq!(
@@ -8821,9 +8884,23 @@ extern "C" {
     ///false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal9SecretKey12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal9SecretKey12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_SecretKey_is_valid_for(this: *const seal_SecretKey, context: [u64; 2usize])
         -> bool;
+}
+extern "C" {
+    ///Check whether the current SecretKey is valid for a given SEALContext. If
+    ///the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the SecretKey data does not match the SEALContext, this function returns
+    ///false. Otherwise, returns true. This function only checks the metadata
+    ///and not the secret key data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal9SecretKey21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_SecretKey_is_metadata_valid_for(
+        this: *const seal_SecretKey,
+        context: [u64; 2usize],
+    ) -> bool;
 }
 extern "C" {
     ///Saves the SecretKey to an output stream. The output is in binary format
@@ -8923,6 +9000,10 @@ impl seal_SecretKey {
     #[inline]
     pub unsafe fn is_valid_for(&self, context: [u64; 2usize]) -> bool {
         seal_SecretKey_is_valid_for(self, context)
+    }
+    #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_SecretKey_is_metadata_valid_for(self, context)
     }
     #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
@@ -9146,6 +9227,25 @@ impl seal_Decryptor {
         __bindgen_tmp
     }
 }
+///Static methods for accessing default parameters.
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct seal_DefaultParams {
+    pub _address: u8,
+}
+#[test]
+fn bindgen_test_layout_seal_DefaultParams() {
+    assert_eq!(
+        ::std::mem::size_of::<seal_DefaultParams>(),
+        1usize,
+        concat!("Size of: ", stringify!(seal_DefaultParams))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<seal_DefaultParams>(),
+        1usize,
+        concat!("Alignment of ", stringify!(seal_DefaultParams))
+    );
+}
 extern "C" {
     ///Returns the default coefficients modulus for a given polynomial modulus degree.
     ///The polynomial modulus and the coefficient modulus obtained in this way should
@@ -9155,8 +9255,8 @@ extern "C" {
     ///
     ///@param[in] poly_modulus_degree The degree of the polynomial modulus
     ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
-    #[link_name = "\u{1}_ZN4seal17coeff_modulus_128Em"]
-    pub fn seal_coeff_modulus_128(poly_modulus_degree: usize) -> [u64; 3usize];
+    #[link_name = "\u{1}_ZN4seal13DefaultParams17coeff_modulus_128Em"]
+    pub fn seal_DefaultParams_coeff_modulus_128(poly_modulus_degree: usize) -> [u64; 3usize];
 }
 extern "C" {
     ///Returns the default coefficients modulus for a given polynomial modulus degree.
@@ -9167,8 +9267,8 @@ extern "C" {
     ///
     ///@param[in] poly_modulus_degree The degree of the polynomial modulus
     ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
-    #[link_name = "\u{1}_ZN4seal17coeff_modulus_192Em"]
-    pub fn seal_coeff_modulus_192(poly_modulus_degree: usize) -> [u64; 3usize];
+    #[link_name = "\u{1}_ZN4seal13DefaultParams17coeff_modulus_192Em"]
+    pub fn seal_DefaultParams_coeff_modulus_192(poly_modulus_degree: usize) -> [u64; 3usize];
 }
 extern "C" {
     ///Returns the default coefficients modulus for a given polynomial modulus degree.
@@ -9179,16 +9279,16 @@ extern "C" {
     ///
     ///@param[in] poly_modulus_degree The degree of the polynomial modulus
     ///@throws std::out_of_range if poly_modulus_degree is not 1024, 2048, 4096, 8192, 16384, or 32768
-    #[link_name = "\u{1}_ZN4seal17coeff_modulus_256Em"]
-    pub fn seal_coeff_modulus_256(poly_modulus_degree: usize) -> [u64; 3usize];
+    #[link_name = "\u{1}_ZN4seal13DefaultParams17coeff_modulus_256Em"]
+    pub fn seal_DefaultParams_coeff_modulus_256(poly_modulus_degree: usize) -> [u64; 3usize];
 }
 extern "C" {
     ///Returns a 60-bit coefficient modulus prime.
     ///
     ///@param[in] index The list index of the prime
     ///@throws std::out_of_range if index is not within [0, 64)
-    #[link_name = "\u{1}_ZN4seal16small_mods_60bitEm"]
-    pub fn seal_small_mods_60bit(
+    #[link_name = "\u{1}_ZN4seal13DefaultParams16small_mods_60bitEm"]
+    pub fn seal_DefaultParams_small_mods_60bit(
         index: usize,
     ) -> seal_util_global_variables_internal_mods_SmallModulus;
 }
@@ -9197,8 +9297,8 @@ extern "C" {
     ///
     ///@param[in] index The list index of the prime
     ///@throws std::out_of_range if index is not within [0, 64)
-    #[link_name = "\u{1}_ZN4seal16small_mods_50bitEm"]
-    pub fn seal_small_mods_50bit(
+    #[link_name = "\u{1}_ZN4seal13DefaultParams16small_mods_50bitEm"]
+    pub fn seal_DefaultParams_small_mods_50bit(
         index: usize,
     ) -> seal_util_global_variables_internal_mods_SmallModulus;
 }
@@ -9207,8 +9307,8 @@ extern "C" {
     ///
     ///@param[in] index The list index of the prime
     ///@throws std::out_of_range if index is not within [0, 64)
-    #[link_name = "\u{1}_ZN4seal16small_mods_40bitEm"]
-    pub fn seal_small_mods_40bit(
+    #[link_name = "\u{1}_ZN4seal13DefaultParams16small_mods_40bitEm"]
+    pub fn seal_DefaultParams_small_mods_40bit(
         index: usize,
     ) -> seal_util_global_variables_internal_mods_SmallModulus;
 }
@@ -9217,87 +9317,81 @@ extern "C" {
     ///
     ///@param[in] index The list index of the prime
     ///@throws std::out_of_range if index is not within [0, 64)
-    #[link_name = "\u{1}_ZN4seal16small_mods_30bitEm"]
-    pub fn seal_small_mods_30bit(
+    #[link_name = "\u{1}_ZN4seal13DefaultParams16small_mods_30bitEm"]
+    pub fn seal_DefaultParams_small_mods_30bit(
         index: usize,
     ) -> seal_util_global_variables_internal_mods_SmallModulus;
 }
 extern "C" {
     ///Returns the largest allowed decomposition bit count (60).
-    #[link_name = "\u{1}_ZN4seal7dbc_maxEv"]
-    pub fn seal_dbc_max() -> ::std::os::raw::c_int;
+    #[link_name = "\u{1}_ZN4seal13DefaultParams7dbc_maxEv"]
+    pub fn seal_DefaultParams_dbc_max() -> ::std::os::raw::c_int;
 }
 extern "C" {
     ///Returns the smallest allowed decomposition bit count (1).
-    #[link_name = "\u{1}_ZN4seal7dbc_minEv"]
-    pub fn seal_dbc_min() -> ::std::os::raw::c_int;
-}
-#[repr(C)]
-pub struct seal_AbstractIntegerEncoder__bindgen_vtable(::std::os::raw::c_void);
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_AbstractIntegerEncoder {
-    pub vtable_: *const seal_AbstractIntegerEncoder__bindgen_vtable,
-}
-#[test]
-fn bindgen_test_layout_seal_AbstractIntegerEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_AbstractIntegerEncoder>(),
-        8usize,
-        concat!("Size of: ", stringify!(seal_AbstractIntegerEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_AbstractIntegerEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_AbstractIntegerEncoder))
-    );
-}
-impl Default for seal_AbstractIntegerEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
+    #[link_name = "\u{1}_ZN4seal13DefaultParams7dbc_minEv"]
+    pub fn seal_DefaultParams_dbc_min() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    #[link_name = "\u{1}_ZN4seal22AbstractIntegerEncoderD1Ev"]
-    pub fn seal_AbstractIntegerEncoder_AbstractIntegerEncoder_destructor(
-        this: *mut seal_AbstractIntegerEncoder,
-    );
+    #[link_name = "\u{1}_ZN4seal13DefaultParamsC1Ev"]
+    pub fn seal_DefaultParams_DefaultParams(this: *mut seal_DefaultParams);
 }
-#[repr(C)]
-pub struct seal_AbstractFractionalEncoder__bindgen_vtable(::std::os::raw::c_void);
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_AbstractFractionalEncoder {
-    pub vtable_: *const seal_AbstractFractionalEncoder__bindgen_vtable,
-}
-#[test]
-fn bindgen_test_layout_seal_AbstractFractionalEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_AbstractFractionalEncoder>(),
-        8usize,
-        concat!("Size of: ", stringify!(seal_AbstractFractionalEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_AbstractFractionalEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_AbstractFractionalEncoder))
-    );
-}
-impl Default for seal_AbstractFractionalEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
+impl seal_DefaultParams {
+    #[inline]
+    pub unsafe fn coeff_modulus_128(poly_modulus_degree: usize) -> [u64; 3usize] {
+        seal_DefaultParams_coeff_modulus_128(poly_modulus_degree)
     }
-}
-extern "C" {
-    #[link_name = "\u{1}_ZN4seal25AbstractFractionalEncoderD1Ev"]
-    pub fn seal_AbstractFractionalEncoder_AbstractFractionalEncoder_destructor(
-        this: *mut seal_AbstractFractionalEncoder,
-    );
+    #[inline]
+    pub unsafe fn coeff_modulus_192(poly_modulus_degree: usize) -> [u64; 3usize] {
+        seal_DefaultParams_coeff_modulus_192(poly_modulus_degree)
+    }
+    #[inline]
+    pub unsafe fn coeff_modulus_256(poly_modulus_degree: usize) -> [u64; 3usize] {
+        seal_DefaultParams_coeff_modulus_256(poly_modulus_degree)
+    }
+    #[inline]
+    pub unsafe fn small_mods_60bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus {
+        seal_DefaultParams_small_mods_60bit(index)
+    }
+    #[inline]
+    pub unsafe fn small_mods_50bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus {
+        seal_DefaultParams_small_mods_50bit(index)
+    }
+    #[inline]
+    pub unsafe fn small_mods_40bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus {
+        seal_DefaultParams_small_mods_40bit(index)
+    }
+    #[inline]
+    pub unsafe fn small_mods_30bit(
+        index: usize,
+    ) -> seal_util_global_variables_internal_mods_SmallModulus {
+        seal_DefaultParams_small_mods_30bit(index)
+    }
+    #[inline]
+    pub unsafe fn dbc_max() -> ::std::os::raw::c_int {
+        seal_DefaultParams_dbc_max()
+    }
+    #[inline]
+    pub unsafe fn dbc_min() -> ::std::os::raw::c_int {
+        seal_DefaultParams_dbc_min()
+    }
+    #[inline]
+    pub unsafe fn new() -> Self {
+        let mut __bindgen_tmp = ::std::mem::uninitialized();
+        seal_DefaultParams_DefaultParams(&mut __bindgen_tmp);
+        __bindgen_tmp
+    }
 }
 ///Encodes integers into plaintext polynomials that Encryptor can encrypt. An instance of
-///the BinaryEncoder class converts an integer into a plaintext polynomial by placing its
+///the IntegerEncoder class converts an integer into a plaintext polynomial by placing its
 ///binary digits as the coefficients of the polynomial. Decoding the integer amounts to
-///evaluating the plaintext polynomial at X=2.
+///evaluating the plaintext polynomial at x=2.
 ///
 ///Addition and multiplication on the integer side translate into addition and multiplication
 ///on the encoded plaintext polynomial side, provided that the length of the polynomial
@@ -9310,183 +9404,100 @@ extern "C" {
 ///and the negative coefficients are stored in the plaintext polynomials as unsigned integers
 ///that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
 ///would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@see BinaryFractionalEncoder for encoding real numbers.
-///@see BalancedEncoder for encoding using base-b representation for b greater than 2.
-///@see IntegerEncoder for a common interface to all integer encoders.
 #[repr(C)]
-#[derive(Debug)]
-pub struct seal_BinaryEncoder {
-    pub _base: seal_AbstractIntegerEncoder,
-    pub pool_: seal_MemoryPoolHandle,
-    pub plain_modulus_: seal_util_global_variables_internal_mods_SmallModulus,
+#[derive(Debug, Default)]
+pub struct seal_IntegerEncoder {
+    pub context_: [u64; 2usize],
     pub coeff_neg_threshold_: u64,
     pub neg_one_: u64,
 }
 #[test]
-fn bindgen_test_layout_seal_BinaryEncoder() {
+fn bindgen_test_layout_seal_IntegerEncoder() {
     assert_eq!(
-        ::std::mem::size_of::<seal_BinaryEncoder>(),
-        88usize,
-        concat!("Size of: ", stringify!(seal_BinaryEncoder))
+        ::std::mem::size_of::<seal_IntegerEncoder>(),
+        32usize,
+        concat!("Size of: ", stringify!(seal_IntegerEncoder))
     );
     assert_eq!(
-        ::std::mem::align_of::<seal_BinaryEncoder>(),
+        ::std::mem::align_of::<seal_IntegerEncoder>(),
         8usize,
-        concat!("Alignment of ", stringify!(seal_BinaryEncoder))
+        concat!("Alignment of ", stringify!(seal_IntegerEncoder))
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_BinaryEncoder>())).pool_ as *const _ as usize },
-        8usize,
+        unsafe { &(*(::std::ptr::null::<seal_IntegerEncoder>())).context_ as *const _ as usize },
+        0usize,
         concat!(
             "Offset of field: ",
-            stringify!(seal_BinaryEncoder),
+            stringify!(seal_IntegerEncoder),
             "::",
-            stringify!(pool_)
+            stringify!(context_)
         )
     );
     assert_eq!(
         unsafe {
-            &(*(::std::ptr::null::<seal_BinaryEncoder>())).plain_modulus_ as *const _ as usize
+            &(*(::std::ptr::null::<seal_IntegerEncoder>())).coeff_neg_threshold_ as *const _
+                as usize
         },
-        24usize,
+        16usize,
         concat!(
             "Offset of field: ",
-            stringify!(seal_BinaryEncoder),
-            "::",
-            stringify!(plain_modulus_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryEncoder>())).coeff_neg_threshold_ as *const _ as usize
-        },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryEncoder),
+            stringify!(seal_IntegerEncoder),
             "::",
             stringify!(coeff_neg_threshold_)
         )
     );
     assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_BinaryEncoder>())).neg_one_ as *const _ as usize },
-        80usize,
+        unsafe { &(*(::std::ptr::null::<seal_IntegerEncoder>())).neg_one_ as *const _ as usize },
+        24usize,
         concat!(
             "Offset of field: ",
-            stringify!(seal_BinaryEncoder),
+            stringify!(seal_IntegerEncoder),
             "::",
             stringify!(neg_one_)
         )
     );
 }
 extern "C" {
-    ///Creates a BinaryEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus (represented by SmallModulus).
-    ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@throws std::invalid_argument if plain_modulus is not at least 2
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoderC1ERKNS_12SmallModulusE"]
-    pub fn seal_BinaryEncoder_BinaryEncoder(
-        this: *mut seal_BinaryEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-    );
-}
-extern "C" {
-    ///Creates a copy of a BinaryEncoder.
-    ///
-    ///@param[in] copy The BinaryEncoder to copy from
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoderC1ERKS0_"]
-    pub fn seal_BinaryEncoder_BinaryEncoder1(
-        this: *mut seal_BinaryEncoder,
-        copy: *const seal_BinaryEncoder,
-    );
-}
-extern "C" {
-    ///Creates a new BinaryEncoder by moving an old one.
-    ///
-    ///@param[in] source The BinaryEncoder to move from
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoderC1EOS0_"]
-    pub fn seal_BinaryEncoder_BinaryEncoder2(
-        this: *mut seal_BinaryEncoder,
-        source: *mut seal_BinaryEncoder,
-    );
-}
-impl Default for seal_BinaryEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
-}
-impl seal_BinaryEncoder {
-    #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-    ) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryEncoder_BinaryEncoder(&mut __bindgen_tmp, plain_modulus);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new1(copy: *const seal_BinaryEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryEncoder_BinaryEncoder1(&mut __bindgen_tmp, copy);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new2(source: *mut seal_BinaryEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryEncoder_BinaryEncoder2(&mut __bindgen_tmp, source);
-        __bindgen_tmp
-    }
-}
-extern "C" {
-    ///Destroys the BinaryEncoder.
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoderD1Ev"]
-    pub fn seal_BinaryEncoder_BinaryEncoder_destructor(this: *mut seal_BinaryEncoder);
-}
-extern "C" {
     ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
     ///
     ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEm"]
-    pub fn seal_BinaryEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: u64,
-    ) -> seal_Plaintext;
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEm"]
+    pub fn seal_IntegerEncoder_encode(this: *mut seal_IntegerEncoder, value: u64)
+        -> seal_Plaintext;
 }
 extern "C" {
     ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
     ///
     ///@param[in] value The unsigned integer to encode
     ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEmRNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_encode1(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEmRNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_encode1(
+        this: *mut seal_IntegerEncoder,
         value: u64,
         destination: *mut seal_Plaintext,
     );
 }
 extern "C" {
     ///Decodes a plaintext polynomial and returns the result as std::uint32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
+    ///Mathematically this amounts to evaluating the input polynomial at x=2.
     ///
     ///@param[in] plain The plaintext to be decoded
     ///@throws std::invalid_argument if the output does not fit in std::uint32_t
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder13decode_uint32ERKNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_decode_uint32(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder13decode_uint32ERKNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_decode_uint32(
+        this: *mut seal_IntegerEncoder,
         plain: *const seal_Plaintext,
     ) -> u32;
 }
 extern "C" {
     ///Decodes a plaintext polynomial and returns the result as std::uint64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
+    ///Mathematically this amounts to evaluating the input polynomial at x=2.
     ///
     ///@param[in] plain The plaintext to be decoded
     ///@throws std::invalid_argument if the output does not fit in std::uint64_t
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder13decode_uint64ERKNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_decode_uint64(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder13decode_uint64ERKNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_decode_uint64(
+        this: *mut seal_IntegerEncoder,
         plain: *const seal_Plaintext,
     ) -> u64;
 }
@@ -9500,9 +9511,9 @@ extern "C" {
     ///would be stored as a polynomial coefficient plain_modulus-1.
     ///
     ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEl"]
-    pub fn seal_BinaryEncoder_encode2(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEl"]
+    pub fn seal_IntegerEncoder_encode2(
+        this: *mut seal_IntegerEncoder,
         value: i64,
     ) -> seal_Plaintext;
 }
@@ -9517,9 +9528,9 @@ extern "C" {
     ///
     ///@param[in] value The signed integer to encode
     ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeElRNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_encode3(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeElRNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_encode3(
+        this: *mut seal_IntegerEncoder,
         value: i64,
         destination: *mut seal_Plaintext,
     );
@@ -9528,9 +9539,9 @@ extern "C" {
     ///Encodes an unsigned integer (represented by BigUInt) into a plaintext polynomial.
     ///
     ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeERKNS_7BigUIntE"]
-    pub fn seal_BinaryEncoder_encode4(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeERKNS_7BigUIntE"]
+    pub fn seal_IntegerEncoder_encode4(
+        this: *mut seal_IntegerEncoder,
         value: *const seal_BigUInt,
     ) -> seal_Plaintext;
 }
@@ -9539,67 +9550,51 @@ extern "C" {
     ///
     ///@param[in] value The unsigned integer to encode
     ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeERKNS_7BigUIntERNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_encode5(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeERKNS_7BigUIntERNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_encode5(
+        this: *mut seal_IntegerEncoder,
         value: *const seal_BigUInt,
         destination: *mut seal_Plaintext,
     );
 }
 extern "C" {
     ///Decodes a plaintext polynomial and returns the result as std::int32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
+    ///Mathematically this amounts to evaluating the input polynomial at x=2.
     ///
     ///@param[in] plain The plaintext to be decoded
     ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
     ///@throws std::invalid_argument if the output does not fit in std::int32_t
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder12decode_int32ERKNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_decode_int32(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder12decode_int32ERKNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_decode_int32(
+        this: *mut seal_IntegerEncoder,
         plain: *const seal_Plaintext,
     ) -> i32;
 }
 extern "C" {
     ///Decodes a plaintext polynomial and returns the result as std::int64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
+    ///Mathematically this amounts to evaluating the input polynomial at x=2.
     ///
     ///@param[in] plain The plaintext to be decoded
     ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
     ///@throws std::invalid_argument if the output does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder12decode_int64ERKNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_decode_int64(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder12decode_int64ERKNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_decode_int64(
+        this: *mut seal_IntegerEncoder,
         plain: *const seal_Plaintext,
     ) -> i64;
 }
 extern "C" {
     ///Decodes a plaintext polynomial and returns the result as BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
+    ///Mathematically this amounts to evaluating the input polynomial at x=2.
     ///
     ///@param[in] plain The plaintext to be decoded
     ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
     ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder14decode_biguintERKNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_decode_biguint(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder14decode_biguintERKNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_decode_biguint(
+        this: *mut seal_IntegerEncoder,
         plain: *const seal_Plaintext,
     ) -> seal_BigUInt;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and stores the result in a given BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=2.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@param[out] destination The BigUInt to overwrite with the decoding
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in destination
-    ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder14decode_biguintERKNS_9PlaintextERNS_7BigUIntE"]
-    pub fn seal_BinaryEncoder_decode_biguint1(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-        destination: *mut seal_BigUInt,
-    );
 }
 extern "C" {
     ///Encodes a signed integer (represented by std::int32_t) into a plaintext polynomial.
@@ -9611,9 +9606,9 @@ extern "C" {
     ///would be stored as a polynomial coefficient plain_modulus-1.
     ///
     ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEi"]
-    pub fn seal_BinaryEncoder_encode6(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEi"]
+    pub fn seal_IntegerEncoder_encode6(
+        this: *mut seal_IntegerEncoder,
         value: i32,
     ) -> seal_Plaintext;
 }
@@ -9621,9 +9616,9 @@ extern "C" {
     ///Encodes an unsigned integer (represented by std::uint32_t) into a plaintext polynomial.
     ///
     ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEj"]
-    pub fn seal_BinaryEncoder_encode7(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEj"]
+    pub fn seal_IntegerEncoder_encode7(
+        this: *mut seal_IntegerEncoder,
         value: u32,
     ) -> seal_Plaintext;
 }
@@ -9638,9 +9633,9 @@ extern "C" {
     ///
     ///@param[in] value The signed integer to encode
     ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEiRNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_encode8(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEiRNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_encode8(
+        this: *mut seal_IntegerEncoder,
         value: i32,
         destination: *mut seal_Plaintext,
     );
@@ -9650,1028 +9645,32 @@ extern "C" {
     ///
     ///@param[in] value The unsigned integer to encode
     ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal13BinaryEncoder6encodeEjRNS_9PlaintextE"]
-    pub fn seal_BinaryEncoder_encode9(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEjRNS_9PlaintextE"]
+    pub fn seal_IntegerEncoder_encode9(
+        this: *mut seal_IntegerEncoder,
         value: u32,
         destination: *mut seal_Plaintext,
     );
 }
 extern "C" {
     ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal13BinaryEncoder13plain_modulusEv"]
-    pub fn seal_BinaryEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
+    #[link_name = "\u{1}_ZNK4seal14IntegerEncoder13plain_modulusEv"]
+    pub fn seal_IntegerEncoder_plain_modulus(
+        this: *const seal_IntegerEncoder,
     ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
 }
 extern "C" {
-    ///<summary>Returns the base used for encoding (2).</summary>
-    #[link_name = "\u{1}_ZNK4seal13BinaryEncoder4baseEv"]
-    pub fn seal_BinaryEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-///Encodes integers into plaintext polynomials that Encryptor can encrypt. An instance of
-///the BalancedEncoder class converts an integer into a plaintext polynomial by placing its
-///digits in balanced base-b representation as the coefficients of the polynomial. The base
-///b must be a positive integer at least 3 (which is the default value). When b is odd,
-///digits in such a balanced representation are integers in the range
-///-(b-1)/2,...,(b-1)/2. When b is even, digits are integers in the range -b/2,..., b/2-1.
-///Note that the default value 3 for the base b allows for more compact representation than
-///BinaryEncoder without increasing the sizes of the coefficients of freshly encoded plaintext
-///polynomials. A larger base allows for an even more compact representation at the cost of
-///having larger coefficients in freshly encoded plaintext polynomials. Decoding the integer
-///amounts to evaluating the plaintext polynomial at X=b.
-///
-///Addition and multiplication on the integer side translate into addition and multiplication
-///on the encoded plaintext polynomial side, provided that the length of the polynomial
-///never grows to be of the size of the polynomial modulus (poly_modulus), and that the
-///coefficients of the plaintext polynomials appearing throughout the computations never
-///experience coefficients larger than the plaintext modulus (plain_modulus).
-///
-///@par Negative Integers
-///Negative integers in the balanced base-b encoding are represented the same way as
-///positive integers, namely, both positive and negative integers can have both positive and negative
-///digits in their balanced base-b representation. Negative coefficients are stored in the
-///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@see BalancedFractionalEncoder for encoding real numbers.
-///@see BinaryEncoder for encoding using the binary representation.
-///@see IntegerEncoder for a common interface to all integer encoders.
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_BalancedEncoder {
-    pub _base: seal_AbstractIntegerEncoder,
-    pub pool_: seal_MemoryPoolHandle,
-    pub plain_modulus_: seal_util_global_variables_internal_mods_SmallModulus,
-    pub base_: u64,
-    pub coeff_neg_threshold_: u64,
-}
-#[test]
-fn bindgen_test_layout_seal_BalancedEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_BalancedEncoder>(),
-        88usize,
-        concat!("Size of: ", stringify!(seal_BalancedEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_BalancedEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_BalancedEncoder))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_BalancedEncoder>())).pool_ as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedEncoder),
-            "::",
-            stringify!(pool_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedEncoder>())).plain_modulus_ as *const _ as usize
-        },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedEncoder),
-            "::",
-            stringify!(plain_modulus_)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_BalancedEncoder>())).base_ as *const _ as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedEncoder),
-            "::",
-            stringify!(base_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedEncoder>())).coeff_neg_threshold_ as *const _
-                as usize
-        },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedEncoder),
-            "::",
-            stringify!(coeff_neg_threshold_)
-        )
-    );
-}
-extern "C" {
-    ///Creates a BalancedEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus (represented by SmallModulus), and optionally an integer,
-    ///at least 3, that is used as a base in the encoding.
+    ///Creates a IntegerEncoder object. The constructor takes as input a pointer to
+    ///a SEALContext object which contains the plaintext modulus.
     ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@param[in] base The base to be used for encoding (default value is 3)
-    ///@throws std::invalid_argument if base is not an integer and at least 3
-    ///@throws std::invalid_argument if plain_modulus is not at least base
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoderC1ERKNS_12SmallModulusEm"]
-    pub fn seal_BalancedEncoder_BalancedEncoder(
-        this: *mut seal_BalancedEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        base: u64,
-    );
-}
-extern "C" {
-    ///Creates a copy of a BalancedEncoder.
-    ///
-    ///@param[in] copy The BalancedEncoder to copy from
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoderC1ERKS0_"]
-    pub fn seal_BalancedEncoder_BalancedEncoder1(
-        this: *mut seal_BalancedEncoder,
-        copy: *const seal_BalancedEncoder,
-    );
-}
-extern "C" {
-    ///Creates a new BalancedEncoder by moving an old one.
-    ///
-    ///@param[in] source The BalancedEncoder to move from
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoderC1EOS0_"]
-    pub fn seal_BalancedEncoder_BalancedEncoder2(
-        this: *mut seal_BalancedEncoder,
-        source: *mut seal_BalancedEncoder,
-    );
-}
-impl Default for seal_BalancedEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
-}
-impl seal_BalancedEncoder {
-    #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        base: u64,
-    ) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedEncoder_BalancedEncoder(&mut __bindgen_tmp, plain_modulus, base);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new1(copy: *const seal_BalancedEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedEncoder_BalancedEncoder1(&mut __bindgen_tmp, copy);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new2(source: *mut seal_BalancedEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedEncoder_BalancedEncoder2(&mut __bindgen_tmp, source);
-        __bindgen_tmp
-    }
-}
-extern "C" {
-    ///Destroys the BalancedEncoder.
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoderD1Ev"]
-    pub fn seal_BalancedEncoder_BalancedEncoder_destructor(this: *mut seal_BalancedEncoder);
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEm"]
-    pub fn seal_BalancedEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: u64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEmRNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_encode1(
-        this: *mut ::std::os::raw::c_void,
-        value: u64,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::uint32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::uint32_t
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder13decode_uint32ERKNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_decode_uint32(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> u32;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::uint64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::uint64_t
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder13decode_uint64ERKNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_decode_uint64(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> u64;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int64_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the balanced base-b encoding are represented the same way as
-    ///positive integers, namely, both positive and negative integers can have both positive and negative
-    ///digits in their balanced base-b representation. Negative coefficients are stored in the
-    ///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-    ///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEl"]
-    pub fn seal_BalancedEncoder_encode2(
-        this: *mut ::std::os::raw::c_void,
-        value: i64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int64_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the balanced base-b encoding are represented the same way as
-    ///positive integers, namely, both positive and negative integers can have both positive and negative
-    ///digits in their balanced base-b representation. Negative coefficients are stored in the
-    ///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-    ///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeElRNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_encode3(
-        this: *mut ::std::os::raw::c_void,
-        value: i64,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by BigUInt) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeERKNS_7BigUIntE"]
-    pub fn seal_BalancedEncoder_encode4(
-        this: *mut ::std::os::raw::c_void,
-        value: *const seal_BigUInt,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by BigUInt) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeERKNS_7BigUIntERNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_encode5(
-        this: *mut ::std::os::raw::c_void,
-        value: *const seal_BigUInt,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::int32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::int32_t
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder12decode_int32ERKNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_decode_int32(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> i32;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::int64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder12decode_int64ERKNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_decode_int64(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> i64;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder14decode_biguintERKNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_decode_biguint(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> seal_BigUInt;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and stores the result in a given BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@param[out] destination The BigUInt to overwrite with the decoding
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in destination
-    ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder14decode_biguintERKNS_9PlaintextERNS_7BigUIntE"]
-    pub fn seal_BalancedEncoder_decode_biguint1(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-        destination: *mut seal_BigUInt,
-    );
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int32_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the balanced base-b encoding are represented the same way as
-    ///positive integers, namely, both positive and negative integers can have both positive and negative
-    ///digits in their balanced base-b representation. Negative coefficients are stored in the
-    ///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-    ///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEi"]
-    pub fn seal_BalancedEncoder_encode6(
-        this: *mut ::std::os::raw::c_void,
-        value: i32,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint32_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEj"]
-    pub fn seal_BalancedEncoder_encode7(
-        this: *mut ::std::os::raw::c_void,
-        value: u32,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int32_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the balanced base-b encoding are represented the same way as
-    ///positive integers, namely, both positive and negative integers can have both positive and negative
-    ///digits in their balanced base-b representation. Negative coefficients are stored in the
-    ///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-    ///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEiRNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_encode8(
-        this: *mut ::std::os::raw::c_void,
-        value: i32,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint32_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal15BalancedEncoder6encodeEjRNS_9PlaintextE"]
-    pub fn seal_BalancedEncoder_encode9(
-        this: *mut ::std::os::raw::c_void,
-        value: u32,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal15BalancedEncoder13plain_modulusEv"]
-    pub fn seal_BalancedEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
-    ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
-}
-extern "C" {
-    ///Returns the base used for encoding.
-    #[link_name = "\u{1}_ZNK4seal15BalancedEncoder4baseEv"]
-    pub fn seal_BalancedEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-///Encodes floating point numbers into plaintext polynomials that Encryptor can encrypt.
-///An instance of the BinaryFractionalEncoder class converts a double-precision floating-point
-///number into a plaintext polynomial by computing its binary representation, encoding the
-///integral part as in BinaryEncoder, and the fractional part as the highest degree
-///terms of the plaintext polynomial, with signs inverted. Decoding the polynomial
-///back into a double amounts to evaluating the low degree part at X=2, negating the
-///coefficients of the high degree part and evaluating it at X=1/2.
-///
-///Addition and multiplication on the double side translate into addition and multiplication
-///on the encoded plaintext polynomial side, provided that the integral part never mixes
-///with the fractional part in the plaintext polynomials, and that the
-///coefficients of the plaintext polynomials appearing throughout the computations never
-///experience coefficients larger than the plaintext modulus (plain_modulus).
-///
-///@par Integral and Fractional Parts
-///When homomorphic multiplications are performed, the integral part "grows up" to higher
-///degree coefficients of the plaintext polynomial space, and the fractional part "grows down"
-///from the top degree coefficients towards the lower degree coefficients. For decoding to work,
-///these parts must not interfere with each other. When setting up the BinaryFractionalEncoder,
-///one must specify how many coefficients of a plaintext polynomial are reserved for the integral
-///part and how many for the fractional. The sum of these numbers can be at most equal to the
-///degree of the polynomial modulus minus one. If homomorphic multiplications are performed, it is
-///also necessary to leave enough room for the fractional part to "grow down".
-///
-///@par Negative Integers
-///Negative integers are represented by using -1 instead of 1 in the binary representation,
-///and the negative coefficients are stored in the plaintext polynomials as unsigned integers
-///that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-///would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@see BinaryEncoder for encoding integers.
-///@see BalancedFractionalEncoder for encoding using base-b representation for b greater than 2.
-///@see FractionalEncoder for a common interface to all fractional encoders.
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_BinaryFractionalEncoder {
-    pub _base: seal_AbstractFractionalEncoder,
-    pub pool_: seal_MemoryPoolHandle,
-    pub encoder_: seal_BinaryEncoder,
-    pub fraction_coeff_count_: usize,
-    pub integer_coeff_count_: usize,
-    pub poly_modulus_degree_: usize,
-}
-#[test]
-fn bindgen_test_layout_seal_BinaryFractionalEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_BinaryFractionalEncoder>(),
-        136usize,
-        concat!("Size of: ", stringify!(seal_BinaryFractionalEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_BinaryFractionalEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_BinaryFractionalEncoder))
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryFractionalEncoder>())).pool_ as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryFractionalEncoder),
-            "::",
-            stringify!(pool_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryFractionalEncoder>())).encoder_ as *const _ as usize
-        },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryFractionalEncoder),
-            "::",
-            stringify!(encoder_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryFractionalEncoder>())).fraction_coeff_count_
-                as *const _ as usize
-        },
-        112usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryFractionalEncoder),
-            "::",
-            stringify!(fraction_coeff_count_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryFractionalEncoder>())).integer_coeff_count_
-                as *const _ as usize
-        },
-        120usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryFractionalEncoder),
-            "::",
-            stringify!(integer_coeff_count_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BinaryFractionalEncoder>())).poly_modulus_degree_
-                as *const _ as usize
-        },
-        128usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BinaryFractionalEncoder),
-            "::",
-            stringify!(poly_modulus_degree_)
-        )
-    );
-}
-extern "C" {
-    ///Creates a new BinaryFractionalEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus, the degree of the polynomial modulus, and the numbers of
-    ///coefficients that are reserved for the integral and fractional parts. The coefficients
-    ///for the integral part are counted starting from the low-degree end of the polynomial,
-    ///and the coefficients for the fractional part are counted from the high-degree end.
-    ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
-    ///@param[in] integer_coeff_count The number of polynomial coefficients reserved for the integral part
-    ///@param[in] fraction_coeff_count The number of polynomial coefficients reserved for the fractional part
-    ///@throws std::invalid_argument if plain_modulus_degree is invalid
-    ///@throws std::invalid_argument if integer_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if fraction_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if poly_modulus_degree is too small for the integral and fractional parts
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoderC1ERKNS_12SmallModulusEmmm"]
-    pub fn seal_BinaryFractionalEncoder_BinaryFractionalEncoder(
-        this: *mut seal_BinaryFractionalEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-    );
-}
-extern "C" {
-    ///Creates a copy of a BinaryFractionalEncoder.
-    ///
-    ///@param[in] copy The BinaryFractionalEncoder to copy from
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoderC1ERKS0_"]
-    pub fn seal_BinaryFractionalEncoder_BinaryFractionalEncoder1(
-        this: *mut seal_BinaryFractionalEncoder,
-        copy: *const seal_BinaryFractionalEncoder,
-    );
-}
-extern "C" {
-    ///Creates a new BinaryFractionalEncoder by moving an old one.
-    ///
-    ///@param[in] source The BinaryFractionalEncoder to move from
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoderC1EOS0_"]
-    pub fn seal_BinaryFractionalEncoder_BinaryFractionalEncoder2(
-        this: *mut seal_BinaryFractionalEncoder,
-        source: *mut seal_BinaryFractionalEncoder,
-    );
-}
-impl Default for seal_BinaryFractionalEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
-}
-impl seal_BinaryFractionalEncoder {
-    #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-    ) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryFractionalEncoder_BinaryFractionalEncoder(
-            &mut __bindgen_tmp,
-            plain_modulus,
-            poly_modulus_degree,
-            integer_coeff_count,
-            fraction_coeff_count,
-        );
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new1(copy: *const seal_BinaryFractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryFractionalEncoder_BinaryFractionalEncoder1(&mut __bindgen_tmp, copy);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new2(source: *mut seal_BinaryFractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BinaryFractionalEncoder_BinaryFractionalEncoder2(&mut __bindgen_tmp, source);
-        __bindgen_tmp
-    }
-}
-extern "C" {
-    ///Destroys the BinaryFractionalEncoder.
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoderD1Ev"]
-    pub fn seal_BinaryFractionalEncoder_BinaryFractionalEncoder_destructor(
-        this: *mut seal_BinaryFractionalEncoder,
-    );
-}
-extern "C" {
-    ///Encodes a double precision floating point number into a plaintext polynomial.
-    ///
-    ///@param[in] value The double-precision floating-point number to encode
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoder6encodeEd"]
-    pub fn seal_BinaryFractionalEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: f64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as a double-precision
-    ///floating-point number.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the integral part does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal23BinaryFractionalEncoder6decodeERKNS_9PlaintextE"]
-    pub fn seal_BinaryFractionalEncoder_decode(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> f64;
-}
-extern "C" {
-    ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal23BinaryFractionalEncoder13plain_modulusEv"]
-    pub fn seal_BinaryFractionalEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
-    ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
-}
-extern "C" {
-    ///Returns the degree of the polynomial modulus.
-    #[link_name = "\u{1}_ZNK4seal23BinaryFractionalEncoder19poly_modulus_degreeEv"]
-    pub fn seal_BinaryFractionalEncoder_poly_modulus_degree(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-extern "C" {
-    ///Returns the base used for encoding (2).
-    #[link_name = "\u{1}_ZNK4seal23BinaryFractionalEncoder4baseEv"]
-    pub fn seal_BinaryFractionalEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the fractional part.
-    #[link_name = "\u{1}_ZNK4seal23BinaryFractionalEncoder20fraction_coeff_countEv"]
-    pub fn seal_BinaryFractionalEncoder_fraction_coeff_count(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the integral part.
-    #[link_name = "\u{1}_ZNK4seal23BinaryFractionalEncoder19integer_coeff_countEv"]
-    pub fn seal_BinaryFractionalEncoder_integer_coeff_count(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-///Encodes floating point numbers into plaintext polynomials that Encryptor can encrypt.
-///An instance of the BalancedFractionalEncoder class converts a double-precision floating-point
-///number into a plaintext polynomial by computing its balanced base-b representation, encoding the
-///integral part as in BalancedEncoder, and the fractional part as the highest degree
-///terms of the plaintext polynomial, with signs inverted. For an even base b, the
-///coefficients of the polynomial are in the range -b/2,...,b/2-1. Decoding the polynomial back
-///into a double amounts to evaluating the low degree part at X=b, negating the coefficients
-///of the high degree part and evaluating it at X=1/b.
-///
-///Addition and multiplication on the double side translate into addition and multiplication
-///on the encoded plaintext polynomial side, provided that the integral part never mixes
-///with the fractional part in the plaintext polynomials, and that the
-///coefficients of the plaintext polynomials appearing throughout the computations never
-///experience coefficients larger than the plaintext modulus (plain_modulus).
-///
-///@par Integral and Fractional Parts
-///When homomorphic multiplications are performed, the integral part "grows up" to higher
-///degree coefficients of the plaintext polynomial space, and the fractional part "grows down"
-///from the top degree coefficients towards the lower degree coefficients. For decoding to work,
-///these parts must not interfere with each other. When setting up the BalancedFractionalEncoder,
-///one must specify how many coefficients of a plaintext polynomial are reserved for the integral
-///part and how many for the fractional. The sum of these numbers can be at most equal to the
-///degree of the polynomial modulus minus one. If homomorphic multiplications are performed, it is
-///also necessary to leave enough room for the fractional part to "grow down".
-///
-///@par Negative Integers
-///Negative integers in the balanced base-b encoding are represented the same way as
-///positive integers, namely, both positive and negative integers can have both positive and negative
-///digits in their balanced base-b representation. Negative coefficients are stored in the
-///plaintext polynomials as unsigned integers that represent them modulo the plaintext modulus.
-///Thus, for example, a coefficient of -1 would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@see BalancedEncoder for encoding integers.
-///@see BinaryFractionalEncoder for encoding using the binary representation.
-///@see FractionalEncoder for a common interface to all fractional encoders.
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_BalancedFractionalEncoder {
-    pub _base: seal_AbstractFractionalEncoder,
-    pub pool_: seal_MemoryPoolHandle,
-    pub encoder_: seal_BalancedEncoder,
-    pub fraction_coeff_count_: usize,
-    pub integer_coeff_count_: usize,
-    pub poly_modulus_degree_: usize,
-}
-#[test]
-fn bindgen_test_layout_seal_BalancedFractionalEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_BalancedFractionalEncoder>(),
-        136usize,
-        concat!("Size of: ", stringify!(seal_BalancedFractionalEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_BalancedFractionalEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_BalancedFractionalEncoder))
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedFractionalEncoder>())).pool_ as *const _ as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedFractionalEncoder),
-            "::",
-            stringify!(pool_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedFractionalEncoder>())).encoder_ as *const _ as usize
-        },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedFractionalEncoder),
-            "::",
-            stringify!(encoder_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedFractionalEncoder>())).fraction_coeff_count_
-                as *const _ as usize
-        },
-        112usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedFractionalEncoder),
-            "::",
-            stringify!(fraction_coeff_count_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedFractionalEncoder>())).integer_coeff_count_
-                as *const _ as usize
-        },
-        120usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedFractionalEncoder),
-            "::",
-            stringify!(integer_coeff_count_)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            &(*(::std::ptr::null::<seal_BalancedFractionalEncoder>())).poly_modulus_degree_
-                as *const _ as usize
-        },
-        128usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_BalancedFractionalEncoder),
-            "::",
-            stringify!(poly_modulus_degree_)
-        )
-    );
-}
-extern "C" {
-    ///Creates a new BalancedFractionalEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus, the degree of the polynomial modulus, and the numbers of
-    ///coefficients that are reserved for the integral and fractional parts, and optionally
-    ///an integer, at least 3, that is used as the base in the encoding. The coefficients for the
-    ///integral part are counted starting from the low-degree end of the polynomial, and the
-    ///coefficients for the fractional part are counted from the high-degree end.
-    ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
-    ///@param[in] integer_coeff_count The number of polynomial coefficients reserved for the integral part
-    ///@param[in] fraction_coeff_count The number of polynomial coefficients reserved for the fractional part
-    ///@param[in] base The base to be used for encoding (default value is 3)
-    ///@throws std::invalid_argument if plain_modulus is not at least base
-    ///@throws std::invalid_argument if integer_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if fraction_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if poly_modulus_degree is too small for the integral and fractional parts
-    ///@throws std::invalid_argument if base is not an integer and at least 3
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoderC1ERKNS_12SmallModulusEmmmm"]
-    pub fn seal_BalancedFractionalEncoder_BalancedFractionalEncoder(
-        this: *mut seal_BalancedFractionalEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-        base: u64,
-    );
-}
-extern "C" {
-    ///Creates a copy of a BalancedFractionalEncoder.
-    ///
-    ///@param[in] copy The BalancedFractionalEncoder to copy from
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoderC1ERKS0_"]
-    pub fn seal_BalancedFractionalEncoder_BalancedFractionalEncoder1(
-        this: *mut seal_BalancedFractionalEncoder,
-        copy: *const seal_BalancedFractionalEncoder,
-    );
-}
-extern "C" {
-    ///Creates a new BalancedFractionalEncoder by moving an old one.
-    ///
-    ///@param[in] source The BalancedFractionalEncoder to move from
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoderC1EOS0_"]
-    pub fn seal_BalancedFractionalEncoder_BalancedFractionalEncoder2(
-        this: *mut seal_BalancedFractionalEncoder,
-        source: *mut seal_BalancedFractionalEncoder,
-    );
-}
-impl Default for seal_BalancedFractionalEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
-}
-impl seal_BalancedFractionalEncoder {
-    #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-        base: u64,
-    ) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedFractionalEncoder_BalancedFractionalEncoder(
-            &mut __bindgen_tmp,
-            plain_modulus,
-            poly_modulus_degree,
-            integer_coeff_count,
-            fraction_coeff_count,
-            base,
-        );
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new1(copy: *const seal_BalancedFractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedFractionalEncoder_BalancedFractionalEncoder1(&mut __bindgen_tmp, copy);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new2(source: *mut seal_BalancedFractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_BalancedFractionalEncoder_BalancedFractionalEncoder2(&mut __bindgen_tmp, source);
-        __bindgen_tmp
-    }
-}
-extern "C" {
-    ///Destroys the BalancedFractionalEncoder.
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoderD1Ev"]
-    pub fn seal_BalancedFractionalEncoder_BalancedFractionalEncoder_destructor(
-        this: *mut seal_BalancedFractionalEncoder,
-    );
-}
-extern "C" {
-    ///Encodes a double precision floating point number into a plaintext polynomial.
-    ///
-    ///@param[in] value The double-precision floating-point number to encode
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoder6encodeEd"]
-    pub fn seal_BalancedFractionalEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: f64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as a double-precision
-    ///floating-point number.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the integral part does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal25BalancedFractionalEncoder6decodeERKNS_9PlaintextE"]
-    pub fn seal_BalancedFractionalEncoder_decode(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> f64;
-}
-extern "C" {
-    ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal25BalancedFractionalEncoder13plain_modulusEv"]
-    pub fn seal_BalancedFractionalEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
-    ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
-}
-extern "C" {
-    ///Returns the degree of the polynomial modulus.
-    #[link_name = "\u{1}_ZNK4seal25BalancedFractionalEncoder19poly_modulus_degreeEv"]
-    pub fn seal_BalancedFractionalEncoder_poly_modulus_degree(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-extern "C" {
-    ///Returns the base used for encoding.
-    #[link_name = "\u{1}_ZNK4seal25BalancedFractionalEncoder4baseEv"]
-    pub fn seal_BalancedFractionalEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the fractional part.
-    #[link_name = "\u{1}_ZNK4seal25BalancedFractionalEncoder20fraction_coeff_countEv"]
-    pub fn seal_BalancedFractionalEncoder_fraction_coeff_count(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the integral part.
-    #[link_name = "\u{1}_ZNK4seal25BalancedFractionalEncoder19integer_coeff_countEv"]
-    pub fn seal_BalancedFractionalEncoder_integer_coeff_count(
-        this: *mut ::std::os::raw::c_void,
-    ) -> usize;
-}
-///Encodes integers into plaintext polynomials that Encryptor can encrypt. An instance of
-///the IntegerEncoder class converts an integer into a plaintext polynomial by placing its
-///digits in balanced base-b representation as the coefficients of the polynomial. The base
-///b must be a positive integer at least 2 (which is the default value). When b is odd,
-///digits in such a balanced representation are integers in the range -(b-1)/2,...,(b-1)/2.
-///When b is even, digits are integers in the range -b/2,...,b/2-1. When b is 2, the
-///coefficients are either all non-negative (0 and 1), or all non-positive (0 and -1). A larger
-///base allows for more compact representation at the cost of having larger coefficients in
-///freshly encoded plaintext polynomials. Decoding the integer amounts to evaluating the
-///plaintext polynomial at X=b.
-///
-///Addition and multiplication on the integer side translate into addition and multiplication
-///on the encoded plaintext polynomial side, provided that the length of the polynomial
-///never grows to be of the size of the polynomial modulus (poly_modulus), and that the
-///coefficients of the plaintext polynomials appearing throughout the computations never
-///experience coefficients larger than the plaintext modulus (plain_modulus).
-///
-///@par Negative Integers
-///Negative integers in the base-b encoding are represented the same way as positive integers,
-///namely, both positive and negative integers can have both positive and negative digits in their
-///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-///would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@par BinaryEncoder and BalancedEncoder
-///Under the hood IntegerEncoder uses either the BinaryEncoder or the BalancedEncoder classes
-///to do the encoding. The first one is used when the base is 2, and the second one when the
-///base is at least 3. Currently the BinaryEncoder and BalancedEncoder classes can also be used
-///directly, but this might change in future releases.
-///
-///@see BinaryEncoder for encoding using the binary representation.
-///@see BalancedEncoder for encoding using base-b representation for b greater than 2.
-///@see FractionalEncoder for encoding real numbers.
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_IntegerEncoder {
-    pub _base: seal_AbstractIntegerEncoder,
-    pub encoder_: *mut seal_AbstractIntegerEncoder,
-}
-#[test]
-fn bindgen_test_layout_seal_IntegerEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_IntegerEncoder>(),
-        16usize,
-        concat!("Size of: ", stringify!(seal_IntegerEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_IntegerEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_IntegerEncoder))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_IntegerEncoder>())).encoder_ as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_IntegerEncoder),
-            "::",
-            stringify!(encoder_)
-        )
-    );
-}
-extern "C" {
-    ///Creates an IntegerEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus (represented by SmallModulus), and optionally an integer,
-    ///at least 2, that is used as a base in the encoding.
-    ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@param[in] base The base to be used for encoding (default value is 2)
-    ///@throws std::invalid_argument if base is not an integer and at least 2
-    ///@throws std::invalid_argument if plain_modulus is not at least base
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoderC1ERKNS_12SmallModulusEm"]
+    ///@param[in] context The SEALContext
+    ///@throws std::invalid_argument if the context is not set
+    ///@throws std::invalid_argument if the plain_modulus set in context is not
+    ///at least 2
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoderC1ESt10shared_ptrINS_11SEALContextEE"]
     pub fn seal_IntegerEncoder_IntegerEncoder(
         this: *mut seal_IntegerEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        base: u64,
+        context: [u64; 2usize],
     );
 }
 extern "C" {
@@ -10694,19 +9693,82 @@ extern "C" {
         source: *mut seal_IntegerEncoder,
     );
 }
-impl Default for seal_IntegerEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
+extern "C" {
+    ///Destroys the IntegerEncoder.
+    #[link_name = "\u{1}_ZN4seal14IntegerEncoderD1Ev"]
+    pub fn seal_IntegerEncoder_IntegerEncoder_destructor(this: *mut seal_IntegerEncoder);
 }
 impl seal_IntegerEncoder {
     #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        base: u64,
-    ) -> Self {
+    pub unsafe fn encode(&mut self, value: u64) -> seal_Plaintext {
+        seal_IntegerEncoder_encode(self, value)
+    }
+    #[inline]
+    pub unsafe fn encode1(&mut self, value: u64, destination: *mut seal_Plaintext) {
+        seal_IntegerEncoder_encode1(self, value, destination)
+    }
+    #[inline]
+    pub unsafe fn decode_uint32(&mut self, plain: *const seal_Plaintext) -> u32 {
+        seal_IntegerEncoder_decode_uint32(self, plain)
+    }
+    #[inline]
+    pub unsafe fn decode_uint64(&mut self, plain: *const seal_Plaintext) -> u64 {
+        seal_IntegerEncoder_decode_uint64(self, plain)
+    }
+    #[inline]
+    pub unsafe fn encode2(&mut self, value: i64) -> seal_Plaintext {
+        seal_IntegerEncoder_encode2(self, value)
+    }
+    #[inline]
+    pub unsafe fn encode3(&mut self, value: i64, destination: *mut seal_Plaintext) {
+        seal_IntegerEncoder_encode3(self, value, destination)
+    }
+    #[inline]
+    pub unsafe fn encode4(&mut self, value: *const seal_BigUInt) -> seal_Plaintext {
+        seal_IntegerEncoder_encode4(self, value)
+    }
+    #[inline]
+    pub unsafe fn encode5(&mut self, value: *const seal_BigUInt, destination: *mut seal_Plaintext) {
+        seal_IntegerEncoder_encode5(self, value, destination)
+    }
+    #[inline]
+    pub unsafe fn decode_int32(&mut self, plain: *const seal_Plaintext) -> i32 {
+        seal_IntegerEncoder_decode_int32(self, plain)
+    }
+    #[inline]
+    pub unsafe fn decode_int64(&mut self, plain: *const seal_Plaintext) -> i64 {
+        seal_IntegerEncoder_decode_int64(self, plain)
+    }
+    #[inline]
+    pub unsafe fn decode_biguint(&mut self, plain: *const seal_Plaintext) -> seal_BigUInt {
+        seal_IntegerEncoder_decode_biguint(self, plain)
+    }
+    #[inline]
+    pub unsafe fn encode6(&mut self, value: i32) -> seal_Plaintext {
+        seal_IntegerEncoder_encode6(self, value)
+    }
+    #[inline]
+    pub unsafe fn encode7(&mut self, value: u32) -> seal_Plaintext {
+        seal_IntegerEncoder_encode7(self, value)
+    }
+    #[inline]
+    pub unsafe fn encode8(&mut self, value: i32, destination: *mut seal_Plaintext) {
+        seal_IntegerEncoder_encode8(self, value, destination)
+    }
+    #[inline]
+    pub unsafe fn encode9(&mut self, value: u32, destination: *mut seal_Plaintext) {
+        seal_IntegerEncoder_encode9(self, value, destination)
+    }
+    #[inline]
+    pub unsafe fn plain_modulus(
+        &self,
+    ) -> *const seal_util_global_variables_internal_mods_SmallModulus {
+        seal_IntegerEncoder_plain_modulus(self)
+    }
+    #[inline]
+    pub unsafe fn new(context: [u64; 2usize]) -> Self {
         let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_IntegerEncoder_IntegerEncoder(&mut __bindgen_tmp, plain_modulus, base);
+        seal_IntegerEncoder_IntegerEncoder(&mut __bindgen_tmp, context);
         __bindgen_tmp
     }
     #[inline]
@@ -10721,454 +9783,10 @@ impl seal_IntegerEncoder {
         seal_IntegerEncoder_IntegerEncoder2(&mut __bindgen_tmp, source);
         __bindgen_tmp
     }
-}
-extern "C" {
-    ///Destroys the IntegerEncoder.
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoderD1Ev"]
-    pub fn seal_IntegerEncoder_IntegerEncoder_destructor(this: *mut seal_IntegerEncoder);
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEm"]
-    pub fn seal_IntegerEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: u64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint64_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEmRNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_encode1(
-        this: *mut ::std::os::raw::c_void,
-        value: u64,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::uint32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::uint32_t
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder13decode_uint32ERKNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_decode_uint32(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> u32;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::uint64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::uint64_t
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder13decode_uint64ERKNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_decode_uint64(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> u64;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int64_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the base-b encoding are represented the same way as positive integers,
-    ///namely, both positive and negative integers can have both positive and negative digits in their
-    ///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-    ///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-    ///would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEl"]
-    pub fn seal_IntegerEncoder_encode2(
-        this: *mut ::std::os::raw::c_void,
-        value: i64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int64_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the base-b encoding are represented the same way as positive integers,
-    ///namely, both positive and negative integers can have both positive and negative digits in their
-    ///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-    ///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-    ///would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeElRNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_encode3(
-        this: *mut ::std::os::raw::c_void,
-        value: i64,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by BigUInt) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeERKNS_7BigUIntE"]
-    pub fn seal_IntegerEncoder_encode4(
-        this: *mut ::std::os::raw::c_void,
-        value: *const seal_BigUInt,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by BigUInt) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeERKNS_7BigUIntERNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_encode5(
-        this: *mut ::std::os::raw::c_void,
-        value: *const seal_BigUInt,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::int32_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::int32_t
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder12decode_int32ERKNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_decode_int32(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> i32;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as std::int64_t.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder12decode_int64ERKNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_decode_int64(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> i64;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder14decode_biguintERKNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_decode_biguint(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> seal_BigUInt;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and stores the result in a given BigUInt.
-    ///Mathematically this amounts to evaluating the input polynomial at X=base.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@param[out] destination The BigUInt to overwrite with the decoding
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the output does not fit in destination
-    ///@throws std::invalid_argument if the output is negative
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder14decode_biguintERKNS_9PlaintextERNS_7BigUIntE"]
-    pub fn seal_IntegerEncoder_decode_biguint1(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-        destination: *mut seal_BigUInt,
-    );
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int32_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the base-b encoding are represented the same way as positive integers,
-    ///namely, both positive and negative integers can have both positive and negative digits in their
-    ///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-    ///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-    ///would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEi"]
-    pub fn seal_IntegerEncoder_encode6(
-        this: *mut ::std::os::raw::c_void,
-        value: i32,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint32_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEj"]
-    pub fn seal_IntegerEncoder_encode7(
-        this: *mut ::std::os::raw::c_void,
-        value: u32,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Encodes a signed integer (represented by std::int32_t) into a plaintext polynomial.
-    ///
-    ///@par Negative Integers
-    ///Negative integers in the base-b encoding are represented the same way as positive integers,
-    ///namely, both positive and negative integers can have both positive and negative digits in their
-    ///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-    ///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-    ///would be stored as a polynomial coefficient plain_modulus-1.
-    ///
-    ///@param[in] value The signed integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEiRNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_encode8(
-        this: *mut ::std::os::raw::c_void,
-        value: i32,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Encodes an unsigned integer (represented by std::uint32_t) into a plaintext polynomial.
-    ///
-    ///@param[in] value The unsigned integer to encode
-    ///@param[out] destination The plaintext to overwrite with the encoding
-    #[link_name = "\u{1}_ZN4seal14IntegerEncoder6encodeEjRNS_9PlaintextE"]
-    pub fn seal_IntegerEncoder_encode9(
-        this: *mut ::std::os::raw::c_void,
-        value: u32,
-        destination: *mut seal_Plaintext,
-    );
-}
-extern "C" {
-    ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal14IntegerEncoder13plain_modulusEv"]
-    pub fn seal_IntegerEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
-    ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
-}
-extern "C" {
-    ///Returns the base used for encoding.
-    #[link_name = "\u{1}_ZNK4seal14IntegerEncoder4baseEv"]
-    pub fn seal_IntegerEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-///Encodes floating point numbers into plaintext polynomials that Encryptor can encrypt.
-///An instance of the FractionalEncoder class converts a double-precision floating-point
-///number into a plaintext polynomial by computing its balanced base-b representation,
-///encoding the integral part as in IntegerEncoder, and the fractional part as the highest
-///degree terms of the plaintext polynomial, with signs inverted. For an even base b, the
-///coefficients of the polynomial are in the range -b/2,...,b/2-1. When b is 2, the
-///coefficients are either all non-negative (0 and 1), or all non-positive (0 and -1).
-///Decoding the polynomial back into a double amounts to evaluating the low degree part
-///at X=b, negating the coefficients of the high degree part and evaluating it at X=1/b.
-///
-///Addition and multiplication on the double side translate into addition and multiplication
-///on the encoded plaintext polynomial side, provided that the integral part never mixes
-///with the fractional part in the plaintext polynomials, and that the
-///coefficients of the plaintext polynomials appearing throughout the computations never
-///experience coefficients larger than the plaintext modulus (plain_modulus).
-///
-///@par Integral and Fractional Parts
-///When homomorphic multiplications are performed, the integral part "grows up" to higher
-///degree coefficients of the plaintext polynomial space, and the fractional part "grows down"
-///from the top degree coefficients towards the lower degree coefficients. For decoding to work,
-///these parts must not interfere with each other. When setting up the BalancedFractionalEncoder,
-///one must specify how many coefficients of a plaintext polynomial are reserved for the integral
-///part and how many for the fractional. The sum of these numbers can be at most equal to the
-///degree of the polynomial modulus minus one. If homomorphic multiplications are performed, it is
-///also necessary to leave enough room for the fractional part to "grow down".
-///
-///@par Negative Integers
-///Negative integers in the base-b encoding are represented the same way as positive integers,
-///namely, both positive and negative integers can have both positive and negative digits in their
-///base-b representation. Negative coefficients are stored in the plaintext polynomials as unsigned
-///integers that represent them modulo the plaintext modulus. Thus, for example, a coefficient of -1
-///would be stored as a polynomial coefficient plain_modulus-1.
-///
-///@par BinaryFractionalEncoder and BalancedFractionalEncoder
-///Under the hood FractionalEncoder uses either the BinaryFractionalEncoder or the
-///BalancedFractionalEncoder classes to do the encoding. The first one is used when the base is 2,
-///and the second one when the base is at least 3. Currently the BinaryFractionalEncoder and
-///BalancedFractionalEncoder classes can also be used directly, but this might change in future releases.
-///
-///@see BinaryFractionalEncoder for encoding using the binary representation.
-///@see BalancedFractionalEncoder for encoding using base-b representation for b greater than 2.
-///@see IntegerEncoder for encoding integers.
-#[repr(C)]
-#[derive(Debug)]
-pub struct seal_FractionalEncoder {
-    pub _base: seal_AbstractFractionalEncoder,
-    pub encoder_: *mut seal_AbstractFractionalEncoder,
-}
-#[test]
-fn bindgen_test_layout_seal_FractionalEncoder() {
-    assert_eq!(
-        ::std::mem::size_of::<seal_FractionalEncoder>(),
-        16usize,
-        concat!("Size of: ", stringify!(seal_FractionalEncoder))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<seal_FractionalEncoder>(),
-        8usize,
-        concat!("Alignment of ", stringify!(seal_FractionalEncoder))
-    );
-    assert_eq!(
-        unsafe { &(*(::std::ptr::null::<seal_FractionalEncoder>())).encoder_ as *const _ as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(seal_FractionalEncoder),
-            "::",
-            stringify!(encoder_)
-        )
-    );
-}
-extern "C" {
-    ///Creates a new FractionalEncoder object. The constructor takes as input a reference
-    ///to the plaintext modulus, the degree of the polynomial modulus, and the numbers of
-    ///coefficients that are reserved for the integral and fractional parts, and optionally
-    ///an integer, at least 2, that is used as the base in the encoding. The coefficients
-    ///for the integral part are counted starting from the low-degree end of the polynomial,
-    ///and the coefficients for the fractional part are counted from the high-degree end.
-    ///
-    ///@param[in] plain_modulus The plaintext modulus (represented by SmallModulus)
-    ///@param[in] poly_modulus_degree The degree of the polynomial modulus
-    ///@param[in] integer_coeff_count The number of polynomial coefficients reserved for the integral part
-    ///@param[in] fraction_coeff_count The number of polynomial coefficients reserved for the fractional part
-    ///@param[in] base The base to be used for encoding (default value is 2)
-    ///@throws std::invalid_argument if plain_modulus is not at least base
-    ///@throws std::invalid_argument if integer_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if fraction_coeff_count is not strictly positive
-    ///@throws std::invalid_argument if poly_modulus_degree is too small for the integral and fractional parts
-    ///@throws std::invalid_argument if base is not an integer and at least 2
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoderC1ERKNS_12SmallModulusEmmmm"]
-    pub fn seal_FractionalEncoder_FractionalEncoder(
-        this: *mut seal_FractionalEncoder,
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-        base: u64,
-    );
-}
-extern "C" {
-    ///Creates a copy of a FractionalEncoder.
-    ///
-    ///@param[in] copy The FractionalEncoder to copy from
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoderC1ERKS0_"]
-    pub fn seal_FractionalEncoder_FractionalEncoder1(
-        this: *mut seal_FractionalEncoder,
-        copy: *const seal_FractionalEncoder,
-    );
-}
-extern "C" {
-    ///Creates a new FractionalEncoder by moving an old one.
-    ///
-    ///@param[in] source The FractionalEncoder to move from
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoderC1EOS0_"]
-    pub fn seal_FractionalEncoder_FractionalEncoder2(
-        this: *mut seal_FractionalEncoder,
-        source: *mut seal_FractionalEncoder,
-    );
-}
-impl Default for seal_FractionalEncoder {
-    fn default() -> Self {
-        unsafe { ::std::mem::zeroed() }
-    }
-}
-impl seal_FractionalEncoder {
     #[inline]
-    pub unsafe fn new(
-        plain_modulus: *const seal_util_global_variables_internal_mods_SmallModulus,
-        poly_modulus_degree: usize,
-        integer_coeff_count: usize,
-        fraction_coeff_count: usize,
-        base: u64,
-    ) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_FractionalEncoder_FractionalEncoder(
-            &mut __bindgen_tmp,
-            plain_modulus,
-            poly_modulus_degree,
-            integer_coeff_count,
-            fraction_coeff_count,
-            base,
-        );
-        __bindgen_tmp
+    pub unsafe fn destruct(&mut self) {
+        seal_IntegerEncoder_IntegerEncoder_destructor(self)
     }
-    #[inline]
-    pub unsafe fn new1(copy: *const seal_FractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_FractionalEncoder_FractionalEncoder1(&mut __bindgen_tmp, copy);
-        __bindgen_tmp
-    }
-    #[inline]
-    pub unsafe fn new2(source: *mut seal_FractionalEncoder) -> Self {
-        let mut __bindgen_tmp = ::std::mem::uninitialized();
-        seal_FractionalEncoder_FractionalEncoder2(&mut __bindgen_tmp, source);
-        __bindgen_tmp
-    }
-}
-extern "C" {
-    ///Destroys the FractionalEncoder.
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoderD1Ev"]
-    pub fn seal_FractionalEncoder_FractionalEncoder_destructor(this: *mut seal_FractionalEncoder);
-}
-extern "C" {
-    ///Encodes a double precision floating point number into a plaintext polynomial.
-    ///
-    ///@param[in] value The double-precision floating-point number to encode
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoder6encodeEd"]
-    pub fn seal_FractionalEncoder_encode(
-        this: *mut ::std::os::raw::c_void,
-        value: f64,
-    ) -> seal_Plaintext;
-}
-extern "C" {
-    ///Decodes a plaintext polynomial and returns the result as a double-precision
-    ///floating-point number.
-    ///
-    ///@param[in] plain The plaintext to be decoded
-    ///@throws std::invalid_argument if plain does not represent a valid plaintext polynomial
-    ///@throws std::invalid_argument if the integral part does not fit in std::int64_t
-    #[link_name = "\u{1}_ZN4seal17FractionalEncoder6decodeERKNS_9PlaintextE"]
-    pub fn seal_FractionalEncoder_decode(
-        this: *mut ::std::os::raw::c_void,
-        plain: *const seal_Plaintext,
-    ) -> f64;
-}
-extern "C" {
-    ///Returns a reference to the plaintext modulus.
-    #[link_name = "\u{1}_ZNK4seal17FractionalEncoder13plain_modulusEv"]
-    pub fn seal_FractionalEncoder_plain_modulus(
-        this: *mut ::std::os::raw::c_void,
-    ) -> *const seal_util_global_variables_internal_mods_SmallModulus;
-}
-extern "C" {
-    ///Returns the degree of the polynomial modulus.
-    #[link_name = "\u{1}_ZNK4seal17FractionalEncoder19poly_modulus_degreeEv"]
-    pub fn seal_FractionalEncoder_poly_modulus_degree(this: *mut ::std::os::raw::c_void) -> usize;
-}
-extern "C" {
-    ///Returns the base used for encoding.
-    #[link_name = "\u{1}_ZNK4seal17FractionalEncoder4baseEv"]
-    pub fn seal_FractionalEncoder_base(this: *mut ::std::os::raw::c_void) -> u64;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the fractional part.
-    #[link_name = "\u{1}_ZNK4seal17FractionalEncoder20fraction_coeff_countEv"]
-    pub fn seal_FractionalEncoder_fraction_coeff_count(this: *mut ::std::os::raw::c_void) -> usize;
-}
-extern "C" {
-    ///Returns the number of coefficients reserved for the integral part.
-    #[link_name = "\u{1}_ZNK4seal17FractionalEncoder19integer_coeff_countEv"]
-    pub fn seal_FractionalEncoder_integer_coeff_count(this: *mut ::std::os::raw::c_void) -> usize;
 }
 ///Class to store a public key.
 ///
@@ -11226,9 +9844,23 @@ extern "C" {
     ///false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal9PublicKey12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal9PublicKey12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_PublicKey_is_valid_for(this: *const seal_PublicKey, context: [u64; 2usize])
         -> bool;
+}
+extern "C" {
+    ///Check whether the current PublicKey is valid for a given SEALContext. If
+    ///the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the PublicKey data does not match the SEALContext, this function returns
+    ///false. Otherwise, returns true. This function only checks the metadata
+    ///and not the public key data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal9PublicKey21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_PublicKey_is_metadata_valid_for(
+        this: *const seal_PublicKey,
+        context: [u64; 2usize],
+    ) -> bool;
 }
 extern "C" {
     ///Saves the PublicKey to an output stream. The output is in binary format
@@ -11319,6 +9951,10 @@ impl seal_PublicKey {
     #[inline]
     pub unsafe fn is_valid_for(&self, context: [u64; 2usize]) -> bool {
         seal_PublicKey_is_valid_for(self, context)
+    }
+    #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_PublicKey_is_metadata_valid_for(self, context)
     }
     #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
@@ -11492,10 +10128,7 @@ impl seal_Encryptor {
         __bindgen_tmp
     }
 }
-///Class to store relinearization keys. An relinearization key has type
-///std::vector<Ciphertext>.
-///An instance of the RelinKeys class stores internally an std::vector of
-///relinearization keys.
+///Class to store relinearization keys.
 ///
 ///@par Relinearization
 ///Concretely, an relinearization key corresponding to a power K of the secret
@@ -11539,6 +10172,12 @@ pub struct seal_RelinKeys {
     ///The vector of relinearization keys.
     pub keys_: [u64; 3usize],
     pub decomposition_bit_count_: ::std::os::raw::c_int,
+}
+///Enables access to private members of seal::RelinKeys for .NET wrapper.
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct seal_RelinKeys_RelinKeysPrivateHelper {
+    _unused: [u8; 0],
 }
 #[test]
 fn bindgen_test_layout_seal_RelinKeys() {
@@ -11657,9 +10296,23 @@ extern "C" {
     ///false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal9RelinKeys12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal9RelinKeys12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_RelinKeys_is_valid_for(this: *const seal_RelinKeys, context: [u64; 2usize])
         -> bool;
+}
+extern "C" {
+    ///Check whether the current RelinKeys is valid for a given SEALContext. If
+    ///the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the RelinKeys data does not match the SEALContext, this function returns
+    ///false. Otherwise, returns true. This function only checks the metadata
+    ///and not the relinearization key data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal9RelinKeys21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_RelinKeys_is_metadata_valid_for(
+        this: *const seal_RelinKeys,
+        context: [u64; 2usize],
+    ) -> bool;
 }
 extern "C" {
     ///Saves the RelinKeys instance to an output stream. The output is in binary
@@ -11762,6 +10415,10 @@ impl seal_RelinKeys {
         seal_RelinKeys_is_valid_for(self, context)
     }
     #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_RelinKeys_is_metadata_valid_for(self, context)
+    }
+    #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
         seal_RelinKeys_save(self, stream)
     }
@@ -11834,6 +10491,12 @@ pub struct seal_GaloisKeys {
     ///The vector of Galois keys.
     pub keys_: [u64; 3usize],
     pub decomposition_bit_count_: ::std::os::raw::c_int,
+}
+///Enables access to private members of seal::GaloisKeys for .NET wrapper.
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct seal_GaloisKeys_GaloisKeysPrivateHelper {
+    _unused: [u8; 0],
 }
 #[test]
 fn bindgen_test_layout_seal_GaloisKeys() {
@@ -11951,8 +10614,22 @@ extern "C" {
     ///false. Otherwise, returns true.
     ///
     ///@param[in] context The SEALContext
-    #[link_name = "\u{1}_ZNK4seal10GaloisKeys12is_valid_forESt10shared_ptrINS_11SEALContextEE"]
+    #[link_name = "\u{1}_ZNK4seal10GaloisKeys12is_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
     pub fn seal_GaloisKeys_is_valid_for(
+        this: *const seal_GaloisKeys,
+        context: [u64; 2usize],
+    ) -> bool;
+}
+extern "C" {
+    ///Check whether the current GaloisKeys is valid for a given SEALContext. If
+    ///the given SEALContext is not set, the encryption parameters are invalid,
+    ///or the GaloisKeys data does not match the SEALContext, this function returns
+    ///false. Otherwise, returns true. This function only checks the metadata
+    ///and not the Galois key data itself.
+    ///
+    ///@param[in] context The SEALContext
+    #[link_name = "\u{1}_ZNK4seal10GaloisKeys21is_metadata_valid_forESt10shared_ptrIKNS_11SEALContextEE"]
+    pub fn seal_GaloisKeys_is_metadata_valid_for(
         this: *const seal_GaloisKeys,
         context: [u64; 2usize],
     ) -> bool;
@@ -12056,6 +10733,10 @@ impl seal_GaloisKeys {
     #[inline]
     pub unsafe fn is_valid_for(&self, context: [u64; 2usize]) -> bool {
         seal_GaloisKeys_is_valid_for(self, context)
+    }
+    #[inline]
+    pub unsafe fn is_metadata_valid_for(&self, context: [u64; 2usize]) -> bool {
+        seal_GaloisKeys_is_metadata_valid_for(self, context)
     }
     #[inline]
     pub unsafe fn save(&self, stream: *mut std_ostream) {
@@ -12216,6 +10897,7 @@ extern "C" {
     ///@param[out] destination The ciphertext to overwrite with the negated result
     ///@throws std::invalid_argument if encrypted is not valid for the encryption
     ///parameters
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator6negateERKNS_10CiphertextERS1_"]
     pub fn seal_Evaluator_negate(
         this: *mut seal_Evaluator,
@@ -12234,6 +10916,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted1 and encrypted2 are in different
     ///NTT forms
     ///@throws std::invalid_argument if encrypted1 and encrypted2 have different scale
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator11add_inplaceERNS_10CiphertextERKS1_"]
     pub fn seal_Evaluator_add_inplace(
         this: *mut seal_Evaluator,
@@ -12253,6 +10936,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted1 and encrypted2 are in different
     ///NTT forms
     ///@throws std::invalid_argument if encrypted1 and encrypted2 have different scale
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator3addERKNS_10CiphertextES3_RS1_"]
     pub fn seal_Evaluator_add(
         this: *mut seal_Evaluator,
@@ -12273,6 +10957,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypteds are in different NTT forms
     ///@throws std::invalid_argument if encrypteds have different scale
     ///@throws std::invalid_argument if destination is one of encrypteds
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator8add_manyERKSt6vectorINS_10CiphertextESaIS2_EERS2_"]
     pub fn seal_Evaluator_add_many(
         this: *mut seal_Evaluator,
@@ -12291,6 +10976,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted1 and encrypted2 are in different
     ///NTT forms
     ///@throws std::invalid_argument if encrypted1 and encrypted2 have different scale
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator11sub_inplaceERNS_10CiphertextERKS1_"]
     pub fn seal_Evaluator_sub_inplace(
         this: *mut seal_Evaluator,
@@ -12310,6 +10996,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted1 and encrypted2 are in different
     ///NTT forms
     ///@throws std::invalid_argument if encrypted1 and encrypted2 have different scale
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator3subERKNS_10CiphertextES3_RS1_"]
     pub fn seal_Evaluator_sub(
         this: *mut seal_Evaluator,
@@ -12334,6 +11021,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output scale
     ///is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator16multiply_inplaceERNS_10CiphertextERKS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_multiply_inplace(
         this: *mut seal_Evaluator,
@@ -12359,6 +11047,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output scale
     ///is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator8multiplyERKNS_10CiphertextES3_RS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_multiply(
         this: *mut seal_Evaluator,
@@ -12381,6 +11070,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output scale
     ///is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator14square_inplaceERNS_10CiphertextENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_square_inplace(
         this: *mut seal_Evaluator,
@@ -12403,6 +11093,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output scale
     ///is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator6squareERKNS_10CiphertextERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_square(
         this: *mut seal_Evaluator,
@@ -12428,6 +11119,7 @@ extern "C" {
     ///parameters in the current context
     ///@throws std::invalid_argument if the size of relin_keys is too small
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator19relinearize_inplaceERNS_10CiphertextERKNS_9RelinKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_relinearize_inplace(
         this: *mut seal_Evaluator,
@@ -12454,6 +11146,7 @@ extern "C" {
     ///parameters in the current context
     ///@throws std::invalid_argument if the size of relin_keys is too small
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator11relinearizeERKNS_10CiphertextERKNS_9RelinKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_relinearize(
         this: *mut seal_Evaluator,
@@ -12479,6 +11172,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the scale is too
     ///large for the new encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator18mod_switch_to_nextERKNS_10CiphertextERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_mod_switch_to_next(
         this: *mut seal_Evaluator,
@@ -12501,6 +11195,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the scale is too
     ///large for the new encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator26mod_switch_to_next_inplaceERNS_10CiphertextENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_mod_switch_to_next_inplace(
         this: *mut seal_Evaluator,
@@ -12562,6 +11257,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the scale is too
     ///large for the new encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator21mod_switch_to_inplaceERNS_10CiphertextESt5arrayImLm4EENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_mod_switch_to_inplace(
         this: *mut seal_Evaluator,
@@ -12588,6 +11284,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the scale is too
     ///large for the new encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator13mod_switch_toERKNS_10CiphertextESt5arrayImLm4EERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_mod_switch_to(
         this: *mut seal_Evaluator,
@@ -12656,6 +11353,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted is already at lowest level
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator15rescale_to_nextERKNS_10CiphertextERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rescale_to_next(
         this: *mut seal_Evaluator,
@@ -12678,6 +11376,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted is already at lowest level
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator23rescale_to_next_inplaceERNS_10CiphertextENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rescale_to_next_inplace(
         this: *mut seal_Evaluator,
@@ -12702,6 +11401,7 @@ extern "C" {
     ///than the parameters corresponding to parms_id
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator18rescale_to_inplaceERNS_10CiphertextESt5arrayImLm4EENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rescale_to_inplace(
         this: *mut seal_Evaluator,
@@ -12729,6 +11429,7 @@ extern "C" {
     ///than the parameters corresponding to parms_id
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator10rescale_toERKNS_10CiphertextESt5arrayImLm4EERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rescale_to(
         this: *mut seal_Evaluator,
@@ -12760,6 +11461,7 @@ extern "C" {
     ///is too large for the encryption parameters
     ///@throws std::invalid_argument if the size of relin_keys is too small
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator13multiply_manyERSt6vectorINS_10CiphertextESaIS2_EERKNS_9RelinKeysERS2_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_multiply_many(
         this: *mut seal_Evaluator,
@@ -12790,6 +11492,7 @@ extern "C" {
     ///@throws std::invalid_argument if exponent is zero
     ///@throws std::invalid_argument if the size of relin_keys is too small
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator20exponentiate_inplaceERNS_10CiphertextEmRKNS_9RelinKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_exponentiate_inplace(
         this: *mut seal_Evaluator,
@@ -12821,6 +11524,7 @@ extern "C" {
     ///@throws std::invalid_argument if exponent is zero
     ///@throws std::invalid_argument if the size of relin_keys is too small
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator12exponentiateERKNS_10CiphertextEmRKNS_9RelinKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_exponentiate(
         this: *mut seal_Evaluator,
@@ -12832,17 +11536,15 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Adds a ciphertext and a plaintext. This function adds a plaintext to
-    ///a ciphertext. For the operation to be valid, the plaintext must have less
-    ///than degree(poly_modulus) many non-zero coefficients, and each coefficient
-    ///must be less than the plaintext modulus, i.e. the plaintext must be a valid
-    ///plaintext under the current encryption parameters.
+    ///Adds a ciphertext and a plaintext. The plaintext must be valid for the current
+    ///encryption parameters.
     ///
     ///@param[in] encrypted The ciphertext to add
     ///@param[in] plain The plaintext to add
     ///@throws std::invalid_argument if encrypted or plain is not valid for the
     ///encryption parameters
     ///@throws std::invalid_argument if encrypted or plain is in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator17add_plain_inplaceERNS_10CiphertextERKNS_9PlaintextE"]
     pub fn seal_Evaluator_add_plain_inplace(
         this: *mut seal_Evaluator,
@@ -12851,12 +11553,9 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Adds a ciphertext and a plaintext. This function adds a plaintext to
-    ///a ciphertext and stores the result in the destination parameter. For the
-    ///operation to be valid, the plaintext must have less than degree(poly_modulus)
-    ///many non-zero coefficients, and each coefficient must be less than the
-    ///plaintext modulus, i.e. the plaintext must be a valid plaintext under the
-    ///current encryption parameters.
+    ///Adds a ciphertext and a plaintext. This function adds a ciphertext and
+    ///a plaintext and stores the result in the destination parameter. The plaintext
+    ///must be valid for the current encryption parameters.
     ///
     ///@param[in] encrypted The ciphertext to add
     ///@param[in] plain The plaintext to add
@@ -12864,6 +11563,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted or plain is not valid for the
     ///encryption parameters
     ///@throws std::invalid_argument if encrypted or plain is in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator9add_plainERKNS_10CiphertextERKNS_9PlaintextERS1_"]
     pub fn seal_Evaluator_add_plain(
         this: *mut seal_Evaluator,
@@ -12873,17 +11573,15 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Subtracts a plaintext from a ciphertext. This function subtracts a plaintext
-    ///from a ciphertext. For the operation to be valid, the plaintext must have
-    ///less than degree(poly_modulus) many non-zero coefficients, and each coefficient
-    ///must be less than the plaintext modulus, i.e. the plaintext must be a valid
-    ///plaintext under the current encryption parameters.
+    ///Subtracts a plaintext from a ciphertext. The plaintext must be valid for the
+    ///current encryption parameters.
     ///
     ///@param[in] encrypted The ciphertext to subtract from
     ///@param[in] plain The plaintext to subtract
     ///@throws std::invalid_argument if encrypted or plain is not valid for the
     ///encryption parameters
     ///@throws std::invalid_argument if encrypted or plain is in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator17sub_plain_inplaceERNS_10CiphertextERKNS_9PlaintextE"]
     pub fn seal_Evaluator_sub_plain_inplace(
         this: *mut seal_Evaluator,
@@ -12893,11 +11591,8 @@ extern "C" {
 }
 extern "C" {
     ///Subtracts a plaintext from a ciphertext. This function subtracts a plaintext
-    ///from a ciphertext and stores the result in the destination parameter. For
-    ///the operation to be valid, the plaintext must have less than degree(poly_modulus)
-    ///many non-zero coefficients, and each coefficient must be less than the plaintext
-    ///modulus, i.e. the plaintext must be a valid plaintext under the current
-    ///encryption parameters.
+    ///from a ciphertext and stores the result in the destination parameter. The
+    ///plaintext must be valid for the current encryption parameters.
     ///
     ///@param[in] encrypted The ciphertext to subtract from
     ///@param[in] plain The plaintext to subtract
@@ -12905,6 +11600,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted or plain is not valid for the
     ///encryption parameters
     ///@throws std::invalid_argument if encrypted or plain is in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator9sub_plainERKNS_10CiphertextERKNS_9PlaintextERS1_"]
     pub fn seal_Evaluator_sub_plain(
         this: *mut seal_Evaluator,
@@ -12914,13 +11610,10 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Multiplies a ciphertext with a plaintext. This function multiplies a ciphertext
-    ///with a plaintext. For the operation to be valid, the plaintext must have
-    ///less than degree(poly_modulus) many non-zero coefficients, and each coefficient
-    ///must be less than the plaintext modulus, i.e. the plaintext must be a valid
-    ///plaintext under the current encryption parameters. Moreover, the plaintext
-    ///cannot be identially 0. Dynamic memory allocations in the process are allocated
-    ///from the memory pool pointed to by the given MemoryPoolHandle.
+    ///Multiplies a ciphertext with a plaintext. The plaintext must be valid for the
+    ///current encryption parameters, and cannot be identially 0. Dynamic memory
+    ///allocations in the process are allocated from the memory pool pointed to by
+    ///the given MemoryPoolHandle.
     ///
     ///@param[in] encrypted The ciphertext to multiply
     ///@param[in] plain The plaintext to multiply
@@ -12928,10 +11621,10 @@ extern "C" {
     ///@throws std::invalid_argument if the encrypted or plain is not valid for
     ///the encryption parameters
     ///@throws std::invalid_argument if encrypted and plain are in different NTT forms
-    ///@throws std::invalid_argument if plain is zero
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output
     ///scale is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator22multiply_plain_inplaceERNS_10CiphertextERKNS_9PlaintextENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_multiply_plain_inplace(
         this: *mut seal_Evaluator,
@@ -12943,12 +11636,9 @@ extern "C" {
 extern "C" {
     ///Multiplies a ciphertext with a plaintext. This function multiplies
     ///a ciphertext with a plaintext and stores the result in the destination
-    ///parameter. For the operation to be valid, the plaintext must have less
-    ///than degree (poly_modulus) many non-zero coefficients, and each coefficient
-    ///must be less than the plaintext modulus, i.e. the plaintext must be a valid
-    ///plaintext under the current encryption parameters. Moreover, the plaintext
-    ///cannot be identially 0. Dynamic memory allocations in the process are allocated
-    ///from the memory pool pointed to by the given MemoryPoolHandle.
+    ///parameter. The plaintext must be a valid for the current encryption parameters,
+    ///and cannot be identially 0. Dynamic memory allocations in the process are
+    ///allocated from the memory pool pointed to by the given MemoryPoolHandle.
     ///
     ///@param[in] encrypted The ciphertext to multiply
     ///@param[in] plain The plaintext to multiply
@@ -12961,6 +11651,7 @@ extern "C" {
     ///@throws std::invalid_argument if, when using scheme_type::CKKS, the output
     ///scale is too large for the encryption parameters
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator14multiply_plainERKNS_10CiphertextERKNS_9PlaintextERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_multiply_plain(
         this: *mut seal_Evaluator,
@@ -13035,6 +11726,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted is not valid for the encryption
     ///parameters
     ///@throws std::invalid_argument if encrypted is already in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator24transform_to_ntt_inplaceERNS_10CiphertextE"]
     pub fn seal_Evaluator_transform_to_ntt_inplace1(
         this: *mut seal_Evaluator,
@@ -13051,6 +11743,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted is not valid for the encryption
     ///parameters
     ///@throws std::invalid_argument if encrypted is already in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator16transform_to_nttERKNS_10CiphertextERS1_"]
     pub fn seal_Evaluator_transform_to_ntt1(
         this: *mut seal_Evaluator,
@@ -13067,6 +11760,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted_ntt is not valid for the encryption
     ///parameters
     ///@throws std::invalid_argument if encrypted_ntt is not in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator26transform_from_ntt_inplaceERNS_10CiphertextE"]
     pub fn seal_Evaluator_transform_from_ntt_inplace(
         this: *mut seal_Evaluator,
@@ -13083,6 +11777,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted_ntt is not valid for the encryption
     ///parameters
     ///@throws std::invalid_argument if encrypted_ntt is not in NTT form
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator18transform_from_nttERKNS_10CiphertextERS1_"]
     pub fn seal_Evaluator_transform_from_ntt(
         this: *mut seal_Evaluator,
@@ -13119,6 +11814,7 @@ extern "C" {
     ///@throws std::invalid_argument if the Galois element is not valid
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator20apply_galois_inplaceERNS_10CiphertextEmRKNS_10GaloisKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_apply_galois_inplace(
         this: *mut seal_Evaluator,
@@ -13158,6 +11854,7 @@ extern "C" {
     ///@throws std::invalid_argument if the Galois element is not valid
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator12apply_galoisERKNS_10CiphertextEmRKNS_10GaloisKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_apply_galois(
         this: *mut seal_Evaluator,
@@ -13193,6 +11890,7 @@ extern "C" {
     ///@throws std::invalid_argument if steps has too big absolute value
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator19rotate_rows_inplaceERNS_10CiphertextEiRKNS_10GaloisKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_rows_inplace(
         this: *mut seal_Evaluator,
@@ -13228,6 +11926,7 @@ extern "C" {
     ///@throws std::invalid_argument if steps has too big absolute value
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator11rotate_rowsERKNS_10CiphertextEiRKNS_10GaloisKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_rows(
         this: *mut seal_Evaluator,
@@ -13261,6 +11960,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator22rotate_columns_inplaceERNS_10CiphertextERKNS_10GaloisKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_columns_inplace(
         this: *mut seal_Evaluator,
@@ -13292,6 +11992,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator14rotate_columnsERKNS_10CiphertextERKNS_10GaloisKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_columns(
         this: *mut seal_Evaluator,
@@ -13324,6 +12025,7 @@ extern "C" {
     ///@throws std::invalid_argument if steps has too big absolute value
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator21rotate_vector_inplaceERNS_10CiphertextEiRKNS_10GaloisKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_vector_inplace(
         this: *mut seal_Evaluator,
@@ -13357,6 +12059,7 @@ extern "C" {
     ///@throws std::invalid_argument if steps has too big absolute value
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator13rotate_vectorERKNS_10CiphertextEiRKNS_10GaloisKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_rotate_vector(
         this: *mut seal_Evaluator,
@@ -13386,6 +12089,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator25complex_conjugate_inplaceERNS_10CiphertextERKNS_10GaloisKeysENS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_complex_conjugate_inplace(
         this: *mut seal_Evaluator,
@@ -13414,6 +12118,7 @@ extern "C" {
     ///@throws std::invalid_argument if encrypted has size larger than 2
     ///@throws std::invalid_argument if necessary Galois keys are not present
     ///@throws std::invalid_argument if pool is uninitialized
+    ///@throws std::logic_error if result ciphertext is transparent
     #[link_name = "\u{1}_ZN4seal9Evaluator17complex_conjugateERKNS_10CiphertextERKNS_10GaloisKeysERS1_NS_16MemoryPoolHandleE"]
     pub fn seal_Evaluator_complex_conjugate(
         this: *mut seal_Evaluator,
@@ -14217,7 +12922,7 @@ impl seal_KeyGenerator {
 }
 ///Provides functionality for CRT batching. If the polynomial modulus degree is N, and
 ///the plaintext modulus is a prime number T such that T is congruent to 1 modulo 2N,
-///then BatchEncoder allows the SEAL plaintext elements to be viewed as 2-by-(N/2)
+///then BatchEncoder allows the plaintext elements to be viewed as 2-by-(N/2)
 ///matrices of integers modulo T. Homomorphic operations performed on such encrypted
 ///matrices are applied coefficient (slot) wise, enabling powerful SIMD functionality
 ///for computations that are vectorizable. This functionality is often called "batching"
@@ -14326,13 +13031,13 @@ fn bindgen_test_layout_seal_BatchEncoder() {
     );
 }
 extern "C" {
-    ///Creates a SEAL plaintext from a given matrix. This function "batches" a given matrix
-    ///of integers modulo the plaintext modulus into a SEAL plaintext element, and stores
+    ///Creates a plaintext from a given matrix. This function "batches" a given matrix
+    ///of integers modulo the plaintext modulus into a plaintext element, and stores
     ///the result in the destination parameter. The input vector must have size at most equal
     ///to the degree of the polynomial modulus. The first half of the elements represent the
     ///first row of the matrix, and the second half represent the second row. The numbers
     ///in the matrix can be at most equal to the plaintext modulus for it to represent
-    ///a valid SEAL plaintext.
+    ///a valid plaintext.
     ///
     ///If the destination plaintext overlaps the input values in memory, the behavior of
     ///this function is undefined.
@@ -14348,13 +13053,13 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Creates a SEAL plaintext from a given matrix. This function "batches" a given matrix
-    ///of integers modulo the plaintext modulus into a SEAL plaintext element, and stores
+    ///Creates a plaintext from a given matrix. This function "batches" a given matrix
+    ///of integers modulo the plaintext modulus into a plaintext element, and stores
     ///the result in the destination parameter. The input vector must have size at most equal
     ///to the degree of the polynomial modulus. The first half of the elements represent the
     ///first row of the matrix, and the second half represent the second row. The numbers
     ///in the matrix can be at most equal to the plaintext modulus for it to represent
-    ///a valid SEAL plaintext.
+    ///a valid plaintext.
     ///
     ///If the destination plaintext overlaps the input values in memory, the behavior of
     ///this function is undefined.
@@ -14370,8 +13075,8 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Creates a SEAL plaintext from a given matrix. This function "batches" a given matrix
-    ///of integers modulo the plaintext modulus in-place into a SEAL plaintext ready to be
+    ///Creates a plaintext from a given matrix. This function "batches" a given matrix
+    ///of integers modulo the plaintext modulus in-place into a plaintext ready to be
     ///encrypted. The matrix is given as a plaintext element whose first N/2 coefficients
     ///represent the first row of the matrix, and the second N/2 coefficients represent the
     ///second row, where N denotes the degree of the polynomial modulus. The input plaintext
@@ -14393,7 +13098,7 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Inverse of encode. This function "unbatches" a given SEAL plaintext into a matrix
+    ///Inverse of encode. This function "unbatches" a given plaintext into a matrix
     ///of integers modulo the plaintext modulus, and stores the result in the destination
     ///parameter. The input plaintext must have degress less than the polynomial modulus,
     ///and coefficients less than the plaintext modulus, i.e. it must be a valid plaintext
@@ -14415,7 +13120,7 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Inverse of encode. This function "unbatches" a given SEAL plaintext into a matrix
+    ///Inverse of encode. This function "unbatches" a given plaintext into a matrix
     ///of integers modulo the plaintext modulus, and stores the result in the destination
     ///parameter. The input plaintext must have degress less than the polynomial modulus,
     ///and coefficients less than the plaintext modulus, i.e. it must be a valid plaintext
@@ -14437,7 +13142,7 @@ extern "C" {
     );
 }
 extern "C" {
-    ///Inverse of encode. This function "unbatches" a given SEAL plaintext in-place into
+    ///Inverse of encode. This function "unbatches" a given plaintext in-place into
     ///a matrix of integers modulo the plaintext modulus. The input plaintext must have
     ///degress less than the polynomial modulus, and coefficients less than the plaintext
     ///modulus, i.e. it must be a valid plaintext for the encryption parameters. Dynamic
@@ -14523,6 +13228,90 @@ impl seal_BatchEncoder {
         __bindgen_tmp
     }
 }
+///A simple wrapper class to implement C++ UniformRandomBitGenerator type properties
+///for a given polymorphic UniformRandomGenerator instance. The resulting object can
+///be used as a randomness source in C++ standard random number distribution classes,
+///such as std::uniform_int_distribution, std::normal_distribution, or any of the
+///standard RandomNumberEngine classes.
+#[repr(C)]
+#[derive(Debug, Default)]
+pub struct seal_RandomToStandardAdapter {
+    pub generator_: [u64; 2usize],
+}
+pub type seal_RandomToStandardAdapter_result_type = u32;
+#[test]
+fn bindgen_test_layout_seal_RandomToStandardAdapter() {
+    assert_eq!(
+        ::std::mem::size_of::<seal_RandomToStandardAdapter>(),
+        16usize,
+        concat!("Size of: ", stringify!(seal_RandomToStandardAdapter))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<seal_RandomToStandardAdapter>(),
+        8usize,
+        concat!("Alignment of ", stringify!(seal_RandomToStandardAdapter))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<seal_RandomToStandardAdapter>())).generator_ as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(seal_RandomToStandardAdapter),
+            "::",
+            stringify!(generator_)
+        )
+    );
+}
+extern "C" {
+    ///Returns the backing UniformRandomGenerator.
+    #[link_name = "\u{1}_ZNK4seal23RandomToStandardAdapter9generatorEv"]
+    pub fn seal_RandomToStandardAdapter_generator(
+        this: *const seal_RandomToStandardAdapter,
+    ) -> [u64; 2usize];
+}
+extern "C" {
+    ///Returns the smallest possible output value.
+    #[link_name = "\u{1}_ZN4seal23RandomToStandardAdapter3minEv"]
+    pub fn seal_RandomToStandardAdapter_min() -> seal_RandomToStandardAdapter_result_type;
+}
+extern "C" {
+    ///Returns the largest possible output value.
+    #[link_name = "\u{1}_ZN4seal23RandomToStandardAdapter3maxEv"]
+    pub fn seal_RandomToStandardAdapter_max() -> seal_RandomToStandardAdapter_result_type;
+}
+extern "C" {
+    ///Creates a new RandomToStandardAdapter backed by a given UniformRandomGenerator.
+    ///
+    ///@param[in] generator A backing UniformRandomGenerator instance
+    ///@throws std::invalid_argument if generator is null
+    #[link_name = "\u{1}_ZN4seal23RandomToStandardAdapterC1ESt10shared_ptrINS_22UniformRandomGeneratorEE"]
+    pub fn seal_RandomToStandardAdapter_RandomToStandardAdapter(
+        this: *mut seal_RandomToStandardAdapter,
+        generator: [u64; 2usize],
+    );
+}
+impl seal_RandomToStandardAdapter {
+    #[inline]
+    pub unsafe fn generator(&self) -> [u64; 2usize] {
+        seal_RandomToStandardAdapter_generator(self)
+    }
+    #[inline]
+    pub unsafe fn min() -> seal_RandomToStandardAdapter_result_type {
+        seal_RandomToStandardAdapter_min()
+    }
+    #[inline]
+    pub unsafe fn max() -> seal_RandomToStandardAdapter_result_type {
+        seal_RandomToStandardAdapter_max()
+    }
+    #[inline]
+    pub unsafe fn new(generator: [u64; 2usize]) -> Self {
+        let mut __bindgen_tmp = ::std::mem::uninitialized();
+        seal_RandomToStandardAdapter_RandomToStandardAdapter(&mut __bindgen_tmp, generator);
+        __bindgen_tmp
+    }
+}
 pub type __m128i = [::std::os::raw::c_longlong; 2usize];
 extern "C" {
     #[link_name = "\u{1}EncryptionParameters_Create"]
@@ -14571,7 +13360,7 @@ extern "C" {
 }
 extern "C" {
     #[link_name = "\u{1}IntegerEncoder_Create"]
-    pub fn bindings_IntegerEncoder_Create(sm: u64) -> *mut seal_IntegerEncoder;
+    pub fn bindings_IntegerEncoder_Create(ctx: *mut seal_SEALContext) -> *mut seal_IntegerEncoder;
 }
 extern "C" {
     #[link_name = "\u{1}IntegerEncoder_encode"]

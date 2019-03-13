@@ -14,8 +14,8 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
 
     // Cloning the repo.
-    //let url = "https://github.com/Microsoft/SEAL.git";
-    //
+    let url = "https://github.com/Microsoft/SEAL.git";
+
     //let _repo = match Repository::clone(url, "./seal") {
     //    Ok(repo) => repo,
     //    Err(e) => panic!("Failed to clone SEAL: {}", e),
@@ -23,7 +23,7 @@ fn main() {
 
     // Configuring before building
     // Setting working directory
-    let _res = match env::set_current_dir(Path::new("./seal")) {
+    let _res = match env::set_current_dir(Path::new("./seal/native/")) {
         Ok(r) => r,
         Err(e) => panic!("SEAL was not properly cloned: {}", e),
     };
@@ -34,7 +34,7 @@ fn main() {
             .output()
             .expect("failed to execute process");
     // Resetting working directory
-    let _res = match env::set_current_dir(Path::new("..")) {
+    let _res = match env::set_current_dir(Path::new("../../")) {
         Ok(r) => r,
         Err(e) => panic!("Unable to clean after cmaking the repo: {}", e)
     };
@@ -46,11 +46,11 @@ fn main() {
     build.flag_if_supported("-march=native");
     build.flag_if_supported("-fkeep-inline-functions");
     build.flag_if_supported("-fno-inline-functions");
-    let base_path = Path::new("./seal/src/seal/");
-    let util_base_path = Path::new("./seal/src/seal/util/");
+    let base_path = Path::new("./seal/native/src/seal/");
+    let util_base_path = Path::new("./seal/native/src/seal/util/");
     add_cpp_files(&mut build, base_path);
     add_cpp_files(&mut build, util_base_path);
-    build.include("./seal/src");
+    build.include("./seal/native/src");
     build.include("src/");
     build.file("src/bindings.cpp");
     build.compile("seal");
@@ -60,7 +60,7 @@ fn main() {
         .generate_inline_functions(true)
         .derive_default(true)
         .header("src/bindings.h")
-        .clang_arg("-I./seal/src/")
+        .clang_arg("-I./seal/native/src/")
         .clang_arg("-std=c++17")
         .clang_arg("-x")
         .clang_arg("c++")
@@ -89,6 +89,7 @@ fn main() {
 }
 
 fn add_cpp_files(build: &mut cc::Build, path: &Path) {
+    println!("{:#?}", path);
     for e in path.read_dir().unwrap() {
         println!("{:#?}", e);
         let e = e.unwrap();

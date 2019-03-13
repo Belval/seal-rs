@@ -24,7 +24,7 @@ fn example1() {
         let mut ctx = bindings_SEALContext_Create(ep, false);
 
         // Construct the IntegerEncoder
-        let mut ie = bindings_IntegerEncoder_Create(2);
+        let mut ie = bindings_IntegerEncoder_Create(ctx);
 
         // Construct the KeyGenerator to generate the public and private keys
         let mut kg = bindings_KeyGenerator_Create(ctx);
