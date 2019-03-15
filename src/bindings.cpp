@@ -66,6 +66,10 @@ namespace bindings
         return &kg->secret_key();
     }
 
+    RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count = 1) {
+        return &kg->relin_keys(decomposition_bit_count, count);
+    }
+
     // Evaluator functions
     Evaluator* Evaluator_Create(SEALContext* ctx) {
         std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
@@ -82,6 +86,10 @@ namespace bindings
 
     void Evaluator_multiply_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2) {
         evr->multiply_inplace(*c1, *c2);
+    }
+
+    void Evaluator_square_inplace(Evaluator* evr, Ciphertext* c1) {
+        evr->square_inplace(*c1);
     }
 
     // Encryptor functions
@@ -113,6 +121,11 @@ namespace bindings
     }
 
     // Plaintext functions
+    Plaintext* Plaintext_Create(const char* hex_poly) {
+        std::string str_hex_poly(hex_poly);
+        return new Plaintext(str_hex_poly);
+    }
+
     const char* Plaintext_to_string(Plaintext* pt) {
         return pt->to_string().c_str();
     }

@@ -24,12 +24,16 @@ namespace bindings
   extern "C" KeyGenerator* KeyGenerator_Create(SEALContext* ctx);
   extern "C" const PublicKey* KeyGenerator_public_key(KeyGenerator* kg);
   extern "C" const SecretKey* KeyGenerator_secret_key(KeyGenerator* kg);
+  extern "C" RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count = 1);
 
   // Evaluator function
   extern "C" Evaluator* Evaluator_Create(SEALContext* ctx);
   extern "C" void Evaluator_negate_inplace(Evaluator* evr, Ciphertext* c1);
   extern "C" void Evaluator_add_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2);
   extern "C" void Evaluator_multiply_inplace(Evaluator* evr, Ciphertext* c1, Ciphertext* c2);
+  extern "C" void Evaluator_square_inplace(Evaluator* evr, Ciphertext* c1);
+  extern "C" void Evaluator_relinearize_inplace(Evaluator* evr, Ciphertext* c1, RelinKeys* rk);
+
 
   // Encryptor function
   extern "C" Encryptor* Encryptor_Create(SEALContext* ctx, const PublicKey* pk);
@@ -41,5 +45,6 @@ namespace bindings
   extern "C" int Decryptor_invariant_noise_budget(Decryptor* dec, Ciphertext* ct);
 
   // Plaintext function
+  extern "C" Plaintext* Plaintext_Create(const char* hex_poly);
   extern "C" const char* Plaintext_to_string(Plaintext* pt);
 }
