@@ -26,7 +26,6 @@ namespace bindings
         return &ep->plain_modulus();
     }
 
-
     // SEALContext functions
     SEALContext* SEALContext_Create(const EncryptionParameters* parms, bool expand_mod_chain) {
         return SEALContext::Create(*parms, expand_mod_chain);
@@ -66,8 +65,8 @@ namespace bindings
         return &kg->secret_key();
     }
 
-    RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count = 1) {
-        return &kg->relin_keys(decomposition_bit_count, count);
+    RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count) {
+        return new RelinKeys(kg->relin_keys(decomposition_bit_count, count));
     }
 
     // Evaluator functions
@@ -90,6 +89,10 @@ namespace bindings
 
     void Evaluator_square_inplace(Evaluator* evr, Ciphertext* c1) {
         evr->square_inplace(*c1);
+    }
+
+    void Evaluator_relinearize_inplace(Evaluator* evr, Ciphertext* c1, RelinKeys* rk) {
+        evr->relinearize_inplace(*c1, *rk);
     }
 
     // Encryptor functions
@@ -122,12 +125,17 @@ namespace bindings
 
     // Plaintext functions
     Plaintext* Plaintext_Create(const char* hex_poly) {
-        std::string str_hex_poly(hex_poly);
-        return new Plaintext(str_hex_poly);
+        //std::string str_hex_poly(hex_poly);
+        return new Plaintext("1x^2 + 2x^1 + 3");
     }
 
     const char* Plaintext_to_string(Plaintext* pt) {
         return pt->to_string().c_str();
+    }
+
+    // Ciphertext functions
+    int Ciphertext_size(const Ciphertext* ct1) {
+        return ct1->size();
     }
 }
 

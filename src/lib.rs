@@ -324,69 +324,262 @@ fn example_bfv_basics_i() {
 #[test]
 fn example_bfv_basics_ii() {
     unsafe {
-        // Building the EncryptionParameters object
+        println!("Example: BFV Basics II");
+
+        /*
+        In this example we explain what relinearization is, how to use it, and how 
+        it affects noise budget consumption. Relinearization is used both in the BFV
+        and the CKKS schemes but in this example (for the sake of simplicity) we 
+        again focus on BFV.
+        First we set the parameters, create a SEALContext, and generate the public
+        and secret keys. We use slightly larger parameters than before to be able to 
+        do more homomorphic multiplications.
+        */
         let mut ep = bindings_EncryptionParameters_Create(1);
         bindings_EncryptionParameters_set_poly_modulus_degree(ep, 8192);
+
+        /*
+        The default coefficient modulus consists of the following primes:
+            0x7fffffff380001,  0x7ffffffef00001,
+            0x3fffffff000001,  0x3ffffffef40001
+        The total size is 218 bits.
+        */
         bindings_EncryptionParameters_set_coeff_modulus(ep, 128, 8192);
         bindings_EncryptionParameters_set_plain_modulus(ep, 1024);
 
-        // Construct the context
         let mut ctx = bindings_SEALContext_Create(ep, false);
 
-        // Construct the KeyGenerator to generate the public and private keys
+        /*
+        We generate the public and secret keys as before. 
+        There are actually two more types of keys in Microsoft SEAL: `relinearization keys' 
+        and `Galois keys'. In this example we will discuss relinearization keys, and 
+        Galois keys will be discussed later in example_bfv_basics_iii().
+        */
         let mut kg = bindings_KeyGenerator_Create(ctx);
-
         let mut pk = bindings_KeyGenerator_public_key(kg);
-
         let mut sk = bindings_KeyGenerator_secret_key(kg);
 
+        /*
+        We also set up an Encryptor, Evaluator, and Decryptor here. We will
+        encrypt polynomials directly in this example, so there is no need for
+        an encoder.
+        */
         let mut enc = bindings_Encryptor_Create(ctx, pk);
-
         let mut ev = bindings_Evaluator_Create(ctx);
-
         let mut dec = bindings_Decryptor_Create(ctx, sk);
 
-        let mut pt1 = bindings_Plaintext_Create(ctx, "1x^2 + 2x^1 + 3");
+        /*
+        We can easily construct a plaintext polynomial from a string. Again, note 
+        how there is no need for encoding since the BFV scheme natively encrypts
+        polynomials.
+        */
+        let mut pt1 = bindings_Plaintext_Create("1x^2 + 2x^1 + 3".as_bytes().as_ptr() as *const i8);
         let mut ct1 = bindings_Encryptor_encrypt(enc, pt1);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+        /*
+        In Microsoft SEAL, a valid ciphertext consists of two or more polynomials whose 
+        coefficients are integers modulo the product of the primes in coeff_modulus. 
+        The current size of a ciphertext can be found using Ciphertext::size().
+        A freshly encrypted ciphertext always has size 2.
+        */
+        println!("Size of fresh encryption: {}", bindings_Ciphertext_size(ct1));
+        println!("Noise budget in fresh encryption: {} bits", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+
+        /*
+        Homomorphic multiplication results in the output ciphertext growing in size. 
+        More precisely, if the input ciphertexts have size M and N, then the output 
+        ciphertext after homomorphic multiplication will have size M+N-1. In this
+        case we square encrypted twice to observe this growth (also observe noise
+        budget consumption).
+        */
+        bindings_Evaluator_square_inplace(ev, ct1);
+
+        println!("Size after squaring: {}", bindings_Ciphertext_size(ct1));
+        println!("Noise budget after squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
 
         bindings_Evaluator_square_inplace(ev, ct1);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
+        println!("Size after second squaring: {}", bindings_Ciphertext_size(ct1));
+        println!("Noise budget after second squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
 
-        bindings_Evaluator_square_inplace(ev, ct1);
-
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct1));
-
+        /*
+        It does not matter that the size has grown -- decryption works as usual.
+        Observe from the print-out that the coefficients in the plaintext have grown 
+        quite large. One more squaring would cause some of them to wrap around the
+        plain_modulus (0x400) and as a result we would no longer obtain the expected 
+        result as an integer-coefficient polynomial. We can fix this problem to some 
+        extent by increasing plain_modulus. This makes sense since we still have 
+        plenty of noise budget left.
+        */
         let mut pt2 = bindings_Decryptor_decrypt(dec, ct1);
 
-        println!("{}", CStr::from_ptr(bindings_Plaintext_to_string(pt2)).to_str().unwrap());
+        println!("Fourth power: {}", CStr::from_ptr(bindings_Plaintext_to_string(pt2)).to_str().unwrap());
 
-        let mut rk60 = bindings_KeyGenerator_relin_keys(kg, 60);
+        /*
+        The problem here is that homomorphic operations on large ciphertexts are
+        computationally much more costly than on small ciphertexts. Specifically,
+        homomorphic multiplication on input ciphertexts of size M and N will require 
+        O(M*N) polynomial multiplications to be performed, and an addition will
+        require O(M+N) additions. Relinearization reduces the size of ciphertexts
+        after multiplication back to the initial size (2). Thus, relinearizing one
+        or both inputs before the next multiplication or e.g. before serializing the
+        ciphertexts, can have a huge positive impact on performance.
+        Another problem is that the noise budget consumption in multiplication is
+        bigger when the input ciphertexts sizes are bigger. In a complicated
+        computation the contribution of the sizes to the noise budget consumption
+        can actually become the dominant term. We will point this out again below
+        once we get to our example.
+        Relinearization itself has both a computational cost and a noise budget cost.
+        These both depend on a parameter called `decomposition bit count', which can
+        be any integer at least 1 [dbc_min()] and at most 60 [dbc_max()]. A large
+        decomposition bit count makes relinearization fast, but consumes more noise
+        budget. A small decomposition bit count can make relinearization slower, but 
+        might not change the noise budget by any observable amount.
+        Relinearization requires a special type of key called `relinearization keys'.
+        These can be created by the KeyGenerator for any decomposition bit count.
+        To relinearize a ciphertext of size M >= 2 back to size 2, we actually need 
+        M-2 relinearization keys. Attempting to relinearize a too large ciphertext 
+        with too few relinearization keys will result in an exception being thrown.
+        We repeat our computation, but this time relinearize after both squarings.
+        Since our ciphertext never grows past size 3 (we relinearize after every
+        multiplication), it suffices to generate only one relinearization key. This
+        (relinearizing after every multiplication) should be the preferred approach 
+        in almost all cases.
+        First, we need to create relinearization keys. We use a decomposition bit 
+        count of 16 here, which should be thought of as very small.
+        This function generates one single relinearization key. Another overload 
+        of KeyGenerator::relin_keys takes the number of keys to be generated as an 
+        argument, but one is all we need in this example (see above).
+        */
+        let mut rk16 = bindings_KeyGenerator_relin_keys(kg, 16, 1);
 
         let mut ct2 = bindings_Encryptor_encrypt(enc, pt1);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
+        println!("Size of fresh encryption: {}", bindings_Ciphertext_size(ct2));
+        println!("Noise budget in fresh encryption: {} bits", bindings_Decryptor_invariant_noise_budget(dec, ct2));
 
         bindings_Evaluator_square_inplace(ev, ct2);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
+        println!("Size after squaring: {}", bindings_Ciphertext_size(ct2));
+        println!("Noise budget after squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
 
-        bindings_Evaluator_relinearize_inplace(ev, ct2, rk60);
+        bindings_Evaluator_relinearize_inplace(ev, ct2, rk16);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
-
-        let mut pt3 = bindings_Decryptor_decrypt(dev, ct2);
-
-        println!("{}", CStr::from_ptr(bindings_Plaintext_to_string(pt3)).to_str().unwrap());
+        println!("Size after relinearization: {}", bindings_Ciphertext_size(ct2));
+        println!("Noise budget after relinearization (dbc = 16): {}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
 
         bindings_Evaluator_square_inplace(ev, ct2);
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
+        println!("Size after second squaring: {}", bindings_Ciphertext_size(ct2));
+        println!("Noise budget after second squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
 
-        bindings_Evaluator_relinearize_inplace(ev, ct2, rk60);
+        bindings_Evaluator_relinearize_inplace(ev, ct2, rk16);
+        
+        println!("Size after relinearization: {}", bindings_Ciphertext_size(ct2));
+        println!("Noise budget after relinearization (dbc = 16): {}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
 
-        println!("{}", bindings_Decryptor_invariant_noise_budget(dec, ct2));
+        let mut pt3 = bindings_Decryptor_decrypt(dec, ct2);
+
+        println!("Fourth power: {}", CStr::from_ptr(bindings_Plaintext_to_string(pt3)).to_str().unwrap());
+
+        /*
+        Of course the result is still the same, but this time we actually used less 
+        of our noise budget. This is not surprising for two reasons:
+        
+            - We used a very small decomposition bit count, which is why
+            relinearization itself did not consume the noise budget by any
+            observable amount;
+            - Since our ciphertext sizes remain small throughout the two
+            squarings, the noise budget consumption rate in multiplication
+            remains as small as possible. Recall from above that operations
+            on larger ciphertexts actually cause more noise growth.
+        To make things more clear, we repeat the computation a third time, now using 
+        the largest possible decomposition bit count (60). We are not measuring
+        running time here, but relinearization with relin_keys60 (below) is much 
+        faster than with relin_keys16.
+        */
+        let mut rk60 = bindings_KeyGenerator_relin_keys(kg, 60, 1);
+
+        let mut ct3 = bindings_Encryptor_encrypt(enc, pt1);
+
+        println!("Size of fresh encryption: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget in fresh encryption: {} bits", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        bindings_Evaluator_square_inplace(ev, ct3);
+
+        println!("Size after squaring: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        bindings_Evaluator_relinearize_inplace(ev, ct3, rk60);
+
+        println!("Size after relinearization: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after relinearization (dbc = 60): {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        bindings_Evaluator_square_inplace(ev, ct3);
+
+        println!("Size after second squaring: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after second squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        bindings_Evaluator_relinearize_inplace(ev, ct3, rk60);
+        
+        println!("Size after relinearization: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after relinearization (dbc = 60): {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        let mut pt3 = bindings_Decryptor_decrypt(dec, ct3);
+
+        println!("Fourth power: {}", CStr::from_ptr(bindings_Plaintext_to_string(pt3)).to_str().unwrap());
+
+        /*
+        Observe from the print-out that we have now used significantly more of our
+        noise budget than in the two previous runs. This is again not surprising, 
+        since the first relinearization chops off a huge part of the noise budget.
+
+        However, note that the second relinearization does not change the noise
+        budget by any observable amount. This is very important to understand when
+        optimal performance is desired: relinearization always drops the noise
+        budget from the maximum (freshly encrypted ciphertext) down to a fixed 
+        amount depending on the encryption parameters and the decomposition bit 
+        count. On the other hand, homomorphic multiplication always consumes the
+        noise budget from its current level. This is why the second relinearization
+        does not change the noise budget anymore: it is already consumed past the
+        fixed amount determinted by the decomposition bit count and the encryption
+        parameters. 
+
+        We now perform a third squaring and observe an even further compounded
+        decrease in the noise budget. Again, relinearization does not consume the
+        noise budget at this point by any observable amount, even with the largest
+        possible decomposition bit count.
+        */
+
+        bindings_Evaluator_square_inplace(ev, ct3);
+
+        println!("Size after third squaring: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after third squaring: {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        bindings_Evaluator_relinearize_inplace(ev, ct3, rk60);
+        
+        println!("Size after relinearization: {}", bindings_Ciphertext_size(ct3));
+        println!("Noise budget after relinearization (dbc = 60): {}", bindings_Decryptor_invariant_noise_budget(dec, ct3));
+
+        let mut pt3 = bindings_Decryptor_decrypt(dec, ct3);
+
+        println!("Eighth power: {}", CStr::from_ptr(bindings_Plaintext_to_string(pt3)).to_str().unwrap());
+
+        /*
+        Observe from the print-out that the polynomial coefficients are no longer
+        correct as integers: they have been reduced modulo plain_modulus, and there
+        was no warning sign about this. It might be necessary to carefully analyze
+        the computation to make sure such overflow does not occur unexpectedly.
+        These experiments suggest that an optimal strategy might be to relinearize
+        first with relinearization keys with a small decomposition bit count, and 
+        later with relinearization keys with a larger decomposition bit count (for 
+        performance) when noise budget has already been consumed past the bound 
+        determined by the larger decomposition bit count. For example, the best 
+        strategy might have been to use relin_keys16 in the first relinearization 
+        and relin_keys60 in the next two relinearizations for optimal noise budget 
+        consumption/performance trade-off. Luckily, in most use-cases it is not so 
+        critical to squeeze out every last bit of performance, especially when 
+        larger parameters are used.
+        */
     }
 }

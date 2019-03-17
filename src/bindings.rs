@@ -13389,6 +13389,14 @@ extern "C" {
     pub fn bindings_KeyGenerator_secret_key(kg: *mut seal_KeyGenerator) -> *const seal_SecretKey;
 }
 extern "C" {
+    #[link_name = "\u{1}KeyGenerator_relin_keys"]
+    pub fn bindings_KeyGenerator_relin_keys(
+        kg: *mut seal_KeyGenerator,
+        decomposition_bit_count: ::std::os::raw::c_int,
+        count: ::std::os::raw::c_int,
+    ) -> *mut seal_RelinKeys;
+}
+extern "C" {
     #[link_name = "\u{1}Evaluator_Create"]
     pub fn bindings_Evaluator_Create(ctx: *mut seal_SEALContext) -> *mut seal_Evaluator;
 }
@@ -13410,6 +13418,18 @@ extern "C" {
         evr: *mut seal_Evaluator,
         c1: *mut seal_Ciphertext,
         c2: *mut seal_Ciphertext,
+    );
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_square_inplace"]
+    pub fn bindings_Evaluator_square_inplace(evr: *mut seal_Evaluator, c1: *mut seal_Ciphertext);
+}
+extern "C" {
+    #[link_name = "\u{1}Evaluator_relinearize_inplace"]
+    pub fn bindings_Evaluator_relinearize_inplace(
+        evr: *mut seal_Evaluator,
+        c1: *mut seal_Ciphertext,
+        rk: *mut seal_RelinKeys,
     );
 }
 extern "C" {
@@ -13448,8 +13468,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    #[link_name = "\u{1}Plaintext_Create"]
+    pub fn bindings_Plaintext_Create(
+        hex_poly: *const ::std::os::raw::c_char,
+    ) -> *mut seal_Plaintext;
+}
+extern "C" {
     #[link_name = "\u{1}Plaintext_to_string"]
     pub fn bindings_Plaintext_to_string(pt: *mut seal_Plaintext) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    #[link_name = "\u{1}Ciphertext_size"]
+    pub fn bindings_Ciphertext_size(ct1: *const seal_Ciphertext) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Default, Copy, Clone)]
