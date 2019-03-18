@@ -7,6 +7,7 @@ include!("./bindings.rs");
 extern crate libc;
 
 use std::ffi::CStr;
+use std::ffi::CString;
 
 #[test]
 fn example_bfv_basics_i() {
@@ -373,7 +374,7 @@ fn example_bfv_basics_ii() {
         how there is no need for encoding since the BFV scheme natively encrypts
         polynomials.
         */
-        let mut pt1 = bindings_Plaintext_Create("1x^2 + 2x^1 + 3".as_bytes().as_ptr() as *const i8);
+        let mut pt1 = bindings_Plaintext_Create(CString::new("1x^2 + 2x^1 + 3").expect("Something happened").as_ptr());
         let mut ct1 = bindings_Encryptor_encrypt(enc, pt1);
 
         /*

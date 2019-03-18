@@ -125,8 +125,8 @@ namespace bindings
 
     // Plaintext functions
     Plaintext* Plaintext_Create(const char* hex_poly) {
-        //std::string str_hex_poly(hex_poly);
-        return new Plaintext("1x^2 + 2x^1 + 3");
+        std::string str_hex_poly(hex_poly);
+        return new Plaintext(str_hex_poly);
     }
 
     const char* Plaintext_to_string(Plaintext* pt) {
