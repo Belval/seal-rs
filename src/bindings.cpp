@@ -51,6 +51,16 @@ namespace bindings
         return ie->decode_int32(*pt);
     }
 
+    // BatchEncoder functions
+    BatchEncoder* BatchEncoder_Create(SEALContext* ctx) {
+        std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
+        return new BatchEncoder(sp_ctx);
+    }
+
+    int BatchEncoder_slot_count(BatchEncoder* be) {
+        return be->slot_count();
+    }
+
     // KeyGenerator functions
     KeyGenerator* KeyGenerator_Create(SEALContext* ctx) {
         std::shared_ptr<SEALContext> sp_ctx(static_cast<SEALContext*>(ctx));
@@ -67,6 +77,10 @@ namespace bindings
 
     RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count) {
         return new RelinKeys(kg->relin_keys(decomposition_bit_count, count));
+    }
+
+    GaloisKeys* KeyGenerator_galois_keys(KeyGenerator* kg, int decomposition_bit_count) {
+        return new GaloisKeys(kg->galois_keys(decomposition_bit_count));
     }
 
     // Evaluator functions

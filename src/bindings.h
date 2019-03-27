@@ -20,11 +20,16 @@ namespace bindings
   extern "C" Plaintext* IntegerEncoder_encode(IntegerEncoder* ie, int value);
   extern "C" int IntegerEncoder_decode_int32(IntegerEncoder* ie, const Plaintext* pt);
 
+  // BatchEncoder functions
+  extern "C" BatchEncoder* BatchEncoder_Create(SEALContext* ctx);
+  extern "C" BatchEncoder* BatchEncoder_slot_count(BatchENcoder* be);
+
   // KeyGenerator functions
   extern "C" KeyGenerator* KeyGenerator_Create(SEALContext* ctx);
   extern "C" const PublicKey* KeyGenerator_public_key(KeyGenerator* kg);
   extern "C" const SecretKey* KeyGenerator_secret_key(KeyGenerator* kg);
   extern "C" RelinKeys* KeyGenerator_relin_keys(KeyGenerator* kg, int decomposition_bit_count, int count);
+  extern "C" GaloisKeys* KeyGenerator_galois_keys(KeyGenerator* kg, int decomposition_bit_count);
 
   // Evaluator functions
   extern "C" Evaluator* Evaluator_Create(SEALContext* ctx);

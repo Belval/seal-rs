@@ -584,3 +584,98 @@ fn example_bfv_basics_ii() {
         */
     }
 }
+#[test]
+fn example_bfv_basics_iii() {
+    unsafe {
+        println!("Example: BFV Basics III");
+
+        /*
+        In this fundamental example we discuss and demonstrate a powerful technique 
+        called `batching'. If N denotes the degree of the polynomial modulus, and T
+        the plaintext modulus, then batching is automatically enabled for the BFV
+        scheme when T is a prime number congruent to 1 modulo 2*N. In batching the 
+        plaintexts are viewed as matrices of size 2-by-(N/2) with each element an 
+        integer modulo T. Homomorphic operations act element-wise between encrypted 
+        matrices, allowing the user to obtain speeds-ups of several orders of 
+        magnitude in naively vectorizable computations. We demonstrate two more 
+        homomorphic operations which act on encrypted matrices by rotating the rows 
+        cyclically, or rotate the columns (i.e. swap the rows). These operations 
+        require the construction of so-called `Galois keys', which are very similar 
+        to relinearization keys.
+        The batching functionality is totally optional in the BFV scheme and is 
+        exposed through the BatchEncoder class. 
+        */
+
+        let mut ep = bindings_EncryptionParameters_Create(1);
+        
+        bindings_EncryptionParameters_set_poly_modulus_degree(ep, 8192);
+        bindings_EncryptionParameters_set_coeff_modulus(ep, 128, 4096);
+
+        /*
+        Note that 40961 is a prime number and 2*4096 divides 40960, so batching will
+        automatically be enabled for these parameters.
+        */
+        bindings_EncryptionParameters_set_plain_modulus(ep, 40961);
+
+        let mut ctx = bindings_SEALContext_Create(ep, false);
+
+        /*
+        We can verify that batching is indeed enabled by looking at the encryption
+        parameter qualifiers created by SEALContext.
+        */
+        // TODO
+
+        let mut kg = bindings_KeyGenerator_Create(ctx);
+        let mut pk = bindings_KeyGenerator_public_key(kg);
+        let mut sk = bindings_KeyGenerator_secret_key(kg);
+
+        /*
+        We need to create so-called `Galois keys' for performing matrix row and 
+        column rotations on encrypted matrices. Like relinearization keys, the 
+        behavior of Galois keys depends on a decomposition bit count. The noise 
+        budget consumption behavior of matrix row and column rotations is exactly 
+        like that of relinearization (recall example_bfv_basics_ii()).
+        Here we use a moderate size decomposition bit count.
+        */
+        let mut gal_keys = bindings_KeyGenerator_galois_keys(kg, 30);
+
+        /*
+        Since we are going to do some multiplications we will also relinearize.
+        */
+        let mut relin_keys = bindings_KeyGenerator_relin_keys(kg, 30, 1);
+
+        /*
+        We also set up an Encryptor, Evaluator, and Decryptor here.
+        */
+        let mut enc = bindings_Encryptor_Create(ctx, pk);
+        let mut ev = bindings_Evaluator_Create(ctx);
+        let mut dec = bindings_Decryptor_Create(ctx, sk);
+
+        /*
+        Batching is done through an instance of the BatchEncoder class so need to
+        construct one.
+        */
+        let mut be = bindings_BatchEncoder_Create(ctx);
+
+        /*
+        The total number of batching `slots' is poly_modulus_degree. The matrices 
+        we encrypt are of size 2-by-(slot_count / 2).
+        */
+        println!("Plaintext matrix row size: {}", bindings_BatchEncoder_slot_count(be) / 2);
+
+        /*
+        Printing the matrix is a bit of a pain.
+        ... so I won't do it
+        */
+
+        /*
+        The matrix plaintext is simply given to BatchEncoder as a flattened vector
+        of numbers of size slot_count. The first row_size numbers form the first row, 
+        and the rest form the second row. Here we create the following matrix:
+            [ 0,  1,  2,  3,  0,  0, ...,  0 ]
+            [ 4,  5,  6,  7,  0,  0, ...,  0 ]
+        */
+        
+        // TODO
+    }
+}
